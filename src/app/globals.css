@@ -14,3 +14,59 @@ body,
 .map-container {
 	height: 100vh;
 }
+
+.controls {
+	display: none;
+}
+
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year {
+	width: auto;
+	padding: 5px 10px;
+	font-weight: bold;
+	font-size: 1.25rem;
+	height: auto;
+	display: flex;
+	align-items: center;
+	color: rgba(0, 0, 0, 1);
+}
+/* .mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-visible-false, */
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-visible-false > * {
+	color: #bbb;
+	fill: #bbb !important;
+}
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year svg {
+	height: 1rem;
+	width: 20px;
+	color: inherit;
+}
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year svg:first-of-type {
+	margin-right: 5px;
+}
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year svg:last-of-type {
+	margin-left: 5px;
+}
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-23 svg:last-of-type {
+	fill: var(--color-23);
+}
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-19 svg:last-of-type {
+	fill: var(--color-19);
+}
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-18 svg:last-of-type {
+	fill: var(--color-18);
+}
+
+.mapboxgl-popup-content h1 {
+	margin: 0;
+}
+
+.madi-icon svg {
+	height: 29px;
+	padding: 5px;
+}
+
+.popup.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+	border-width: 15px;
+}
+.popup .mapboxgl-popup-content {
+	padding: 7px;
+}
