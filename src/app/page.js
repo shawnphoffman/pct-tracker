@@ -50,8 +50,17 @@ const Home = () => {
 
 		map.current.on('load', () => {
 			console.log('Map loaded')
+			const popup = new mapboxgl.Popup()
 			map.current.on('click', 'PCT - 2023', function (e) {
 				new mapboxgl.Popup().setLngLat(e.lngLat).setHTML('<h2>Madison wee wee woo woo</h2>').addTo(map.current)
+			})
+			map.current.on('mouseover', 'PCT - 2023', function (e) {
+				popup.setLngLat(e.lngLat).setHTML('<h2>HOVER BOI!!!</h2>').addTo(map.current)
+			})
+			map.current.on('mouseleave', 'PCT - 2023', function (e) {
+				setTimeout(() => {
+					popup.remove()
+				}, 500)
 			})
 		})
 
