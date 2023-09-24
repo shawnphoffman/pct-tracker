@@ -11,7 +11,7 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 const defaults = {
 	lng: -121.577,
 	lat: 41.369,
-	zoom: 4.75,
+	zoom: 4.5,
 	bounds: {
 		north: 49.94686973387624,
 		south: 30.997918064591815,
@@ -149,9 +149,9 @@ const Home = () => {
 			center: [lng, lat],
 			zoom: zoom,
 			attributionControl: false,
-			minZoom: defaults.zoom,
+			minZoom: defaults.zoom - 0.5,
 			// maxBounds: [defaults.bounds.west, defaults.bounds.south, defaults.bounds.east, defaults.bounds.north],
-			touchZoomRotate: false,
+			// touchZoomRotate: false,
 		})
 			.addControl(controlNav)
 			.addControl(controlScale)
