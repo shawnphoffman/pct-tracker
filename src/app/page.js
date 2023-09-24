@@ -50,6 +50,9 @@ const Home = () => {
 
 		map.current.on('load', () => {
 			console.log('Map loaded')
+			map.current.on('click', 'PCT - 2023', function (e) {
+				new mapboxgl.Popup().setLngLat(e.lngLat).setHTML('<h2>Madison wee wee woo woo</h2>').addTo(map.current)
+			})
 		})
 
 		// // NOTE DEBUG-ONLY
