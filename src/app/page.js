@@ -11,7 +11,7 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 const defaults = {
 	lng: -121.577,
 	lat: 41.369,
-	zoom: 4,
+	zoom: 4.1,
 	bounds: {
 		north: 49.94686973387624,
 		south: 30.997918064591815,
@@ -121,7 +121,7 @@ const Home = () => {
 		})
 
 		// Fullscreen control
-		const controlFullscreen = new mapboxgl.FullscreenControl({ container: document.querySelector('body') })
+		const controlFullscreen = new mapboxgl.FullscreenControl()
 
 		// Attribution control
 		const controlAttribution = new mapboxgl.AttributionControl({
@@ -151,7 +151,7 @@ const Home = () => {
 			attributionControl: false,
 			minZoom: defaults.zoom - 0.5,
 			// maxBounds: [defaults.bounds.west, defaults.bounds.south, defaults.bounds.east, defaults.bounds.north],
-			touchZoomRotate: true,
+			// touchZoomRotate: true,
 		})
 			.addControl(controlNav)
 			.addControl(controlScale)
