@@ -27,11 +27,11 @@ const Home = () => {
 
 			const visibility = map.current.getLayoutProperty(layerName, 'visibility')
 
-			console.log('Toggling layer', {
-				layerName,
-				currentVisibility: visibility,
-				newVisibility: visibility === 'none' ? 'visible' : 'none',
-			})
+			// console.log('Toggling layer', {
+			// 	layerName,
+			// 	currentVisibility: visibility,
+			// 	newVisibility: visibility === 'none' ? 'visible' : 'none',
+			// })
 
 			// Toggle layer visibility by changing the layout object's visibility property.
 			map.current.setLayoutProperty(layerName, 'visibility', visibility === 'none' ? 'visible' : 'none')
@@ -47,8 +47,14 @@ const Home = () => {
 			center: [lng, lat],
 			zoom: zoom,
 		})
-		window.map = map.current
-	})
+
+		map.current.on('load', () => {
+			console.log('Map loaded')
+		})
+
+		// // NOTE DEBUG-ONLY
+		// window.map = map.current
+	}, [lat, lng, zoom])
 
 	return (
 		<div>
