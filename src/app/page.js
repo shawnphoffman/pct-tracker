@@ -11,7 +11,7 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 const defaults = {
 	lng: -121.577,
 	lat: 41.369,
-	zoom: 4.1,
+	zoom: 4.25,
 	bounds: {
 		north: 49.94686973387624,
 		south: 30.997918064591815,
@@ -165,6 +165,9 @@ const Home = () => {
 		// Wait for the map to laod
 		map.current.on('load', () => {
 			console.log('Map loaded', { map, zoom, lng, lat })
+
+			// Resize just in case
+			map.current.resize()
 
 			// Create a basic popup
 			const pp = new mapboxgl.Popup({
