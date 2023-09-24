@@ -46,12 +46,10 @@ const Layers = {
 /*
 
 === HIGH PRIORITY ===
-- Toggle year with legend and toggle awareness
 
 === LOW PRIORITY ===
-- Source with post locations
--
-
+- Source with newsletter locations
+- Interesting places with zoom (sonora with pitch, cool photos, etc)
 */
 
 const layerIdToYear = id => {
