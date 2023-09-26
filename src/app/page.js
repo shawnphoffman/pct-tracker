@@ -26,7 +26,7 @@ class CustomControl {
 		this._container = container
 	}
 	onAdd(map) {
-		const container = this._container
+		// const container = this._container
 		// console.log('onAdd', { map, container })
 		this._map = map
 		this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group'
@@ -76,7 +76,7 @@ const Home = () => {
 	const [zoom] = useState(defaults.zoom)
 	//
 	const [show23, setShow23] = useState(true)
-	const [show19, setShow19] = useState(true)
+	const [show19, setShow19] = useState(false)
 	const [show18, setShow18] = useState(true)
 
 	const toggleLayer = useCallback(
@@ -209,7 +209,9 @@ const Home = () => {
 				if (layer.id.includes('PCT -')) {
 					console.log('layer', { layer, i: i - 69 })
 					// setTimeout(() => {
-					map.current.setLayoutProperty(layer.id, 'visibility', 'visible')
+					if (!layer.id.includes('2019')) {
+						map.current.setLayoutProperty(layer.id, 'visibility', 'visible')
+					}
 					// }, (i - 69) * 1 * 500)
 
 					const color = layer.paint['line-color']
