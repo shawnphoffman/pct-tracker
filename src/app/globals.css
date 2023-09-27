@@ -72,3 +72,15 @@ body,
 	padding: 7px;
 	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
+
+.newsletter-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.newsletter-title {
+	font-weight: bold;
+	font-size: 1.2rem;
+}

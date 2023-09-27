@@ -213,11 +213,68 @@ const Home = () => {
 						map.current.setLayoutProperty(layer.id, 'visibility', 'visible')
 					}
 					// }, (i - 69) * 1 * 500)
-
 					const color = layer.paint['line-color']
 					const yearKey = layer.id.slice(-2)
 					document.documentElement.style.setProperty(`--color-${yearKey}`, color)
 				}
+			})
+
+			// Add newsletter source and layer
+			const newsletterSource = 'newsletter-points'
+			map.current.addSource(newsletterSource, {
+				type: 'vector',
+				url: 'mapbox://shawnhoffman.cln29xsgu00fw2noxeyy2w94s-9r9pg',
+			})
+			map.current.addLayer(
+				{
+					id: 'newsletter-points',
+					source: newsletterSource,
+					'source-layer': 'PCT_-_Madison_-_2023_-_Newslette',
+					// type: 'symbol',
+					// layout: {
+					// 	'icon-image': ['get', 'icon'],
+					// 	'icon-allow-overlap': true,
+					// },
+					type: 'circle',
+					layout: {
+						visibility: 'visible',
+					},
+					minzoom: 5,
+					paint: {
+						'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
+						// 'circle-color': 'rgba(55,148,179,1)',
+						'circle-color': 'hsl(60, 100%, 50%)',
+						'circle-stroke-color': 'hsl(64, 100%, 0%)',
+						'circle-stroke-width': ['step', ['zoom'], 1, 5, 2, 8, 3],
+					},
+				},
+				'pct-miles' // Add layer below labels
+			)
+			map.current.on('click', newsletterSource, function (e) {
+				pp.remove()
+
+				// Copy coordinates array.
+				const coordinates = e.features[0].geometry.coordinates.slice()
+				const props = e.features[0].properties
+				console.log({ props })
+				const { Mile, Link } = props
+
+				// Ensure that if the map is zoomed out such that multiple
+				// copies of the feature are visible, the popup appears
+				// over the copy being pointed to.
+				while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+					coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
+				}
+
+				new mapboxgl.Popup()
+					.setLngLat(coordinates)
+					.setHTML(
+						`<div class="newsletter-container">
+							<div class="newsletter-title">Mile ${Mile}</div>
+							<a href="${Link}" target="_blank">View Newsletter</a>
+						</div>`
+					)
+					.addTo(map.current)
 			})
 
 			// DEBUG STUFF
@@ -227,7 +284,7 @@ const Home = () => {
 			map.current.on('mouseover', Object.values(Layers), function (e) {
 				const c = e.features[0].layer.paint['line-color']
 				const str = `rgba(${c.r}, ${c.g}, ${c.b}, ${c.a})`
-				console.log('LINE CLICK', { c, str })
+				console.log('LINE HOVER', { c, str })
 			})
 
 			// map.current.on('move', () => {
