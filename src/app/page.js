@@ -4,6 +4,9 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 // import * as Sentry from "@sentry/nextjs";
 
+import newsletterData from '@/data/newsletter.js'
+import newsletters from '@/data/PCT - Madison - 2023 - Newsletter Points.json'
+
 import EyeToggle from '@/components/EyeToggle'
 import ColorCircle from '@/components/ColorCircle'
 
@@ -44,37 +47,24 @@ const Layers = {
 	Madi2018: 'PCT - 2018',
 }
 
-/*
-
-=== HIGH PRIORITY ===
-
-=== LOW PRIORITY ===
-- Source with newsletter locations
-- Interesting places with zoom (sonora with pitch, cool photos, etc)
-*/
-
-const layerIdToYear = id => {
-	switch (id) {
-		case Layers.Madi2023:
-			return 2023
-		case Layers.Madi2019:
-			return 2019
-		case Layers.Madi2018:
-			return 2018
-		default:
-			return null
-	}
-}
+// const layerIdToYear = id => {
+// 	switch (id) {
+// 		case Layers.Madi2023:
+// 			return 2023
+// 		case Layers.Madi2019:
+// 			return 2019
+// 		case Layers.Madi2018:
+// 			return 2018
+// 		default:
+// 			return null
+// 	}
+// }
 
 const Home = () => {
 	const mapContainer = useRef(null)
 	const map = useRef(null)
 	const popup = useRef(null)
-	// TODO - You don't need this state
-	const [lng] = useState(defaults.lng)
-	const [lat] = useState(defaults.lat)
-	const [zoom] = useState(defaults.zoom)
-	//
+	const [showNewsletters, setShowNewsletter] = useState(false)
 	const [show23, setShow23] = useState(true)
 	const [show19, setShow19] = useState(false)
 	const [show18, setShow18] = useState(true)
@@ -139,6 +129,9 @@ const Home = () => {
 		const control18 = new CustomControl({
 			container: document.getElementById('toggle-18'),
 		})
+		const controlNewsletter = new CustomControl({
+			container: document.getElementById('toggle-newsletter'),
+		})
 		const buttonReset = new CustomControl({
 			container: document.getElementById('button-reset'),
 		})
@@ -147,8 +140,10 @@ const Home = () => {
 		map.current = new mapboxgl.Map({
 			container: mapContainer.current,
 			style: process.env.NEXT_PUBLIC_MAPBOX_STYLE,
-			center: [lng, lat],
-			zoom: zoom,
+			// center: [lng, lat],
+			center: [defaults.lng, defaults.lat],
+			// zoom: zoom,
+			zoom: defaults.zoom,
 			attributionControl: false,
 			minZoom: defaults.zoom - 0.5,
 			// maxBounds: [defaults.bounds.west, defaults.bounds.south, defaults.bounds.east, defaults.bounds.north],
@@ -161,11 +156,13 @@ const Home = () => {
 			.addControl(control23, 'top-left')
 			.addControl(control19, 'top-left')
 			.addControl(control18, 'top-left')
+			.addControl(controlNewsletter, 'top-left')
 			.addControl(buttonReset, 'top-right')
 
 		// Wait for the map to laod
 		map.current.on('load', () => {
-			console.log('Map loaded', { map, zoom, lng, lat })
+			// console.log('Map loaded', { map, zoom, lng, lat })
+			console.log('Map loaded', { map })
 
 			// Resize just in case
 			map.current.resize()
@@ -230,11 +227,6 @@ const Home = () => {
 					id: 'newsletter-points',
 					source: newsletterSource,
 					'source-layer': 'PCT_-_Madison_-_2023_-_Newslette',
-					// type: 'symbol',
-					// layout: {
-					// 	'icon-image': ['get', 'icon'],
-					// 	'icon-allow-overlap': true,
-					// },
 					type: 'circle',
 					layout: {
 						visibility: 'visible',
@@ -242,7 +234,6 @@ const Home = () => {
 					minzoom: 5,
 					paint: {
 						'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
-						// 'circle-color': 'rgba(55,148,179,1)',
 						'circle-color': 'hsl(60, 100%, 50%)',
 						'circle-stroke-color': 'hsl(64, 100%, 0%)',
 						'circle-stroke-width': ['step', ['zoom'], 1, 5, 2, 8, 3],
@@ -250,7 +241,25 @@ const Home = () => {
 				},
 				'pct-miles' // Add layer below labels
 			)
-			map.current.on('click', newsletterSource, function (e) {
+			map.current.addLayer(
+				{
+					id: 'newsletter-points-hidden',
+					source: newsletterSource,
+					'source-layer': 'PCT_-_Madison_-_2023_-_Newslette',
+					type: 'circle',
+					layout: {
+						visibility: 'visible',
+					},
+					minzoom: 5,
+					paint: {
+						'circle-opacity': 0.01,
+						'circle-radius': 18,
+						'circle-color': 'hsl(120, 100%, 50%)',
+					},
+				},
+				'newsletter-points'
+			)
+			map.current.on('click', 'newsletter-points-hidden', function (e) {
 				// pp.remove()
 
 				// Copy coordinates array.
@@ -293,7 +302,8 @@ const Home = () => {
 			// 	setZoom(map.current.getZoom().toFixed(2));
 			// 	});
 		})
-	}, [lat, lng, zoom])
+		// }, [lat, lng, zoom])
+	}, [])
 
 	// useEffect(() => {
 	// 	popup.current?.remove()
@@ -302,6 +312,7 @@ const Home = () => {
 	return (
 		<div>
 			<div className="controls">
+				{/* LEFT CONTROLS */}
 				<div id="toggle-23">
 					<button className={`mapboxgl-ctrl-year year-visible-${show23} year-23`} onClick={() => toggleLayer(Layers.Madi2023, setShow23)}>
 						<EyeToggle visible={show23} />
@@ -320,10 +331,15 @@ const Home = () => {
 					<button className={`mapboxgl-ctrl-year year-visible-${show18} year-18`} onClick={() => toggleLayer(Layers.Madi2018, setShow18)}>
 						<EyeToggle visible={show18} />
 						<>2018</>
-
 						<ColorCircle />
 					</button>
 				</div>
+				<div id="toggle-newsletter">
+					<button className="mapboxgl-ctrl-toggle" onClick={() => setShowNewsletter(!showNewsletters)}>
+						Newsletters
+					</button>
+				</div>
+				{/* RIGHT CONTROLS */}
 				<div id="button-reset">
 					<button className="" onClick={() => reset()}>
 						<span className="mapboxgl-ctrl-icon madi-icon">
@@ -334,7 +350,27 @@ const Home = () => {
 					</button>
 				</div>
 			</div>
+			{/* MAP */}
 			<div ref={mapContainer} className="map-container" />
+			{/* NEWSLETTERS */}
+			{showNewsletters && (
+				<nav className="menu-ui">
+					{/* {newsletterData.map(letter => ( */}
+					{newsletters.features.map(letter => (
+						<a
+							href={letter.properties.Link}
+							target="_blank"
+							onClick={() => console.log('CLICK', letter.properties.Link)}
+							key={letter.properties.Mile}
+						>
+							<>Read Mile {letter.properties.Mile}</>
+							<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+								<path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z" />
+							</svg>
+						</a>
+					))}
+				</nav>
+			)}
 		</div>
 	)
 }
