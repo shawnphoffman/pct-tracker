@@ -4,11 +4,16 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 // import * as Sentry from "@sentry/nextjs";
 
-import newsletterData from '@/data/newsletter.js'
 import newsletters from '@/data/PCT - Madison - 2023 - Newsletter Points.json'
 
 import EyeToggle from '@/components/EyeToggle'
 import ColorCircle from '@/components/ColorCircle'
+
+const newslettersSorted = newsletters.features.sort((a, b) => {
+	const aDate = new Date(a.properties.Date)
+	const bDate = new Date(b.properties.Date)
+	return aDate - bDate
+})
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 
@@ -64,7 +69,8 @@ const Home = () => {
 	const mapContainer = useRef(null)
 	const map = useRef(null)
 	const popup = useRef(null)
-	const [showNewsletters, setShowNewsletter] = useState(false)
+	const [showNewslettersDialog, setShowNewslettersDialog] = useState(false)
+	const [showNewslettersLayer, setShowNewslettersLayer] = useState(true)
 	const [show23, setShow23] = useState(true)
 	const [show19, setShow19] = useState(false)
 	const [show18, setShow18] = useState(true)
@@ -80,6 +86,13 @@ const Home = () => {
 			stateCallback && stateCallback(visibility === 'none')
 		},
 		[map]
+	)
+
+	const toggleLayers = useCallback(
+		(layerNames, stateCallback) => {
+			layerNames.forEach(layerName => toggleLayer(layerName, stateCallback))
+		},
+		[toggleLayer]
 	)
 
 	const reset = useCallback(() => {
@@ -158,6 +171,8 @@ const Home = () => {
 			.addControl(control18, 'top-left')
 			.addControl(controlNewsletter, 'top-left')
 			.addControl(buttonReset, 'top-right')
+
+		// window.map = map.current
 
 		// Wait for the map to laod
 		map.current.on('load', () => {
@@ -288,7 +303,12 @@ const Home = () => {
 
 			// DEBUG STUFF
 			map.current.on('click', function (e) {
-				console.log('click', { e })
+				console.log('click', {
+					zoom: map.current.getZoom(),
+					pitch: map.current.getPitch(),
+					bearing: map.current.getBearing(),
+					center: map.current.getCenter(),
+				})
 			})
 			map.current.on('mouseover', Object.values(Layers), function (e) {
 				const c = e.features[0].layer.paint['line-color']
@@ -335,8 +355,15 @@ const Home = () => {
 					</button>
 				</div>
 				<div id="toggle-newsletter">
-					<button className="mapboxgl-ctrl-toggle" onClick={() => setShowNewsletter(!showNewsletters)}>
+					<button className="mapboxgl-ctrl-toggle news-list" onClick={() => setShowNewslettersDialog(!showNewslettersDialog)}>
 						Newsletters
+					</button>
+					<span></span>
+					<button
+						className="mapboxgl-ctrl-toggle news-eye"
+						onClick={() => toggleLayers(['newsletter-points', 'newsletter-points-hidden'], setShowNewslettersLayer)}
+					>
+						<EyeToggle visible={showNewslettersLayer} />
 					</button>
 				</div>
 				{/* RIGHT CONTROLS */}
@@ -353,17 +380,18 @@ const Home = () => {
 			{/* MAP */}
 			<div ref={mapContainer} className="map-container" />
 			{/* NEWSLETTERS */}
-			{showNewsletters && (
+			{showNewslettersDialog && (
 				<nav className="menu-ui">
-					{/* {newsletterData.map(letter => ( */}
-					{newsletters.features.map(letter => (
+					{newslettersSorted.map(letter => (
 						<a
 							href={letter.properties.Link}
 							target="_blank"
 							onClick={() => console.log('CLICK', letter.properties.Link)}
 							key={letter.properties.Mile}
 						>
-							<>Read Mile {letter.properties.Mile}</>
+							<>{letter.properties.Date.slice(0, -3)}</>
+							&nbsp;&ndash;&nbsp;
+							<>{letter.properties.Title ?? `Mile ${letter.properties.Mile}`}</>
 							<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
 								<path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z" />
 							</svg>

@@ -5,7 +5,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 0,
-				"Link": "https://madisonsites.substack.com/p/im-out-on-trail"
+				"Link": "https://madisonsites.substack.com/p/im-out-on-trail",
+				"Date": "3/28/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -19,7 +20,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 42,
-				"Link": "https://madisonsites.substack.com/p/first-marathon-done"
+				"Link": "https://madisonsites.substack.com/p/first-marathon-done",
+				"Date": "3/31/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -33,7 +35,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 77,
-				"Link": "https://madisonsites.substack.com/p/notes-from-mile-77"
+				"Link": "https://madisonsites.substack.com/p/notes-from-mile-77",
+				"Date": "4/4/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -47,7 +50,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 101,
-				"Link": "https://madisonsites.substack.com/p/mile-101"
+				"Link": "https://madisonsites.substack.com/p/mile-101",
+				"Date": "4/8/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -61,7 +65,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 151,
-				"Link": "https://madisonsites.substack.com/p/mile-151"
+				"Link": "https://madisonsites.substack.com/p/mile-151",
+				"Date": "4/12/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -75,7 +80,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 168,
-				"Link": "https://madisonsites.substack.com/p/mile-168"
+				"Link": "https://madisonsites.substack.com/p/mile-168",
+				"Date": "4/19/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -89,7 +95,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 210,
-				"Link": "https://madisonsites.substack.com/p/make-up-miles-san-jacinto"
+				"Link": "https://madisonsites.substack.com/p/make-up-miles-san-jacinto",
+				"Date": "6/8/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -103,7 +110,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 266,
-				"Link": "https://madisonsites.substack.com/p/mile-266"
+				"Link": "https://madisonsites.substack.com/p/mile-266",
+				"Date": "4/28/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -117,7 +125,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 298,
-				"Link": "https://madisonsites.substack.com/p/mile-298"
+				"Link": "https://madisonsites.substack.com/p/mile-298",
+				"Date": "5/2/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -131,7 +140,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 314,
-				"Link": "https://madisonsites.substack.com/p/mile-314"
+				"Link": "https://madisonsites.substack.com/p/mile-314",
+				"Date": "5/5/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -145,7 +155,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 363,
-				"Link": "https://madisonsites.substack.com/p/mile-363"
+				"Link": "https://madisonsites.substack.com/p/mile-363",
+				"Date": "5/7/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -159,7 +170,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 444,
-				"Link": "https://madisonsites.substack.com/p/mile-444"
+				"Link": "https://madisonsites.substack.com/p/mile-444",
+				"Date": "5/12/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -173,7 +185,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 455,
-				"Link": "https://madisonsites.substack.com/p/mile-455"
+				"Link": "https://madisonsites.substack.com/p/mile-455",
+				"Date": "5/14/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -187,7 +200,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 517,
-				"Link": "https://madisonsites.substack.com/p/mile-517"
+				"Link": "https://madisonsites.substack.com/p/mile-517",
+				"Date": "5/17/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -201,7 +215,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 559,
-				"Link": "https://madisonsites.substack.com/p/mile-559"
+				"Link": "https://madisonsites.substack.com/p/mile-559",
+				"Date": "5/22/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -215,7 +230,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 567,
-				"Link": "https://madisonsites.substack.com/p/mile-567"
+				"Link": "https://madisonsites.substack.com/p/mile-567",
+				"Date": "6/2/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -229,7 +245,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 653,
-				"Link": "https://madisonsites.substack.com/p/mile-653"
+				"Link": "https://madisonsites.substack.com/p/mile-653",
+				"Date": "6/20/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -243,7 +260,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 703,
-				"Link": "https://madisonsites.substack.com/p/mile-703"
+				"Link": "https://madisonsites.substack.com/p/mile-703",
+				"Date": "6/23/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -257,7 +275,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 768,
-				"Link": "https://madisonsites.substack.com/p/mile-768"
+				"Link": "https://madisonsites.substack.com/p/mile-768",
+				"Date": "9/6/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -271,7 +290,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 944,
-				"Link": "https://madisonsites.substack.com/p/mile-944"
+				"Link": "https://madisonsites.substack.com/p/mile-944",
+				"Date": "9/24/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -285,7 +305,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 1197,
-				"Link": "https://madisonsites.substack.com/p/mile-1197"
+				"Link": "https://madisonsites.substack.com/p/mile-1197",
+				"Date": "7/4/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -300,7 +321,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 1288,
-				"Link": "https://madisonsites.substack.com/p/mile-1288"
+				"Link": "https://madisonsites.substack.com/p/mile-1288",
+				"Date": "7/8/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -314,7 +336,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 1322,
-				"Link": "https://madisonsites.substack.com/p/mile-1322"
+				"Link": "https://madisonsites.substack.com/p/mile-1322",
+				"Date": "7/11/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -328,7 +351,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 1375,
-				"Link": "https://madisonsites.substack.com/p/mile-1375"
+				"Link": "https://madisonsites.substack.com/p/mile-1375",
+				"Date": "7/13/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -342,7 +366,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 1412,
-				"Link": "https://madisonsites.substack.com/p/mile-1412"
+				"Link": "https://madisonsites.substack.com/p/mile-1412",
+				"Date": "7/15/2023"
 			},
 			"geometry": {
 				"type": "Point",
@@ -356,7 +381,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 1502,
-				"Link": "https://madisonsites.substack.com/p/mile-1502"
+				"Link": "https://madisonsites.substack.com/p/mile-1502",
+				"Date": "7/20/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -370,7 +396,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 1600,
-				"Link": "https://madisonsites.substack.com/p/mile-1600"
+				"Link": "https://madisonsites.substack.com/p/mile-1600",
+				"Date": "7/28/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -384,7 +411,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 1657,
-				"Link": "https://madisonsites.substack.com/p/mile-1657"
+				"Link": "https://madisonsites.substack.com/p/mile-1657",
+				"Date": "8/1/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -398,7 +426,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 1713,
-				"Link": "https://madisonsites.substack.com/p/mile-1713"
+				"Link": "https://madisonsites.substack.com/p/mile-1713",
+				"Date": "8/3/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -412,7 +441,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 1864,
-				"Link": "https://madisonsites.substack.com/p/mile-1864"
+				"Link": "https://madisonsites.substack.com/p/mile-1864",
+				"Date": "8/7/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -426,7 +456,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 2002,
-				"Link": "https://madisonsites.substack.com/p/mile-2002"
+				"Link": "https://madisonsites.substack.com/p/mile-2002",
+				"Date": "8/12/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -440,7 +471,8 @@
 			"type": "Feature",
 			"properties": {
 				"Mile": 2150,
-				"Link": "https://madisonsites.substack.com/p/mile-2150"
+				"Link": "https://madisonsites.substack.com/p/mile-2150",
+				"Date": "8/22/23"
 			},
 			"geometry": {
 				"type": "Point",
@@ -453,8 +485,10 @@
 		{
 			"type": "Feature",
 			"properties": {
+				"Title": "An update from the Sierras",
 				"Mile": "Misc 1",
-				"Link": "https://madisonsites.substack.com/p/an-update-from-the-sierras"
+				"Link": "https://madisonsites.substack.com/p/an-update-from-the-sierras",
+				"Date": "6/29/23"
 			},
 			"geometry": {
 				"coordinates": [
@@ -467,8 +501,10 @@
 		{
 			"type": "Feature",
 			"properties": {
+				"Title": "Nom, nom, nom",
 				"Mile": "Misc 2",
-				"Link": "https://madisonsites.substack.com/p/nom-nom-nom"
+				"Link": "https://madisonsites.substack.com/p/nom-nom-nom",
+				"Date": "3/21/23"
 			},
 			"geometry": {
 				"coordinates": [
@@ -481,8 +517,10 @@
 		{
 			"type": "Feature",
 			"properties": {
+				"Title": "#2 Without a Trace",
 				"Mile": "Misc 3",
-				"Link": "https://madisonsites.substack.com/p/2"
+				"Link": "https://madisonsites.substack.com/p/2",
+				"Date": "3/14/23"
 			},
 			"geometry": {
 				"coordinates": [
@@ -495,13 +533,30 @@
 		{
 			"type": "Feature",
 			"properties": {
+				"Title": "I won the lottery",
 				"Mile": "Misc 4",
-				"Link": "https://madisonsites.substack.com/p/i-won-the-lottery-5f8"
+				"Link": "https://madisonsites.substack.com/p/i-won-the-lottery-5f8",
+				"Date": "3/7/23"
 			},
 			"geometry": {
 				"coordinates": [
 					-120.0254941551388,
 					39.01687546757134
+				],
+				"type": "Point"
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"Mile": 1018,
+				"Link": "https://madisonsites.substack.com/p/mile-1018",
+				"Date": "9/28/23"
+			},
+			"geometry": {
+				"coordinates": [
+					-119.63849229999994,
+					38.32752020000004
 				],
 				"type": "Point"
 			}
