@@ -47,9 +47,17 @@ body,
 	color: rgba(0, 0, 0, 1);
 }
 /* .mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-visible-false, */
-.mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-visible-false > * {
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-visible-false > *,
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-toggle.visible-false {
 	color: #bbb;
 	fill: #bbb !important;
+}
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-toggle.toggle-eye {
+	padding-left: 4px;
+}
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-toggle.photo-list,
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-toggle.news-list {
+	padding-right: 4px;
 }
 .mapboxgl-ctrl-group button.mapboxgl-ctrl-year svg {
 	height: 0.9rem;

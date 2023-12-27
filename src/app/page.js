@@ -413,7 +413,7 @@ const Home = () => {
 					</button>
 					<span></span>
 					<button
-						className="mapboxgl-ctrl-toggle news-eye"
+						className={`mapboxgl-ctrl-toggle toggle-eye visible-${showNewslettersLayer}`}
 						onClick={() => toggleLayers(['newsletter-points', 'newsletter-points-hidden'], setShowNewslettersLayer)}
 					>
 						<EyeToggle visible={showNewslettersLayer} />
@@ -426,7 +426,10 @@ const Home = () => {
 						Photos
 					</button>
 					<span></span>
-					<button className="mapboxgl-ctrl-toggle photo-eye" onClick={() => toggleLayers(['photo-points'], setShowPhotosLayer)}>
+					<button
+						className={`mapboxgl-ctrl-toggle toggle-eye visible-${showPhotosLayer}`}
+						onClick={() => toggleLayers(['photo-points'], setShowPhotosLayer)}
+					>
 						<EyeToggle visible={showPhotosLayer} />
 					</button>
 				</div>
