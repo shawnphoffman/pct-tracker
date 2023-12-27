@@ -1,0 +1,62 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"properties": {
+				"url": "test - 2.jpeg",
+				"date": "2023:08:01 11:23:42",
+				"make": "Apple",
+				"model": "iPhone 14 Pro Max",
+				"size": 15672948,
+				"type": "image/jpeg"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-122.70996944444445,
+					42.197963888888886,
+					581.0200626959248
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"url": "test - 3.jpeg",
+				"date": "2023:09:06 18:22:08",
+				"make": "Apple",
+				"model": "iPhone 14 Pro Max",
+				"size": 9964005,
+				"type": "image/jpeg"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-120.13285833333333,
+					38.86590555555556,
+					2475.7008849557524
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"url": "test - 4.jpeg",
+				"date": "2023:09:19 15:28:58",
+				"make": "Apple",
+				"model": "iPhone 14 Pro Max",
+				"size": 14062535,
+				"type": "image/jpeg"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-120.0111,
+					38.918163888888884,
+					1912.6600331674958
+				]
+			}
+		}
+	]
+}

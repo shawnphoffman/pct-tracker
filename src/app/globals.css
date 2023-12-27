@@ -72,9 +72,12 @@ body,
 	fill: var(--color-18);
 }
 
-#toggle-newsletter {
+#toggle-newsletter,
+#toggle-photos {
 	display: flex;
 }
+##toggle-photos.mapboxgl-ctrl-group button:first-child,
+##toggle-photos.mapboxgl-ctrl-group button:last-child,
 #toggle-newsletter.mapboxgl-ctrl-group button:first-child,
 #toggle-newsletter.mapboxgl-ctrl-group button:last-child {
 	border-radius: 0;

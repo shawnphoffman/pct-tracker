@@ -8,6 +8,7 @@ import newsletters from '@/data/PCT - Madison - 2023 - Newsletter Points.json'
 
 import EyeToggle from '@/components/EyeToggle'
 import ColorCircle from '@/components/ColorCircle'
+import PhotoLightbox from '@/components/PhotoLightbox'
 
 const newslettersSorted = newsletters.features.sort((a, b) => {
 	const aDate = new Date(a.properties.Date)
@@ -74,6 +75,7 @@ const Home = () => {
 	const [show23, setShow23] = useState(true)
 	const [show19, setShow19] = useState(false)
 	const [show18, setShow18] = useState(true)
+	const [showLightbox, setShowLightbox] = useState(false)
 
 	const toggleLayer = useCallback(
 		(layerName, stateCallback) => {
@@ -145,6 +147,9 @@ const Home = () => {
 		const controlNewsletter = new CustomControl({
 			container: document.getElementById('toggle-newsletter'),
 		})
+		const controlPhotos = new CustomControl({
+			container: document.getElementById('toggle-photos'),
+		})
 		const buttonReset = new CustomControl({
 			container: document.getElementById('button-reset'),
 		})
@@ -170,6 +175,7 @@ const Home = () => {
 			.addControl(control19, 'top-left')
 			.addControl(control18, 'top-left')
 			.addControl(controlNewsletter, 'top-left')
+			.addControl(controlPhotos, 'top-left')
 			.addControl(buttonReset, 'top-right')
 
 		// window.map = map.current
@@ -333,6 +339,7 @@ const Home = () => {
 		<div>
 			<div className="controls">
 				{/* LEFT CONTROLS */}
+				{/* YEAR TOGGLES */}
 				<div id="toggle-23">
 					<button className={`mapboxgl-ctrl-year year-visible-${show23} year-23`} onClick={() => toggleLayer(Layers.Madi2023, setShow23)}>
 						<EyeToggle visible={show23} />
@@ -354,6 +361,7 @@ const Home = () => {
 						<ColorCircle />
 					</button>
 				</div>
+				{/* NEWSLETTERS */}
 				<div id="toggle-newsletter">
 					<button className="mapboxgl-ctrl-toggle news-list" onClick={() => setShowNewslettersDialog(!showNewslettersDialog)}>
 						Newsletters
@@ -361,6 +369,20 @@ const Home = () => {
 					<span></span>
 					<button
 						className="mapboxgl-ctrl-toggle news-eye"
+						onClick={() => toggleLayers(['newsletter-points', 'newsletter-points-hidden'], setShowNewslettersLayer)}
+					>
+						<EyeToggle visible={showNewslettersLayer} />
+					</button>
+				</div>
+				{/* PHOTOS */}
+				<div id="toggle-photos">
+					{/* <button className="mapboxgl-ctrl-toggle photo-list" onClick={() => setShowNewslettersDialog(!showNewslettersDialog)}> */}
+					<button className="mapboxgl-ctrl-toggle photo-list" onClick={() => setShowLightbox(true)}>
+						Photo Highlights
+					</button>
+					<span></span>
+					<button
+						className="mapboxgl-ctrl-toggle photo-eye"
 						onClick={() => toggleLayers(['newsletter-points', 'newsletter-points-hidden'], setShowNewslettersLayer)}
 					>
 						<EyeToggle visible={showNewslettersLayer} />
@@ -399,6 +421,9 @@ const Home = () => {
 					))}
 				</nav>
 			)}
+
+			{/* LIGHTBOX */}
+			<PhotoLightbox isOpen={showLightbox} setIsOpen={setShowLightbox} />
 		</div>
 	)
 }
