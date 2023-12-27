@@ -5,6 +5,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 // import * as Sentry from "@sentry/nextjs";
 
 import newsletters from '@/data/PCT - Madison - 2023 - Newsletter Points.json'
+import photos from '@/data/photos.json'
 
 import EyeToggle from '@/components/EyeToggle'
 import ColorCircle from '@/components/ColorCircle'
@@ -72,10 +73,18 @@ const Home = () => {
 	const popup = useRef(null)
 	const [showNewslettersDialog, setShowNewslettersDialog] = useState(false)
 	const [showNewslettersLayer, setShowNewslettersLayer] = useState(true)
+	const [showPhotosLayer, setShowPhotosLayer] = useState(false)
 	const [show23, setShow23] = useState(true)
 	const [show19, setShow19] = useState(false)
 	const [show18, setShow18] = useState(true)
 	const [showLightbox, setShowLightbox] = useState(false)
+	const [imageOverride, setImageOverride] = useState(null)
+
+	useEffect(() => {
+		if (showLightbox === false) {
+			setImageOverride(null)
+		}
+	}, [showLightbox])
 
 	const toggleLayer = useCallback(
 		(layerName, stateCallback) => {
@@ -307,6 +316,42 @@ const Home = () => {
 					.addTo(map.current)
 			})
 
+			// Add local photo source and layer
+			const photoSource = 'photo-points-data'
+			map.current.addSource(photoSource, {
+				type: 'geojson',
+				data: photos,
+			})
+			map.current.addLayer(
+				{
+					id: 'photo-points',
+					source: photoSource,
+					type: 'circle',
+					layout: {
+						visibility: showPhotosLayer ? 'visible' : 'none',
+					},
+					minzoom: 5,
+					paint: {
+						'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
+						'circle-color': 'hsl(190, 100%, 50%)',
+						'circle-stroke-color': 'hsl(64, 100%, 0%)',
+						'circle-stroke-width': ['step', ['zoom'], 1, 5, 2, 8, 3],
+					},
+				},
+				'newsletter-points' // Add layer below newsletters
+			)
+			map.current.on('click', 'photo-points', function (e) {
+				// Copy coordinates array.
+				const coordinates = e.features[0].geometry.coordinates.slice()
+				const props = e.features[0].properties
+				// console.log({ props })
+				// const { altitude, bearing, lens, filename } = props
+				const { filename } = props
+
+				setImageOverride(filename)
+				setShowLightbox(true)
+			})
+
 			// DEBUG STUFF
 			map.current.on('click', function (e) {
 				console.log('click', {
@@ -378,14 +423,11 @@ const Home = () => {
 				<div id="toggle-photos">
 					{/* <button className="mapboxgl-ctrl-toggle photo-list" onClick={() => setShowNewslettersDialog(!showNewslettersDialog)}> */}
 					<button className="mapboxgl-ctrl-toggle photo-list" onClick={() => setShowLightbox(true)}>
-						Photo Highlights
+						Photos
 					</button>
 					<span></span>
-					<button
-						className="mapboxgl-ctrl-toggle photo-eye"
-						onClick={() => toggleLayers(['newsletter-points', 'newsletter-points-hidden'], setShowNewslettersLayer)}
-					>
-						<EyeToggle visible={showNewslettersLayer} />
+					<button className="mapboxgl-ctrl-toggle photo-eye" onClick={() => toggleLayers(['photo-points'], setShowPhotosLayer)}>
+						<EyeToggle visible={showPhotosLayer} />
 					</button>
 				</div>
 				{/* RIGHT CONTROLS */}
@@ -423,7 +465,7 @@ const Home = () => {
 			)}
 
 			{/* LIGHTBOX */}
-			<PhotoLightbox isOpen={showLightbox} setIsOpen={setShowLightbox} />
+			<PhotoLightbox isOpen={showLightbox} setIsOpen={setShowLightbox} imageOverride={imageOverride} />
 		</div>
 	)
 }
