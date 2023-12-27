@@ -6,25 +6,13 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-118.3963888888889,
-					37.375
-				]
-			},
-			"properties": {
-				"filename": "sierras - 29.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
 					-118.13333333333334,
 					36.32916666666667
 				]
 			},
 			"properties": {
-				"filename": "sierras - 23.jpeg"
+				"filename": "sierras - 23.jpeg",
+				"createDate": "2023-08-29T00:41:42.000Z"
 			}
 		},
 		{
@@ -32,15 +20,13 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-118.21991666666666,
-					36.44491111111111
+					-118.3963888888889,
+					37.375
 				]
 			},
 			"properties": {
-				"altitude": 3378.4,
-				"bearing": 351.214111328125,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 10.jpeg"
+				"filename": "sierras - 29.jpeg",
+				"createDate": "2023-08-30T13:06:32.000Z"
 			}
 		},
 		{
@@ -56,7 +42,8 @@
 				"altitude": 1831.7365406643758,
 				"bearing": 13.762495986299903,
 				"lens": "iPhone 14 Pro Max back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 1.jpeg"
+				"filename": "sierras - 1.jpeg",
+				"createDate": "2023-08-24T20:02:16.000Z"
 			}
 		},
 		{
@@ -64,15 +51,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-118.32601111111111,
-					36.493941666666665
+					-118.21991666666666,
+					36.44491111111111
 				]
 			},
 			"properties": {
-				"altitude": 2957.3689236111113,
-				"bearing": 289.99685675797036,
+				"altitude": 3378.4,
+				"bearing": 351.214111328125,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 12.jpeg"
+				"filename": "sierras - 10.jpeg",
+				"createDate": "2023-08-26T23:22:12.000Z"
 			}
 		},
 		{
@@ -88,7 +76,25 @@
 				"altitude": 3359.326582278481,
 				"bearing": 313.20198071409953,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 11.jpeg"
+				"filename": "sierras - 11.jpeg",
+				"createDate": "2023-08-27T10:28:48.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.32601111111111,
+					36.493941666666665
+				]
+			},
+			"properties": {
+				"altitude": 2957.3689236111113,
+				"bearing": 289.99685675797036,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "sierras - 12.jpeg",
+				"createDate": "2023-08-27T16:16:08.000Z"
 			}
 		},
 		{
@@ -104,7 +110,8 @@
 				"altitude": 3234.222816399287,
 				"bearing": 167.02174381054897,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 13.jpeg"
+				"filename": "sierras - 13.jpeg",
+				"createDate": "2023-08-27T20:58:19.000Z"
 			}
 		},
 		{
@@ -120,7 +127,8 @@
 				"altitude": 3134.2,
 				"bearing": 342.9104768083036,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 14.jpeg"
+				"filename": "sierras - 14.jpeg",
+				"createDate": "2023-08-27T21:27:03.000Z"
 			}
 		},
 		{
@@ -136,39 +144,8 @@
 				"altitude": 3148.4794661190963,
 				"bearing": 58.57440186734098,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 15.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.36569999999999,
-					36.54312222222222
-				]
-			},
-			"properties": {
-				"altitude": 3256.0261904761905,
-				"bearing": 199.1349181846249,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 16.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.06324722222222,
-					36.6055
-				]
-			},
-			"properties": {
-				"altitude": 1137.5084226646247,
-				"bearing": 340.91018685955396,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 19.jpeg"
+				"filename": "sierras - 15.jpeg",
+				"createDate": "2023-08-27T22:49:42.000Z"
 			}
 		},
 		{
@@ -184,7 +161,8 @@
 				"altitude": 3307.710217755444,
 				"bearing": 33.88388059701492,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 17.jpeg"
+				"filename": "sierras - 17.jpeg",
+				"createDate": "2023-08-28T13:47:09.000Z"
 			}
 		},
 		{
@@ -192,15 +170,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-118.13409444444446,
-					36.17628611111111
+					-118.06324722222222,
+					36.6055
 				]
 			},
 			"properties": {
-				"altitude": 2457.825479930192,
-				"bearing": 3.793121340152694,
+				"altitude": 1137.5084226646247,
+				"bearing": 340.91018685955396,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 2.jpeg"
+				"filename": "sierras - 19.jpeg",
+				"createDate": "2023-08-28T22:45:06.000Z"
 			}
 		},
 		{
@@ -216,7 +195,8 @@
 				"altitude": 3505.2138775510202,
 				"bearing": 90.56680400235433,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 18.jpeg"
+				"filename": "sierras - 18.jpeg",
+				"createDate": "2023-08-28T19:07:51.000Z"
 			}
 		},
 		{
@@ -224,12 +204,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-118.11805555555554,
-					36.10527777777778
+					-118.36569999999999,
+					36.54312222222222
 				]
 			},
 			"properties": {
-				"filename": "sierras - 24.jpeg"
+				"altitude": 3256.0261904761905,
+				"bearing": 199.1349181846249,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "sierras - 16.jpeg",
+				"createDate": "2023-08-27T23:36:32.000Z"
 			}
 		},
 		{
@@ -242,7 +226,8 @@
 				]
 			},
 			"properties": {
-				"filename": "sierras - 21.jpeg"
+				"filename": "sierras - 21.jpeg",
+				"createDate": "2023-08-29T00:41:15.000Z"
 			}
 		},
 		{
@@ -250,15 +235,44 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-119.11866666666666,
-					37.95636666666667
+					-118.33749999999999,
+					36.49611111111111
 				]
 			},
 			"properties": {
-				"altitude": 2066.8012987012985,
-				"bearing": 130.61215218625782,
+				"filename": "sierras - 22.jpeg",
+				"createDate": "2023-08-29T00:41:35.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.13409444444446,
+					36.17628611111111
+				]
+			},
+			"properties": {
+				"altitude": 2457.825479930192,
+				"bearing": 3.793121340152694,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 26.jpeg"
+				"filename": "sierras - 2.jpeg",
+				"createDate": "2023-08-25T13:45:37.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.11805555555554,
+					36.10527777777778
+				]
+			},
+			"properties": {
+				"filename": "sierras - 24.jpeg",
+				"createDate": "2023-08-29T00:41:47.000Z"
 			}
 		},
 		{
@@ -274,7 +288,8 @@
 				"altitude": 2064.481366459627,
 				"bearing": 338.91259765625,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 27.jpeg"
+				"filename": "sierras - 27.jpeg",
+				"createDate": "2023-08-29T20:50:33.000Z"
 			}
 		},
 		{
@@ -287,7 +302,8 @@
 				]
 			},
 			"properties": {
-				"filename": "sierras - 25.jpeg"
+				"filename": "sierras - 25.jpeg",
+				"createDate": "2023-08-29T00:41:56.000Z"
 			}
 		},
 		{
@@ -303,7 +319,8 @@
 				"altitude": 2068.3842443729905,
 				"bearing": 121.80062111801242,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 28.jpeg"
+				"filename": "sierras - 28.jpeg",
+				"createDate": "2023-08-29T23:44:12.000Z"
 			}
 		},
 		{
@@ -311,12 +328,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-118.33749999999999,
-					36.49611111111111
+					-119.11866666666666,
+					37.95636666666667
 				]
 			},
 			"properties": {
-				"filename": "sierras - 22.jpeg"
+				"altitude": 2066.8012987012985,
+				"bearing": 130.61215218625782,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "sierras - 26.jpeg",
+				"createDate": "2023-08-29T20:14:45.000Z"
 			}
 		},
 		{
@@ -332,7 +353,8 @@
 				"altitude": 2399.058287795993,
 				"bearing": 67.9466552734375,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 3.jpeg"
+				"filename": "sierras - 3.jpeg",
+				"createDate": "2023-08-25T14:04:31.000Z"
 			}
 		},
 		{
@@ -348,55 +370,8 @@
 				"altitude": 2396.831663326653,
 				"bearing": 312.3810426540284,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 30.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-119.41624444444444,
-					38.002655555555556
-				]
-			},
-			"properties": {
-				"altitude": 2931.1147327249023,
-				"bearing": 345.60993975903614,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 32.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-119.48496944444445,
-					38.012541666666664
-				]
-			},
-			"properties": {
-				"altitude": 2815.144230769231,
-				"bearing": 36.01593018423604,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 33.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-119.51991944444444,
-					38.05098611111111
-				]
-			},
-			"properties": {
-				"altitude": 2683.674829931973,
-				"bearing": 252.86048879837068,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 34.jpeg"
+				"filename": "sierras - 30.jpeg",
+				"createDate": "2023-08-30T18:46:38.000Z"
 			}
 		},
 		{
@@ -412,7 +387,59 @@
 				"altitude": 2884.0478507704784,
 				"bearing": 161.6497803806735,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 31.jpeg"
+				"filename": "sierras - 31.jpeg",
+				"createDate": "2023-08-31T02:20:11.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-119.41624444444444,
+					38.002655555555556
+				]
+			},
+			"properties": {
+				"altitude": 2931.1147327249023,
+				"bearing": 345.60993975903614,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "sierras - 32.jpeg",
+				"createDate": "2023-08-31T02:56:02.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-119.48496944444445,
+					38.012541666666664
+				]
+			},
+			"properties": {
+				"altitude": 2815.144230769231,
+				"bearing": 36.01593018423604,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "sierras - 33.jpeg",
+				"createDate": "2023-08-31T17:17:34.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-119.51991944444444,
+					38.05098611111111
+				]
+			},
+			"properties": {
+				"altitude": 2683.674829931973,
+				"bearing": 252.86048879837068,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "sierras - 34.jpeg",
+				"createDate": "2023-08-31T23:27:48.000Z"
 			}
 		},
 		{
@@ -428,7 +455,8 @@
 				"altitude": 2372.411330049261,
 				"bearing": 55.318267865593945,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 36.jpeg"
+				"filename": "sierras - 36.jpeg",
+				"createDate": "2023-09-01T14:36:25.000Z"
 			}
 		},
 		{
@@ -444,7 +472,8 @@
 				"altitude": 2864.3060240963855,
 				"bearing": 60.586669921875,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 38.jpeg"
+				"filename": "sierras - 38.jpeg",
+				"createDate": "2023-09-02T09:43:36.000Z"
 			}
 		},
 		{
@@ -460,7 +489,8 @@
 				"altitude": 2877.5995085995087,
 				"bearing": 74.01330561330562,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 39.jpeg"
+				"filename": "sierras - 39.jpeg",
+				"createDate": "2023-09-02T10:42:43.000Z"
 			}
 		},
 		{
@@ -476,7 +506,8 @@
 				"altitude": 2764.8887323943663,
 				"bearing": 69.25348666503548,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 4.jpeg"
+				"filename": "sierras - 4.jpeg",
+				"createDate": "2023-08-26T11:26:59.000Z"
 			}
 		},
 		{
@@ -492,7 +523,8 @@
 				"altitude": 2818.3933209647494,
 				"bearing": 93.46614836410755,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 40.jpeg"
+				"filename": "sierras - 40.jpeg",
+				"createDate": "2023-09-02T10:57:48.000Z"
 			}
 		},
 		{
@@ -508,7 +540,8 @@
 				"altitude": 2752.3522304832713,
 				"bearing": 318.1282652377763,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 41.jpeg"
+				"filename": "sierras - 41.jpeg",
+				"createDate": "2023-09-02T11:17:25.000Z"
 			}
 		},
 		{
@@ -524,7 +557,8 @@
 				"altitude": 2615.359173126615,
 				"bearing": 122.890636430139,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 43.jpeg"
+				"filename": "sierras - 43.jpeg",
+				"createDate": "2023-09-02T13:32:04.000Z"
 			}
 		},
 		{
@@ -540,7 +574,8 @@
 				"altitude": 3061.023178807947,
 				"bearing": 74.58990476190476,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 45.jpeg"
+				"filename": "sierras - 45.jpeg",
+				"createDate": "2023-09-02T18:48:41.000Z"
 			}
 		},
 		{
@@ -556,7 +591,8 @@
 				"altitude": 3051.7697715289983,
 				"bearing": 104.08596620132256,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 44.jpeg"
+				"filename": "sierras - 44.jpeg",
+				"createDate": "2023-09-02T16:20:23.000Z"
 			}
 		},
 		{
@@ -572,7 +608,8 @@
 				"altitude": 2254.7,
 				"bearing": 269.3096618357488,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 49.jpeg"
+				"filename": "sierras - 49.jpeg",
+				"createDate": "2023-09-06T18:21:51.000Z"
 			}
 		},
 		{
@@ -588,7 +625,8 @@
 				"altitude": 3000.5403458213254,
 				"bearing": 75.44607549430796,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 5.jpeg"
+				"filename": "sierras - 5.jpeg",
+				"createDate": "2023-08-26T12:28:13.000Z"
 			}
 		},
 		{
@@ -604,7 +642,8 @@
 				"altitude": 2284.361716171617,
 				"bearing": 242.15995790581425,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 50.jpeg"
+				"filename": "sierras - 50.jpeg",
+				"createDate": "2023-09-07T10:45:48.000Z"
 			}
 		},
 		{
@@ -620,7 +659,8 @@
 				"altitude": 2479.35534591195,
 				"bearing": 202.84156050955414,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 51.jpeg"
+				"filename": "sierras - 51.jpeg",
+				"createDate": "2023-09-07T10:45:58.000Z"
 			}
 		},
 		{
@@ -636,23 +676,8 @@
 				"altitude": 2398.164464023495,
 				"bearing": 103.61071975497703,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 52.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-120.03611666666666,
-					38.85268055555556
-				]
-			},
-			"properties": {
-				"altitude": 2145.4460431654675,
-				"bearing": 10.37786865234375,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 54.jpeg"
+				"filename": "sierras - 52.jpeg",
+				"createDate": "2023-09-07T13:36:14.000Z"
 			}
 		},
 		{
@@ -668,7 +693,25 @@
 				"altitude": 1918.9986187845304,
 				"bearing": 298.54611211573234,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 53.jpeg"
+				"filename": "sierras - 53.jpeg",
+				"createDate": "2023-09-07T18:21:07.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-120.03611666666666,
+					38.85268055555556
+				]
+			},
+			"properties": {
+				"altitude": 2145.4460431654675,
+				"bearing": 10.37786865234375,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "sierras - 54.jpeg",
+				"createDate": "2023-09-07T20:00:41.000Z"
 			}
 		},
 		{
@@ -684,7 +727,8 @@
 				"altitude": 2196.6134699853587,
 				"bearing": 183.86330409356725,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 55.jpeg"
+				"filename": "sierras - 55.jpeg",
+				"createDate": "2023-09-09T17:36:24.000Z"
 			}
 		},
 		{
@@ -700,7 +744,8 @@
 				"altitude": 2144.0959752321983,
 				"bearing": 262.87113951011713,
 				"lens": "iPhone 14 Pro Max back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 56.jpeg"
+				"filename": "sierras - 56.jpeg",
+				"createDate": "2023-09-09T20:31:14.000Z"
 			}
 		},
 		{
@@ -716,7 +761,8 @@
 				"altitude": 3145.637130801688,
 				"bearing": 64.0662841796875,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "sierras - 6.jpeg"
+				"filename": "sierras - 6.jpeg",
+				"createDate": "2023-08-26T14:01:36.000Z"
 			}
 		},
 		{
@@ -732,23 +778,8 @@
 				"altitude": 3247.4697130712007,
 				"bearing": 53.138702392578125,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 7.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.14870555555557,
-					36.40839444444444
-				]
-			},
-			"properties": {
-				"altitude": 3363.339233038348,
-				"bearing": 134.00360100828232,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 8.jpeg"
+				"filename": "sierras - 7.jpeg",
+				"createDate": "2023-08-26T14:45:19.000Z"
 			}
 		},
 		{
@@ -764,7 +795,8 @@
 				"altitude": 2959.6,
 				"bearing": 48.32734674329502,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "sierras - 9.jpeg"
+				"filename": "sierras - 9.jpeg",
+				"createDate": "2023-08-26T18:49:24.000Z"
 			}
 		},
 		{
@@ -780,7 +812,25 @@
 				"altitude": 575.5177182368194,
 				"bearing": 173.8430709802028,
 				"lens": "iPhone 14 Pro Max front camera 2.69mm f/1.9",
-				"filename": "oregon - 1.jpeg"
+				"filename": "oregon - 1.jpeg",
+				"createDate": "2023-08-01T22:16:19.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.14870555555557,
+					36.40839444444444
+				]
+			},
+			"properties": {
+				"altitude": 3363.339233038348,
+				"bearing": 134.00360100828232,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "sierras - 8.jpeg",
+				"createDate": "2023-08-26T18:29:59.000Z"
 			}
 		},
 		{
@@ -796,7 +846,8 @@
 				"altitude": 1811.9,
 				"bearing": 23.218038563566537,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 10.jpeg"
+				"filename": "oregon - 10.jpeg",
+				"createDate": "2023-08-07T21:15:09.000Z"
 			}
 		},
 		{
@@ -812,7 +863,8 @@
 				"altitude": 1727.3574144486693,
 				"bearing": 335.82389830508475,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 11.jpeg"
+				"filename": "oregon - 11.jpeg",
+				"createDate": "2023-08-08T09:32:06.000Z"
 			}
 		},
 		{
@@ -828,7 +880,8 @@
 				"altitude": 1810.7720090293453,
 				"bearing": 340.47872943845715,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 12.jpeg"
+				"filename": "oregon - 12.jpeg",
+				"createDate": "2023-08-08T23:06:12.000Z"
 			}
 		},
 		{
@@ -844,23 +897,8 @@
 				"altitude": 1890.6,
 				"bearing": 14.28594970703125,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 13.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.81383611111112,
-					44.07204166666667
-				]
-			},
-			"properties": {
-				"altitude": 1843.1713004484304,
-				"bearing": 294.71279916753383,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 15.jpeg"
+				"filename": "oregon - 13.jpeg",
+				"createDate": "2023-08-08T23:38:50.000Z"
 			}
 		},
 		{
@@ -876,7 +914,25 @@
 				"altitude": 1716.0883084577115,
 				"bearing": 107.58298112144266,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 14.jpeg"
+				"filename": "oregon - 14.jpeg",
+				"createDate": "2023-08-09T00:07:35.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.81383611111112,
+					44.07204166666667
+				]
+			},
+			"properties": {
+				"altitude": 1843.1713004484304,
+				"bearing": 294.71279916753383,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 15.jpeg",
+				"createDate": "2023-08-09T00:10:05.000Z"
 			}
 		},
 		{
@@ -892,39 +948,8 @@
 				"altitude": 1735.611,
 				"bearing": 93.64700418021366,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 16.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.81822222222222,
-					44.08722222222222
-				]
-			},
-			"properties": {
-				"altitude": 1855.371835443038,
-				"bearing": 43.202842688508795,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 17.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.81816944444444,
-					44.08721666666667
-				]
-			},
-			"properties": {
-				"altitude": 1841.7134831460673,
-				"bearing": 5.273621559064231,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 18.jpeg"
+				"filename": "oregon - 16.jpeg",
+				"createDate": "2023-08-09T09:57:58.000Z"
 			}
 		},
 		{
@@ -940,7 +965,8 @@
 				"altitude": 1970.7438136826784,
 				"bearing": 111.93121911037892,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 19.jpeg"
+				"filename": "oregon - 19.jpeg",
+				"createDate": "2023-08-09T11:36:47.000Z"
 			}
 		},
 		{
@@ -955,7 +981,42 @@
 			"properties": {
 				"altitude": 574.606783919598,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 2.jpeg"
+				"filename": "oregon - 2.jpeg",
+				"createDate": "2023-08-03T00:24:01.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.81816944444444,
+					44.08721666666667
+				]
+			},
+			"properties": {
+				"altitude": 1841.7134831460673,
+				"bearing": 5.273621559064231,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 18.jpeg",
+				"createDate": "2023-08-09T10:47:53.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.81822222222222,
+					44.08722222222222
+				]
+			},
+			"properties": {
+				"altitude": 1855.371835443038,
+				"bearing": 43.202842688508795,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 17.jpeg",
+				"createDate": "2023-08-09T10:27:45.000Z"
 			}
 		},
 		{
@@ -971,39 +1032,8 @@
 				"altitude": 2014.9380733944954,
 				"bearing": 116.87596899224806,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 21.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.79258055555556,
-					44.190016666666665
-				]
-			},
-			"properties": {
-				"altitude": 2070.2603878116342,
-				"bearing": 91.57435993975903,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 23.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.80007222222221,
-					44.19029166666666
-				]
-			},
-			"properties": {
-				"altitude": 1992.693675889328,
-				"bearing": 106.0132350729433,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 22.jpeg"
+				"filename": "oregon - 21.jpeg",
+				"createDate": "2023-08-09T15:19:03.000Z"
 			}
 		},
 		{
@@ -1019,7 +1049,42 @@
 				"altitude": 2080.829261954262,
 				"bearing": 291.92788732394365,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 24.jpeg"
+				"filename": "oregon - 24.jpeg",
+				"createDate": "2023-08-09T17:07:44.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.79258055555556,
+					44.190016666666665
+				]
+			},
+			"properties": {
+				"altitude": 2070.2603878116342,
+				"bearing": 91.57435993975903,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 23.jpeg",
+				"createDate": "2023-08-09T17:04:49.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.80007222222221,
+					44.19029166666666
+				]
+			},
+			"properties": {
+				"altitude": 1992.693675889328,
+				"bearing": 106.0132350729433,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 22.jpeg",
+				"createDate": "2023-08-09T16:46:45.000Z"
 			}
 		},
 		{
@@ -1035,7 +1100,8 @@
 				"altitude": 2074.814207650273,
 				"bearing": 352.0150146484375,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 25.jpeg"
+				"filename": "oregon - 25.jpeg",
+				"createDate": "2023-08-09T17:11:19.000Z"
 			}
 		},
 		{
@@ -1051,39 +1117,8 @@
 				"altitude": 2079.597333333333,
 				"bearing": 333.0138244572277,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 26.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.77488055555555,
-					44.22622777777778
-				]
-			},
-			"properties": {
-				"altitude": 1849.8,
-				"bearing": 14.227316862660482,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 28.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.82886388888889,
-					44.28213611111111
-				]
-			},
-			"properties": {
-				"altitude": 1866.485345838218,
-				"bearing": 350.16708385481854,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 29.jpeg"
+				"filename": "oregon - 26.jpeg",
+				"createDate": "2023-08-09T17:13:44.000Z"
 			}
 		},
 		{
@@ -1099,7 +1134,42 @@
 				"altitude": 2075.4,
 				"bearing": 113.317626953125,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 27.jpeg"
+				"filename": "oregon - 27.jpeg",
+				"createDate": "2023-08-09T17:15:10.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.77488055555555,
+					44.22622777777778
+				]
+			},
+			"properties": {
+				"altitude": 1849.8,
+				"bearing": 14.227316862660482,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 28.jpeg",
+				"createDate": "2023-08-09T18:45:43.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.82886388888889,
+					44.28213611111111
+				]
+			},
+			"properties": {
+				"altitude": 1866.485345838218,
+				"bearing": 350.16708385481854,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 29.jpeg",
+				"createDate": "2023-08-09T23:21:43.000Z"
 			}
 		},
 		{
@@ -1115,7 +1185,8 @@
 				"altitude": 1882.4734219269103,
 				"bearing": 292.3438718059766,
 				"lens": "iPhone 14 Pro Max front camera 2.69mm f/1.9",
-				"filename": "oregon - 3.jpeg"
+				"filename": "oregon - 3.jpeg",
+				"createDate": "2023-08-03T15:03:44.000Z"
 			}
 		},
 		{
@@ -1131,7 +1202,8 @@
 				"altitude": 1436.3,
 				"bearing": 37.13287356321839,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 31.jpeg"
+				"filename": "oregon - 31.jpeg",
+				"createDate": "2023-08-10T12:48:51.000Z"
 			}
 		},
 		{
@@ -1147,7 +1219,8 @@
 				"altitude": 1312.0204081632653,
 				"bearing": 178.78711704634722,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 32.jpeg"
+				"filename": "oregon - 32.jpeg",
+				"createDate": "2023-08-10T15:16:30.000Z"
 			}
 		},
 		{
@@ -1163,7 +1236,8 @@
 				"altitude": 1462.3336141533277,
 				"bearing": 77.8448486328125,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 33.jpeg"
+				"filename": "oregon - 33.jpeg",
+				"createDate": "2023-08-10T16:03:44.000Z"
 			}
 		},
 		{
@@ -1179,7 +1253,8 @@
 				"altitude": 973.2122186495177,
 				"bearing": 1.585357666015625,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 34.jpeg"
+				"filename": "oregon - 34.jpeg",
+				"createDate": "2023-08-11T19:32:45.000Z"
 			}
 		},
 		{
@@ -1195,23 +1270,8 @@
 				"altitude": 1102.2320036680421,
 				"bearing": 225.86938493434693,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 35.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.71060833333334,
-					45.330619444444444
-				]
-			},
-			"properties": {
-				"altitude": 1806.7000343997247,
-				"bearing": 357.0453795379538,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 37.jpeg"
+				"filename": "oregon - 35.jpeg",
+				"createDate": "2023-08-11T23:01:54.000Z"
 			}
 		},
 		{
@@ -1227,7 +1287,8 @@
 				"altitude": 1099.0204262877442,
 				"bearing": 305.5309143686502,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 36.jpeg"
+				"filename": "oregon - 36.jpeg",
+				"createDate": "2023-08-12T17:06:13.000Z"
 			}
 		},
 		{
@@ -1243,7 +1304,8 @@
 				"altitude": 1659.6628664495115,
 				"bearing": 14.62997436935114,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 38.jpeg"
+				"filename": "oregon - 38.jpeg",
+				"createDate": "2023-08-15T14:28:08.000Z"
 			}
 		},
 		{
@@ -1259,7 +1321,25 @@
 				"altitude": 1474.7079245283019,
 				"bearing": 86.76385488537726,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 39.jpeg"
+				"filename": "oregon - 39.jpeg",
+				"createDate": "2023-08-15T16:44:24.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.71060833333334,
+					45.330619444444444
+				]
+			},
+			"properties": {
+				"altitude": 1806.7000343997247,
+				"bearing": 357.0453795379538,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 37.jpeg",
+				"createDate": "2023-08-14T18:13:03.000Z"
 			}
 		},
 		{
@@ -1275,23 +1355,8 @@
 				"altitude": 1448.2534090909091,
 				"bearing": 184.9873887240356,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 4.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.77651944444445,
-					45.37993888888889
-				]
-			},
-			"properties": {
-				"altitude": 1103.2,
-				"bearing": 37.51001742160279,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 41.jpeg"
+				"filename": "oregon - 4.jpeg",
+				"createDate": "2023-08-04T12:32:48.000Z"
 			}
 		},
 		{
@@ -1307,7 +1372,25 @@
 				"altitude": 1346.7667597765362,
 				"bearing": 199.91888412017167,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 40.jpeg"
+				"filename": "oregon - 40.jpeg",
+				"createDate": "2023-08-15T17:02:58.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.77651944444445,
+					45.37993888888889
+				]
+			},
+			"properties": {
+				"altitude": 1103.2,
+				"bearing": 37.51001742160279,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 41.jpeg",
+				"createDate": "2023-08-15T18:24:26.000Z"
 			}
 		},
 		{
@@ -1323,23 +1406,8 @@
 				"altitude": 1120.9101654846336,
 				"bearing": 27.10174560546875,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 43.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.85208055555555,
-					45.58103611111112
-				]
-			},
-			"properties": {
-				"altitude": 360.2557373046875,
-				"bearing": 109.24163822525597,
-				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "oregon - 46.jpeg"
+				"filename": "oregon - 43.jpeg",
+				"createDate": "2023-08-16T09:48:46.000Z"
 			}
 		},
 		{
@@ -1355,7 +1423,8 @@
 				"altitude": 1237.3686826843414,
 				"bearing": 309.09295612009237,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 44.jpeg"
+				"filename": "oregon - 44.jpeg",
+				"createDate": "2023-08-16T10:49:42.000Z"
 			}
 		},
 		{
@@ -1371,7 +1440,25 @@
 				"altitude": 1328.8,
 				"bearing": 356.47189349112426,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 45.jpeg"
+				"filename": "oregon - 45.jpeg",
+				"createDate": "2023-08-16T16:03:20.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.85208055555555,
+					45.58103611111112
+				]
+			},
+			"properties": {
+				"altitude": 360.2557373046875,
+				"bearing": 109.24163822525597,
+				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
+				"filename": "oregon - 46.jpeg",
+				"createDate": "2023-08-16T20:55:13.000Z"
 			}
 		},
 		{
@@ -1387,7 +1474,8 @@
 				"altitude": 350.7641646489104,
 				"bearing": 3.70318603515625,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 47.jpeg"
+				"filename": "oregon - 47.jpeg",
+				"createDate": "2023-08-16T21:04:06.000Z"
 			}
 		},
 		{
@@ -1403,7 +1491,8 @@
 				"altitude": 396.2714592274678,
 				"bearing": 317.15946985891406,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 48.jpeg"
+				"filename": "oregon - 48.jpeg",
+				"createDate": "2023-08-16T21:09:29.000Z"
 			}
 		},
 		{
@@ -1419,7 +1508,8 @@
 				"altitude": 268.4699197860963,
 				"bearing": 219.9781643227239,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 49.jpeg"
+				"filename": "oregon - 49.jpeg",
+				"createDate": "2023-08-16T21:28:03.000Z"
 			}
 		},
 		{
@@ -1435,23 +1525,8 @@
 				"altitude": 1270.2735949098621,
 				"bearing": 297.77885462555065,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "oregon - 5.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.89490555555557,
-					45.62401111111111
-				]
-			},
-			"properties": {
-				"altitude": 152.03905126976522,
-				"bearing": 316.7706302794022,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 50.jpeg"
+				"filename": "oregon - 5.jpeg",
+				"createDate": "2023-08-05T18:38:56.000Z"
 			}
 		},
 		{
@@ -1467,7 +1542,8 @@
 				"altitude": 149.00201531640468,
 				"bearing": 151.704185520362,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 51.jpeg"
+				"filename": "oregon - 51.jpeg",
+				"createDate": "2023-08-16T22:57:03.000Z"
 			}
 		},
 		{
@@ -1475,47 +1551,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-121.89505000000001,
-					45.668863888888886
+					-121.89490555555557,
+					45.62401111111111
 				]
 			},
 			"properties": {
-				"altitude": 31.455803134182176,
-				"bearing": 352.16476462196863,
+				"altitude": 152.03905126976522,
+				"bearing": 316.7706302794022,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 54.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.8959888888889,
-					45.66529444444444
-				]
-			},
-			"properties": {
-				"altitude": 36.72596448254746,
-				"bearing": 359.17166123778503,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 53.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.89621666666667,
-					45.66836111111111
-				]
-			},
-			"properties": {
-				"altitude": 26.898965093843184,
-				"bearing": 228.83285509325682,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 55.jpeg"
+				"filename": "oregon - 50.jpeg",
+				"createDate": "2023-08-16T22:53:42.000Z"
 			}
 		},
 		{
@@ -1531,7 +1576,59 @@
 				"altitude": 54.05677074636834,
 				"bearing": 76.00961281708945,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 52.jpeg"
+				"filename": "oregon - 52.jpeg",
+				"createDate": "2023-08-17T00:26:22.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.8959888888889,
+					45.66529444444444
+				]
+			},
+			"properties": {
+				"altitude": 36.72596448254746,
+				"bearing": 359.17166123778503,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 53.jpeg",
+				"createDate": "2023-08-17T14:04:20.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.89505000000001,
+					45.668863888888886
+				]
+			},
+			"properties": {
+				"altitude": 31.455803134182176,
+				"bearing": 352.16476462196863,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 54.jpeg",
+				"createDate": "2023-08-17T21:27:53.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.89621666666667,
+					45.66836111111111
+				]
+			},
+			"properties": {
+				"altitude": 26.898965093843184,
+				"bearing": 228.83285509325682,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 55.jpeg",
+				"createDate": "2023-08-18T14:56:48.000Z"
 			}
 		},
 		{
@@ -1547,7 +1644,8 @@
 				"altitude": 13.143202782398307,
 				"bearing": 304.30426045016077,
 				"lens": "iPhone 14 Pro Max back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 56.jpeg"
+				"filename": "oregon - 56.jpeg",
+				"createDate": "2023-08-19T04:42:31.000Z"
 			}
 		},
 		{
@@ -1563,23 +1661,8 @@
 				"altitude": 2143.741509433962,
 				"bearing": 342.18008415147267,
 				"lens": "iPhone 14 Pro Max back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 6.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-122.00351666666667,
-					43.63203888888889
-				]
-			},
-			"properties": {
-				"altitude": 1850.1496110113703,
-				"bearing": 282.10498046875,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 8.jpeg"
+				"filename": "oregon - 6.jpeg",
+				"createDate": "2023-08-06T14:53:38.000Z"
 			}
 		},
 		{
@@ -1595,7 +1678,25 @@
 				"altitude": 1778.2855436081243,
 				"bearing": 257.5386046511628,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 7.jpeg"
+				"filename": "oregon - 7.jpeg",
+				"createDate": "2023-08-07T12:48:23.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-122.00351666666667,
+					43.63203888888889
+				]
+			},
+			"properties": {
+				"altitude": 1850.1496110113703,
+				"bearing": 282.10498046875,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "oregon - 8.jpeg",
+				"createDate": "2023-08-07T14:00:00.000Z"
 			}
 		},
 		{
@@ -1611,23 +1712,8 @@
 				"altitude": 1745.4876957494407,
 				"bearing": 47.59084323384526,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "oregon - 9.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-120.63459722222223,
-					39.565675
-				]
-			},
-			"properties": {
-				"altitude": 1276.400930232558,
-				"bearing": 162.7477110885046,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 10.jpeg"
+				"filename": "oregon - 9.jpeg",
+				"createDate": "2023-08-07T18:53:54.000Z"
 			}
 		},
 		{
@@ -1643,7 +1729,25 @@
 				"altitude": 1901.8358208955224,
 				"bearing": 16.35443115234375,
 				"lens": "iPhone 14 Pro Max back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 1.jpeg"
+				"filename": "norcal - 1.jpeg",
+				"createDate": "2023-06-14T18:33:05.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-120.63459722222223,
+					39.565675
+				]
+			},
+			"properties": {
+				"altitude": 1276.400930232558,
+				"bearing": 162.7477110885046,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "norcal - 10.jpeg",
+				"createDate": "2023-07-02T14:03:50.000Z"
 			}
 		},
 		{
@@ -1659,7 +1763,8 @@
 				"altitude": 622.1898569570872,
 				"bearing": 328.2842712842713,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "norcal - 11.jpeg"
+				"filename": "norcal - 11.jpeg",
+				"createDate": "2023-07-04T15:53:58.000Z"
 			}
 		},
 		{
@@ -1675,7 +1780,8 @@
 				"altitude": 759.6214028776978,
 				"bearing": 345.89111328125,
 				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "norcal - 12.jpeg"
+				"filename": "norcal - 12.jpeg",
+				"createDate": "2023-07-04T17:39:44.000Z"
 			}
 		},
 		{
@@ -1691,7 +1797,8 @@
 				"altitude": 1826.0291005291006,
 				"bearing": 127.02590931738914,
 				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "norcal - 13.jpeg"
+				"filename": "norcal - 13.jpeg",
+				"createDate": "2023-07-05T15:16:26.000Z"
 			}
 		},
 		{
@@ -1707,23 +1814,8 @@
 				"altitude": 2055.6275659824046,
 				"bearing": 348.2964169381107,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 14.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.44056666666667,
-					40.19018888888888
-				]
-			},
-			"properties": {
-				"altitude": 1754.5395256916995,
-				"bearing": 60.64265436479773,
-				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "norcal - 16.jpeg"
+				"filename": "norcal - 14.jpeg",
+				"createDate": "2023-07-06T14:16:13.000Z"
 			}
 		},
 		{
@@ -1739,7 +1831,8 @@
 				"altitude": 1889.6012526096033,
 				"bearing": 88.00964360587002,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 15.jpeg"
+				"filename": "norcal - 15.jpeg",
+				"createDate": "2023-07-06T17:59:54.000Z"
 			}
 		},
 		{
@@ -1747,15 +1840,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-121.36427222222221,
-					40.20843055555556
+					-121.44056666666667,
+					40.19018888888888
 				]
 			},
 			"properties": {
-				"altitude": 2256.466237942122,
-				"bearing": 168.70252971654983,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 17.jpeg"
+				"altitude": 1754.5395256916995,
+				"bearing": 60.64265436479773,
+				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
+				"filename": "norcal - 16.jpeg",
+				"createDate": "2023-07-06T19:54:26.000Z"
 			}
 		},
 		{
@@ -1771,7 +1865,8 @@
 				"altitude": 2193.8,
 				"bearing": 169.78399650196764,
 				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "norcal - 18.jpeg"
+				"filename": "norcal - 18.jpeg",
+				"createDate": "2023-07-07T10:14:43.000Z"
 			}
 		},
 		{
@@ -1787,7 +1882,8 @@
 				"altitude": 1624.0074696545284,
 				"bearing": 1.0889787664307382,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 19.jpeg"
+				"filename": "norcal - 19.jpeg",
+				"createDate": "2023-07-08T17:19:46.000Z"
 			}
 		},
 		{
@@ -1803,7 +1899,25 @@
 				"altitude": 2268.9643366619116,
 				"bearing": 198.04098518375986,
 				"lens": "iPhone 14 Pro Max back triple camera 9mm f/2.8",
-				"filename": "norcal - 2.jpeg"
+				"filename": "norcal - 2.jpeg",
+				"createDate": "2023-06-15T18:48:08.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.36427222222221,
+					40.20843055555556
+				]
+			},
+			"properties": {
+				"altitude": 2256.466237942122,
+				"bearing": 168.70252971654983,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "norcal - 17.jpeg",
+				"createDate": "2023-07-07T10:02:05.000Z"
 			}
 		},
 		{
@@ -1819,7 +1933,8 @@
 				"altitude": 1523.8148936170212,
 				"bearing": 279.8795166015625,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 20.jpeg"
+				"filename": "norcal - 20.jpeg",
+				"createDate": "2023-07-08T21:47:07.000Z"
 			}
 		},
 		{
@@ -1835,7 +1950,8 @@
 				"altitude": 1802.5802083333333,
 				"bearing": 46.99844357976654,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 21.jpeg"
+				"filename": "norcal - 21.jpeg",
+				"createDate": "2023-07-09T12:05:11.000Z"
 			}
 		},
 		{
@@ -1851,7 +1967,8 @@
 				"altitude": 1816.7931428571428,
 				"bearing": 281.8327024981075,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 22.jpeg"
+				"filename": "norcal - 22.jpeg",
+				"createDate": "2023-07-09T13:02:45.000Z"
 			}
 		},
 		{
@@ -1867,23 +1984,8 @@
 				"altitude": 1898.0138740661687,
 				"bearing": 56.12339400428265,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 23.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.45996111111111,
-					40.650816666666664
-				]
-			},
-			"properties": {
-				"altitude": 1388.0916179337232,
-				"bearing": 97.49095154699359,
-				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "norcal - 25.jpeg"
+				"filename": "norcal - 23.jpeg",
+				"createDate": "2023-07-09T15:46:59.000Z"
 			}
 		},
 		{
@@ -1899,7 +2001,25 @@
 				"altitude": 1989.7,
 				"bearing": 17.487274165897404,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 24.jpeg"
+				"filename": "norcal - 24.jpeg",
+				"createDate": "2023-07-09T17:54:01.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.45996111111111,
+					40.650816666666664
+				]
+			},
+			"properties": {
+				"altitude": 1388.0916179337232,
+				"bearing": 97.49095154699359,
+				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
+				"filename": "norcal - 25.jpeg",
+				"createDate": "2023-07-10T15:12:20.000Z"
 			}
 		},
 		{
@@ -1915,7 +2035,8 @@
 				"altitude": 1482.0167938931297,
 				"bearing": 268.62139917695475,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 27.jpeg"
+				"filename": "norcal - 27.jpeg",
+				"createDate": "2023-07-11T17:32:47.000Z"
 			}
 		},
 		{
@@ -1931,7 +2052,8 @@
 				"altitude": 1326.1291469194314,
 				"bearing": 297.33053582956745,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 26.jpeg"
+				"filename": "norcal - 26.jpeg",
+				"createDate": "2023-07-11T11:28:09.000Z"
 			}
 		},
 		{
@@ -1947,7 +2069,8 @@
 				"altitude": 1230.360430950049,
 				"bearing": 322.71881060116357,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 29.jpeg"
+				"filename": "norcal - 29.jpeg",
+				"createDate": "2023-07-12T00:16:07.000Z"
 			}
 		},
 		{
@@ -1963,7 +2086,8 @@
 				"altitude": 1249.3411214953271,
 				"bearing": 310.9790343074968,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 28.jpeg"
+				"filename": "norcal - 28.jpeg",
+				"createDate": "2023-07-11T23:22:45.000Z"
 			}
 		},
 		{
@@ -1979,7 +2103,8 @@
 				"altitude": 1120.7159793814433,
 				"bearing": 311.94038383013475,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 30.jpeg"
+				"filename": "norcal - 30.jpeg",
+				"createDate": "2023-07-12T00:35:24.000Z"
 			}
 		},
 		{
@@ -1995,7 +2120,8 @@
 				"altitude": 1895.64039408867,
 				"bearing": 301.6914366595895,
 				"lens": "iPhone 14 Pro Max back triple camera 9mm f/2.8",
-				"filename": "norcal - 3.jpeg"
+				"filename": "norcal - 3.jpeg",
+				"createDate": "2023-06-22T18:40:34.000Z"
 			}
 		},
 		{
@@ -2011,7 +2137,8 @@
 				"altitude": 1056.5199386503068,
 				"bearing": 343.42620865139946,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 31.jpeg"
+				"filename": "norcal - 31.jpeg",
+				"createDate": "2023-07-12T11:49:28.000Z"
 			}
 		},
 		{
@@ -2027,7 +2154,8 @@
 				"altitude": 1017.6,
 				"bearing": 358.23126201153104,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 32.jpeg"
+				"filename": "norcal - 32.jpeg",
+				"createDate": "2023-07-12T12:22:35.000Z"
 			}
 		},
 		{
@@ -2043,23 +2171,8 @@
 				"altitude": 908.5491251682369,
 				"bearing": 226.22877511341542,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "norcal - 33.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.54733333333333,
-					40.93704722222222
-				]
-			},
-			"properties": {
-				"altitude": 912.246536072623,
-				"bearing": 55.771057094403616,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 34.jpeg"
+				"filename": "norcal - 33.jpeg",
+				"createDate": "2023-07-12T14:04:57.000Z"
 			}
 		},
 		{
@@ -2075,7 +2188,25 @@
 				"altitude": 857.3531034482759,
 				"bearing": 351.5686947988224,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 35.jpeg"
+				"filename": "norcal - 35.jpeg",
+				"createDate": "2023-07-13T21:01:49.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.54733333333333,
+					40.93704722222222
+				]
+			},
+			"properties": {
+				"altitude": 912.246536072623,
+				"bearing": 55.771057094403616,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "norcal - 34.jpeg",
+				"createDate": "2023-07-12T14:25:59.000Z"
 			}
 		},
 		{
@@ -2091,23 +2222,8 @@
 				"altitude": 785.5238907849829,
 				"bearing": 198.41895294897282,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 36.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.79919444444444,
-					41.07958888888889
-				]
-			},
-			"properties": {
-				"altitude": 1626.2943037974683,
-				"bearing": 289.897582697201,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 38.jpeg"
+				"filename": "norcal - 36.jpeg",
+				"createDate": "2023-07-14T10:21:53.000Z"
 			}
 		},
 		{
@@ -2123,7 +2239,41 @@
 				"altitude": 983.4,
 				"bearing": 155.52598566308242,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 37.jpeg"
+				"filename": "norcal - 37.jpeg",
+				"createDate": "2023-07-14T15:19:26.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.79919444444444,
+					41.07958888888889
+				]
+			},
+			"properties": {
+				"altitude": 1626.2943037974683,
+				"bearing": 289.897582697201,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "norcal - 38.jpeg",
+				"createDate": "2023-07-15T00:30:17.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.7746361111111,
+					41.11888611111111
+				]
+			},
+			"properties": {
+				"altitude": 1533.1526232114468,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "norcal - 39.jpeg",
+				"createDate": "2023-07-15T12:08:46.000Z"
 			}
 		},
 		{
@@ -2139,54 +2289,8 @@
 				"altitude": 1908.9986504723347,
 				"bearing": 299.20361328125,
 				"lens": "iPhone 14 Pro Max back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 4.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.7746361111111,
-					41.11888611111111
-				]
-			},
-			"properties": {
-				"altitude": 1533.1526232114468,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 39.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.85636944444444,
-					41.17468611111111
-				]
-			},
-			"properties": {
-				"altitude": 1832.320024198427,
-				"bearing": 310.2723239046034,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 41.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-121.89047222222223,
-					41.17761944444444
-				]
-			},
-			"properties": {
-				"altitude": 1643.5872033023736,
-				"bearing": 356.326171875,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 43.jpeg"
+				"filename": "norcal - 4.jpeg",
+				"createDate": "2023-06-24T15:52:49.000Z"
 			}
 		},
 		{
@@ -2202,7 +2306,8 @@
 				"altitude": 1842.8062397372742,
 				"bearing": 171.68065623807706,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 42.jpeg"
+				"filename": "norcal - 42.jpeg",
+				"createDate": "2023-07-15T20:24:14.000Z"
 			}
 		},
 		{
@@ -2218,7 +2323,42 @@
 				"altitude": 1613.6,
 				"bearing": 324.9721068249258,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 40.jpeg"
+				"filename": "norcal - 40.jpeg",
+				"createDate": "2023-07-15T13:41:07.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.85636944444444,
+					41.17468611111111
+				]
+			},
+			"properties": {
+				"altitude": 1832.320024198427,
+				"bearing": 310.2723239046034,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "norcal - 41.jpeg",
+				"createDate": "2023-07-15T19:13:58.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-121.89047222222223,
+					41.17761944444444
+				]
+			},
+			"properties": {
+				"altitude": 1643.5872033023736,
+				"bearing": 356.326171875,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "norcal - 43.jpeg",
+				"createDate": "2023-07-15T21:28:15.000Z"
 			}
 		},
 		{
@@ -2234,7 +2374,8 @@
 				"altitude": 1631.2586989409986,
 				"bearing": 184.00215146299485,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "norcal - 44.jpeg"
+				"filename": "norcal - 44.jpeg",
+				"createDate": "2023-07-16T11:23:29.000Z"
 			}
 		},
 		{
@@ -2249,23 +2390,8 @@
 			"properties": {
 				"altitude": 727.1082762912259,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "norcal - 46.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-122.124,
-					41.11540277777778
-				]
-			},
-			"properties": {
-				"altitude": 1078.9304589707929,
-				"bearing": 63.828506530380466,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 47.jpeg"
+				"filename": "norcal - 46.jpeg",
+				"createDate": "2023-07-16T17:17:16.000Z"
 			}
 		},
 		{
@@ -2281,7 +2407,8 @@
 				"altitude": 1039.7,
 				"bearing": 65.27606201941258,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 45.jpeg"
+				"filename": "norcal - 45.jpeg",
+				"createDate": "2023-07-16T15:08:21.000Z"
 			}
 		},
 		{
@@ -2289,31 +2416,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-122.17073055555556,
-					41.14241388888889
+					-122.124,
+					41.11540277777778
 				]
 			},
 			"properties": {
-				"altitude": 815.0400172117039,
-				"bearing": 81.34298707515558,
-				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "norcal - 49.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-122.25121388888888,
-					41.151405555555556
-				]
-			},
-			"properties": {
-				"altitude": 1316.8100987925357,
-				"bearing": 0.91851806640625,
+				"altitude": 1078.9304589707929,
+				"bearing": 63.828506530380466,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 50.jpeg"
+				"filename": "norcal - 47.jpeg",
+				"createDate": "2023-07-17T12:58:42.000Z"
 			}
 		},
 		{
@@ -2329,7 +2441,8 @@
 				"altitude": 2520.2,
 				"bearing": 298.20773313115996,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 5.jpeg"
+				"filename": "norcal - 5.jpeg",
+				"createDate": "2023-06-29T23:02:56.000Z"
 			}
 		},
 		{
@@ -2337,15 +2450,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-122.29354166666667,
-					41.16070277777778
+					-122.17073055555556,
+					41.14241388888889
 				]
 			},
 			"properties": {
-				"altitude": 627.1465465465466,
-				"bearing": 345.6609651802077,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 51.jpeg"
+				"altitude": 815.0400172117039,
+				"bearing": 81.34298707515558,
+				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
+				"filename": "norcal - 49.jpeg",
+				"createDate": "2023-07-17T17:01:22.000Z"
 			}
 		},
 		{
@@ -2353,15 +2467,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-122.31005,
-					41.316424999999995
+					-122.25121388888888,
+					41.151405555555556
 				]
 			},
 			"properties": {
-				"altitude": 1105.3550212164073,
-				"bearing": 60.869964596689314,
+				"altitude": 1316.8100987925357,
+				"bearing": 0.91851806640625,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 52.jpeg"
+				"filename": "norcal - 50.jpeg",
+				"createDate": "2023-07-18T00:27:25.000Z"
 			}
 		},
 		{
@@ -2377,7 +2492,8 @@
 				"altitude": 1165.700296735905,
 				"bearing": 54.230041532071986,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 53.jpeg"
+				"filename": "norcal - 53.jpeg",
+				"createDate": "2023-07-20T20:00:00.000Z"
 			}
 		},
 		{
@@ -2393,7 +2509,8 @@
 				"altitude": 1932.6388443017656,
 				"bearing": 81.10128785241908,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 54.jpeg"
+				"filename": "norcal - 54.jpeg",
+				"createDate": "2023-07-21T00:29:06.000Z"
 			}
 		},
 		{
@@ -2401,15 +2518,33 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-122.50699722222222,
-					41.200813888888895
+					-122.29354166666667,
+					41.16070277777778
 				]
 			},
 			"properties": {
-				"altitude": 2022.8086642599278,
-				"bearing": 63.18951418951419,
+				"altitude": 627.1465465465466,
+				"bearing": 345.6609651802077,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 55.jpeg"
+				"filename": "norcal - 51.jpeg",
+				"createDate": "2023-07-18T11:25:38.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-122.31005,
+					41.316424999999995
+				]
+			},
+			"properties": {
+				"altitude": 1105.3550212164073,
+				"bearing": 60.869964596689314,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "norcal - 52.jpeg",
+				"createDate": "2023-07-19T16:59:32.000Z"
 			}
 		},
 		{
@@ -2425,7 +2560,8 @@
 				"altitude": 2141.875166002656,
 				"bearing": 351.5937193326791,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 56.jpeg"
+				"filename": "norcal - 56.jpeg",
+				"createDate": "2023-07-21T18:09:11.000Z"
 			}
 		},
 		{
@@ -2433,31 +2569,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-122.69814166666667,
-					41.27614166666667
+					-122.50699722222222,
+					41.200813888888895
 				]
 			},
 			"properties": {
-				"altitude": 1610.5221799746514,
-				"bearing": 348.2950741272119,
+				"altitude": 2022.8086642599278,
+				"bearing": 63.18951418951419,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 58.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-122.73039166666666,
-					41.242808333333336
-				]
-			},
-			"properties": {
-				"altitude": 1980.2146507666098,
-				"bearing": 165.91403955355395,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 59.jpeg"
+				"filename": "norcal - 55.jpeg",
+				"createDate": "2023-07-21T12:37:34.000Z"
 			}
 		},
 		{
@@ -2473,7 +2594,8 @@
 				"altitude": 2211.4753914988814,
 				"bearing": 50.611602753195676,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 57.jpeg"
+				"filename": "norcal - 57.jpeg",
+				"createDate": "2023-07-21T19:39:11.000Z"
 			}
 		},
 		{
@@ -2481,15 +2603,33 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-122.777,
-					41.22606388888889
+					-122.73039166666666,
+					41.242808333333336
 				]
 			},
 			"properties": {
-				"altitude": 2142.7055520898316,
-				"bearing": 175.10225669957686,
+				"altitude": 1980.2146507666098,
+				"bearing": 165.91403955355395,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 61.jpeg"
+				"filename": "norcal - 59.jpeg",
+				"createDate": "2023-07-22T22:14:04.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-122.69814166666667,
+					41.27614166666667
+				]
+			},
+			"properties": {
+				"altitude": 1610.5221799746514,
+				"bearing": 348.2950741272119,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "norcal - 58.jpeg",
+				"createDate": "2023-07-22T17:43:59.000Z"
 			}
 		},
 		{
@@ -2505,7 +2645,8 @@
 				"altitude": 2130.8661016949154,
 				"bearing": 199.06346128990566,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 60.jpeg"
+				"filename": "norcal - 60.jpeg",
+				"createDate": "2023-07-23T10:07:26.000Z"
 			}
 		},
 		{
@@ -2513,15 +2654,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-122.95387222222223,
-					41.264113888888886
+					-122.777,
+					41.22606388888889
 				]
 			},
 			"properties": {
-				"altitude": 2152.206563706564,
-				"bearing": 297.27601585728445,
+				"altitude": 2142.7055520898316,
+				"bearing": 175.10225669957686,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 62.jpeg"
+				"filename": "norcal - 61.jpeg",
+				"createDate": "2023-07-23T10:18:35.000Z"
 			}
 		},
 		{
@@ -2537,7 +2679,8 @@
 				"altitude": 2047.8287560581584,
 				"bearing": 60.551971435546875,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 63.jpeg"
+				"filename": "norcal - 63.jpeg",
+				"createDate": "2023-07-24T09:37:50.000Z"
 			}
 		},
 		{
@@ -2553,7 +2696,25 @@
 				"altitude": 1942.751633986928,
 				"bearing": 70.56561281940233,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 64.jpeg"
+				"filename": "norcal - 64.jpeg",
+				"createDate": "2023-07-24T10:03:04.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-122.95387222222223,
+					41.264113888888886
+				]
+			},
+			"properties": {
+				"altitude": 2152.206563706564,
+				"bearing": 297.27601585728445,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "norcal - 62.jpeg",
+				"createDate": "2023-07-23T21:43:40.000Z"
 			}
 		},
 		{
@@ -2569,7 +2730,8 @@
 				"altitude": 1957.0897832817338,
 				"bearing": 221.15200813421453,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 65.jpeg"
+				"filename": "norcal - 65.jpeg",
+				"createDate": "2023-07-24T10:53:28.000Z"
 			}
 		},
 		{
@@ -2585,7 +2747,8 @@
 				"altitude": 2129.517087667162,
 				"bearing": 67.41571050308914,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 66.jpeg"
+				"filename": "norcal - 66.jpeg",
+				"createDate": "2023-07-24T12:32:42.000Z"
 			}
 		},
 		{
@@ -2601,7 +2764,8 @@
 				"altitude": 893.828447339848,
 				"bearing": 150.474513925381,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "norcal - 67.jpeg"
+				"filename": "norcal - 67.jpeg",
+				"createDate": "2023-07-25T00:23:49.000Z"
 			}
 		},
 		{
@@ -2617,7 +2781,8 @@
 				"altitude": 1951.3582317073171,
 				"bearing": 286.5205688166582,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 68.jpeg"
+				"filename": "norcal - 68.jpeg",
+				"createDate": "2023-07-26T10:03:06.000Z"
 			}
 		},
 		{
@@ -2633,7 +2798,8 @@
 				"altitude": 2064.2385057471265,
 				"bearing": 270.7360992301112,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 69.jpeg"
+				"filename": "norcal - 69.jpeg",
+				"createDate": "2023-07-26T10:58:23.000Z"
 			}
 		},
 		{
@@ -2649,23 +2815,8 @@
 				"altitude": 1944.2812248186947,
 				"bearing": 319.4819182389937,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 70.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-123.24050277777778,
-					41.72527777777778
-				]
-			},
-			"properties": {
-				"altitude": 941.9,
-				"bearing": 119.6006012024048,
-				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "norcal - 72.jpeg"
+				"filename": "norcal - 70.jpeg",
+				"createDate": "2023-07-26T19:20:42.000Z"
 			}
 		},
 		{
@@ -2681,7 +2832,25 @@
 				"altitude": 2019.7337770382696,
 				"bearing": 288.4496307237814,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 71.jpeg"
+				"filename": "norcal - 71.jpeg",
+				"createDate": "2023-07-26T22:12:31.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-123.24050277777778,
+					41.72527777777778
+				]
+			},
+			"properties": {
+				"altitude": 941.9,
+				"bearing": 119.6006012024048,
+				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
+				"filename": "norcal - 72.jpeg",
+				"createDate": "2023-07-27T13:48:27.000Z"
 			}
 		},
 		{
@@ -2697,7 +2866,8 @@
 				"altitude": 369.9802855200544,
 				"bearing": 4.229278567667193,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 73.jpeg"
+				"filename": "norcal - 73.jpeg",
+				"createDate": "2023-07-27T19:24:28.000Z"
 			}
 		},
 		{
@@ -2713,7 +2883,8 @@
 				"altitude": 418.2454642475987,
 				"bearing": 36.660404212923424,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 74.jpeg"
+				"filename": "norcal - 74.jpeg",
+				"createDate": "2023-07-28T16:10:08.000Z"
 			}
 		},
 		{
@@ -2729,23 +2900,8 @@
 				"altitude": 1734.850210970464,
 				"bearing": 28.706422806113686,
 				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "norcal - 75.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-123.122925,
-					41.93892777777778
-				]
-			},
-			"properties": {
-				"altitude": 1713.1453524641297,
-				"bearing": 136.19369515762105,
-				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "norcal - 76.jpeg"
+				"filename": "norcal - 75.jpeg",
+				"createDate": "2023-07-29T13:24:08.000Z"
 			}
 		},
 		{
@@ -2761,7 +2917,25 @@
 				"altitude": 1915.593657086224,
 				"bearing": 230.89599609375,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 77.jpeg"
+				"filename": "norcal - 77.jpeg",
+				"createDate": "2023-07-30T09:49:00.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-123.122925,
+					41.93892777777778
+				]
+			},
+			"properties": {
+				"altitude": 1713.1453524641297,
+				"bearing": 136.19369515762105,
+				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
+				"filename": "norcal - 76.jpeg",
+				"createDate": "2023-07-29T18:09:32.000Z"
 			}
 		},
 		{
@@ -2777,7 +2951,8 @@
 				"altitude": 2043.0642076502731,
 				"bearing": 63.523063781321184,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 79.jpeg"
+				"filename": "norcal - 79.jpeg",
+				"createDate": "2023-07-30T10:41:09.000Z"
 			}
 		},
 		{
@@ -2793,23 +2968,8 @@
 				"altitude": 1831.6,
 				"bearing": 219.07594291539246,
 				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "norcal - 81.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-122.87358888888888,
-					42.032938888888886
-				]
-			},
-			"properties": {
-				"altitude": 2084.579283887468,
-				"bearing": 292.7403869703649,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 83.jpeg"
+				"filename": "norcal - 81.jpeg",
+				"createDate": "2023-07-30T18:31:31.000Z"
 			}
 		},
 		{
@@ -2825,7 +2985,25 @@
 				"altitude": 2140.9695945945946,
 				"bearing": 17.168304448811863,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 82.jpeg"
+				"filename": "norcal - 82.jpeg",
+				"createDate": "2023-07-30T20:21:38.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-122.87358888888888,
+					42.032938888888886
+				]
+			},
+			"properties": {
+				"altitude": 2084.579283887468,
+				"bearing": 292.7403869703649,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "norcal - 83.jpeg",
+				"createDate": "2023-07-30T20:49:35.000Z"
 			}
 		},
 		{
@@ -2841,7 +3019,8 @@
 				"altitude": 1916.3,
 				"bearing": 127.87900552486188,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 84.jpeg"
+				"filename": "norcal - 84.jpeg",
+				"createDate": "2023-07-31T09:56:25.000Z"
 			}
 		},
 		{
@@ -2857,7 +3036,8 @@
 				"altitude": 2121.6,
 				"bearing": 70.39019767126997,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 85.jpeg"
+				"filename": "norcal - 85.jpeg",
+				"createDate": "2023-07-31T13:12:00.000Z"
 			}
 		},
 		{
@@ -2873,7 +3053,8 @@
 				"altitude": 1392.529177718833,
 				"bearing": 246.53588850174216,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "norcal - 9.jpeg"
+				"filename": "norcal - 9.jpeg",
+				"createDate": "2023-07-01T21:25:47.000Z"
 			}
 		},
 		{
@@ -2886,23 +3067,8 @@
 				]
 			},
 			"properties": {
-				"filename": "norcal - 86.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.60216388888888,
-					33.07812222222223
-				]
-			},
-			"properties": {
-				"altitude": 1285.3160270880362,
-				"bearing": 91.5219421101774,
-				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 11.jpeg"
+				"filename": "norcal - 86.jpeg",
+				"createDate": "2023-08-01T12:21:59.000Z"
 			}
 		},
 		{
@@ -2918,39 +3084,8 @@
 				"altitude": 8.98869752421959,
 				"bearing": 296.0552367288379,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 1.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.53076944444445,
-					33.15524722222222
-				]
-			},
-			"properties": {
-				"altitude": 1056.5,
-				"bearing": 349.4319153266843,
-				"lens": "iPhone 14 Pro back dual camera 9mm f/2.8",
-				"filename": "desert - 13.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.49482777777777,
-					33.13637222222222
-				]
-			},
-			"properties": {
-				"altitude": 1021.677432885906,
-				"bearing": 230.85545335085413,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 12.jpeg"
+				"filename": "desert - 1.jpeg",
+				"createDate": "2023-03-26T23:53:36.000Z"
 			}
 		},
 		{
@@ -2966,7 +3101,42 @@
 				"altitude": 1468.042226487524,
 				"bearing": 89.46463012505444,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 10.jpeg"
+				"filename": "desert - 10.jpeg",
+				"createDate": "2023-03-31T22:21:34.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.60216388888888,
+					33.07812222222223
+				]
+			},
+			"properties": {
+				"altitude": 1285.3160270880362,
+				"bearing": 91.5219421101774,
+				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
+				"filename": "desert - 11.jpeg",
+				"createDate": "2023-04-03T18:57:03.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.49482777777777,
+					33.13637222222222
+				]
+			},
+			"properties": {
+				"altitude": 1021.677432885906,
+				"bearing": 230.85545335085413,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 12.jpeg",
+				"createDate": "2023-04-04T21:17:40.000Z"
 			}
 		},
 		{
@@ -2982,7 +3152,8 @@
 				"altitude": 1036.9121638924455,
 				"bearing": 198.94396211523284,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 14.jpeg"
+				"filename": "desert - 14.jpeg",
+				"createDate": "2023-04-05T15:39:15.000Z"
 			}
 		},
 		{
@@ -2998,7 +3169,8 @@
 				"altitude": 1232.450028232637,
 				"bearing": 6.878903386600205,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 15.jpeg"
+				"filename": "desert - 15.jpeg",
+				"createDate": "2023-04-06T17:49:53.000Z"
 			}
 		},
 		{
@@ -3014,7 +3186,8 @@
 				"altitude": 1128.0289901242434,
 				"bearing": 104.55401429171921,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 16.jpeg"
+				"filename": "desert - 16.jpeg",
+				"createDate": "2023-04-07T13:20:28.000Z"
 			}
 		},
 		{
@@ -3022,207 +3195,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-116.60833055555555,
-					33.349269444444445
+					-116.53076944444445,
+					33.15524722222222
 				]
 			},
 			"properties": {
-				"altitude": 1532.8,
-				"bearing": 348.9836730928881,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 18.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.46699444444445,
-					32.58972222222222
-				]
-			},
-			"properties": {
-				"altitude": 899.4,
-				"bearing": 258.36276223776224,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 2.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.58782222222221,
-					33.514430555555556
-				]
-			},
-			"properties": {
-				"altitude": 1343.9585084033613,
-				"bearing": 187.64876543209877,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 19.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.59135555555555,
-					33.56922777777778
-				]
-			},
-			"properties": {
-				"altitude": 1456.4177693761815,
-				"bearing": 219.9461821527139,
-				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 20.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.71345555555556,
-					33.74539166666667
-				]
-			},
-			"properties": {
-				"altitude": 1644.6497297297296,
-				"bearing": 338.30409233997904,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 21.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.62190277777778,
-					33.70794166666667
-				]
-			},
-			"properties": {
-				"altitude": 2148.1337837837837,
-				"bearing": 311.877685546875,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 22.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.69994444444445,
-					33.753375
-				]
-			},
-			"properties": {
-				"altitude": 1763.085545722714,
-				"bearing": 47.9684752955441,
-				"lens": "iPhone 14 Pro Max back triple camera 6.86mm f/1.78",
-				"filename": "desert - 23.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.69993611111111,
-					33.75351388888889
-				]
-			},
-			"properties": {
-				"altitude": 1760.6952526799387,
-				"bearing": 119.02764127764128,
-				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 24.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.68469166666667,
-					33.94962222222222
-				]
-			},
-			"properties": {
-				"altitude": 592.3544921875,
-				"bearing": 48.908538829591464,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 27.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.69487777777778,
-					33.925155555555556
-				]
-			},
-			"properties": {
-				"altitude": 412.598,
-				"bearing": 345.8131710808876,
-				"lens": "iPhone 14 Pro Max back triple camera 6.86mm f/1.78",
-				"filename": "desert - 26.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.67085277777778,
-					34.010330555555555
-				]
-			},
-			"properties": {
-				"altitude": 725.4193912063134,
-				"bearing": 303.3707274320771,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 28.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.73764166666666,
-					34.145375
-				]
-			},
-			"properties": {
-				"altitude": 2588.7,
-				"bearing": 143.44340505144996,
-				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 29.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.47042222222223,
-					32.60091388888889
-				]
-			},
-			"properties": {
-				"altitude": 817.6,
-				"bearing": 200.01126098255168,
-				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 3.jpeg"
+				"altitude": 1056.5,
+				"bearing": 349.4319153266843,
+				"lens": "iPhone 14 Pro back dual camera 9mm f/2.8",
+				"filename": "desert - 13.jpeg",
+				"createDate": "2023-04-05T14:00:13.000Z"
 			}
 		},
 		{
@@ -3238,7 +3220,8 @@
 				"altitude": 1075.7552897884084,
 				"bearing": 42.8178100863244,
 				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 17.jpeg"
+				"filename": "desert - 17.jpeg",
+				"createDate": "2023-04-07T17:38:34.000Z"
 			}
 		},
 		{
@@ -3246,15 +3229,220 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-116.82046388888888,
-					34.25528055555556
+					-116.60833055555555,
+					33.349269444444445
 				]
 			},
 			"properties": {
-				"altitude": 2090.494318181818,
-				"bearing": 264.3553467808787,
+				"altitude": 1532.8,
+				"bearing": 348.9836730928881,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 30.jpeg"
+				"filename": "desert - 18.jpeg",
+				"createDate": "2023-04-08T20:58:58.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.58782222222221,
+					33.514430555555556
+				]
+			},
+			"properties": {
+				"altitude": 1343.9585084033613,
+				"bearing": 187.64876543209877,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 19.jpeg",
+				"createDate": "2023-04-10T10:37:00.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.46699444444445,
+					32.58972222222222
+				]
+			},
+			"properties": {
+				"altitude": 899.4,
+				"bearing": 258.36276223776224,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 2.jpeg",
+				"createDate": "2023-03-27T14:36:50.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.59135555555555,
+					33.56922777777778
+				]
+			},
+			"properties": {
+				"altitude": 1456.4177693761815,
+				"bearing": 219.9461821527139,
+				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
+				"filename": "desert - 20.jpeg",
+				"createDate": "2023-04-10T15:49:23.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.69994444444445,
+					33.753375
+				]
+			},
+			"properties": {
+				"altitude": 1763.085545722714,
+				"bearing": 47.9684752955441,
+				"lens": "iPhone 14 Pro Max back triple camera 6.86mm f/1.78",
+				"filename": "desert - 23.jpeg",
+				"createDate": "2023-04-15T19:29:04.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.71345555555556,
+					33.74539166666667
+				]
+			},
+			"properties": {
+				"altitude": 1644.6497297297296,
+				"bearing": 338.30409233997904,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 21.jpeg",
+				"createDate": "2023-04-11T20:15:23.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.69993611111111,
+					33.75351388888889
+				]
+			},
+			"properties": {
+				"altitude": 1760.6952526799387,
+				"bearing": 119.02764127764128,
+				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
+				"filename": "desert - 24.jpeg",
+				"createDate": "2023-04-16T12:25:55.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.62190277777778,
+					33.70794166666667
+				]
+			},
+			"properties": {
+				"altitude": 2148.1337837837837,
+				"bearing": 311.877685546875,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 22.jpeg",
+				"createDate": "2023-04-14T10:17:32.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.69487777777778,
+					33.925155555555556
+				]
+			},
+			"properties": {
+				"altitude": 412.598,
+				"bearing": 345.8131710808876,
+				"lens": "iPhone 14 Pro Max back triple camera 6.86mm f/1.78",
+				"filename": "desert - 26.jpeg",
+				"createDate": "2023-04-22T18:57:50.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.68469166666667,
+					33.94962222222222
+				]
+			},
+			"properties": {
+				"altitude": 592.3544921875,
+				"bearing": 48.908538829591464,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 27.jpeg",
+				"createDate": "2023-04-22T20:45:28.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.73764166666666,
+					34.145375
+				]
+			},
+			"properties": {
+				"altitude": 2588.7,
+				"bearing": 143.44340505144996,
+				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
+				"filename": "desert - 29.jpeg",
+				"createDate": "2023-04-24T21:31:07.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.67085277777778,
+					34.010330555555555
+				]
+			},
+			"properties": {
+				"altitude": 725.4193912063134,
+				"bearing": 303.3707274320771,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 28.jpeg",
+				"createDate": "2023-04-23T10:39:39.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.47042222222223,
+					32.60091388888889
+				]
+			},
+			"properties": {
+				"altitude": 817.6,
+				"bearing": 200.01126098255168,
+				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
+				"filename": "desert - 3.jpeg",
+				"createDate": "2023-03-27T15:08:10.000Z"
 			}
 		},
 		{
@@ -3270,7 +3458,25 @@
 				"altitude": 2055.8634020618556,
 				"bearing": 168.2279663656182,
 				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 31.jpeg"
+				"filename": "desert - 31.jpeg",
+				"createDate": "2023-04-28T15:19:29.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.82046388888888,
+					34.25528055555556
+				]
+			},
+			"properties": {
+				"altitude": 2090.494318181818,
+				"bearing": 264.3553467808787,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 30.jpeg",
+				"createDate": "2023-04-27T23:14:38.000Z"
 			}
 		},
 		{
@@ -3286,7 +3492,8 @@
 				"altitude": 1997.6,
 				"bearing": 110.17359154929578,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 32.jpeg"
+				"filename": "desert - 32.jpeg",
+				"createDate": "2023-04-29T23:31:29.000Z"
 			}
 		},
 		{
@@ -3302,7 +3509,8 @@
 				"altitude": 1406.9,
 				"bearing": 185.14651493598862,
 				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 33.jpeg"
+				"filename": "desert - 33.jpeg",
+				"createDate": "2023-05-01T15:40:50.000Z"
 			}
 		},
 		{
@@ -3318,7 +3526,8 @@
 				"altitude": 1158.9645808736718,
 				"bearing": 325.3089447236181,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 34.jpeg"
+				"filename": "desert - 34.jpeg",
+				"createDate": "2023-05-01T21:38:39.000Z"
 			}
 		},
 		{
@@ -3334,7 +3543,8 @@
 				"altitude": 1066.1469979296066,
 				"bearing": 50.000885015998364,
 				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 35.jpeg"
+				"filename": "desert - 35.jpeg",
+				"createDate": "2023-05-02T10:53:11.000Z"
 			}
 		},
 		{
@@ -3350,7 +3560,8 @@
 				"altitude": 906.412,
 				"bearing": 64.76007082779991,
 				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 36.jpeg"
+				"filename": "desert - 36.jpeg",
+				"createDate": "2023-05-03T01:05:51.000Z"
 			}
 		},
 		{
@@ -3366,23 +3577,8 @@
 				"altitude": 972.6181818181818,
 				"bearing": 287.10432432432435,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 37.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-117.46616388888889,
-					34.30608055555555
-				]
-			},
-			"properties": {
-				"altitude": 920.7823033707865,
-				"bearing": 248.50747663551402,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 38.jpeg"
+				"filename": "desert - 37.jpeg",
+				"createDate": "2023-05-03T20:57:25.000Z"
 			}
 		},
 		{
@@ -3398,7 +3594,8 @@
 				"altitude": 1817.9267441860466,
 				"bearing": 20.666168224299067,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 39.jpeg"
+				"filename": "desert - 39.jpeg",
+				"createDate": "2023-05-05T20:57:01.000Z"
 			}
 		},
 		{
@@ -3406,15 +3603,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-117.75240277777777,
-					34.37328333333333
+					-117.46616388888889,
+					34.30608055555555
 				]
 			},
 			"properties": {
-				"altitude": 2003.0315789473684,
-				"bearing": 122.95394126738795,
-				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 41.jpeg"
+				"altitude": 920.7823033707865,
+				"bearing": 248.50747663551402,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 38.jpeg",
+				"createDate": "2023-05-04T15:07:47.000Z"
 			}
 		},
 		{
@@ -3430,71 +3628,8 @@
 				"altitude": 750.6312195121951,
 				"bearing": 68.0502624463178,
 				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 4.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-117.76719722222222,
-					34.37287222222222
-				]
-			},
-			"properties": {
-				"altitude": 2093.1823174080178,
-				"bearing": 119.4096794081381,
-				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 42.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-117.81143055555555,
-					34.348086111111115
-				]
-			},
-			"properties": {
-				"altitude": 2276.119191919192,
-				"bearing": 280.3970336565887,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 44.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-117.78066388888888,
-					34.36960277777778
-				]
-			},
-			"properties": {
-				"altitude": 2222.9500069242486,
-				"bearing": 159.67938237965487,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 43.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-117.9284888888889,
-					34.349583333333335
-				]
-			},
-			"properties": {
-				"altitude": 2105.3,
-				"bearing": 220.635009765625,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 46.jpeg"
+				"filename": "desert - 4.jpeg",
+				"createDate": "2023-03-27T16:17:59.000Z"
 			}
 		},
 		{
@@ -3510,7 +3645,93 @@
 				"altitude": 1797.8553459119496,
 				"bearing": 16.06607054148038,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 40.jpeg"
+				"filename": "desert - 40.jpeg",
+				"createDate": "2023-05-06T17:56:10.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-117.76719722222222,
+					34.37287222222222
+				]
+			},
+			"properties": {
+				"altitude": 2093.1823174080178,
+				"bearing": 119.4096794081381,
+				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
+				"filename": "desert - 42.jpeg",
+				"createDate": "2023-05-07T10:27:04.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-117.75240277777777,
+					34.37328333333333
+				]
+			},
+			"properties": {
+				"altitude": 2003.0315789473684,
+				"bearing": 122.95394126738795,
+				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
+				"filename": "desert - 41.jpeg",
+				"createDate": "2023-05-06T23:18:38.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-117.78066388888888,
+					34.36960277777778
+				]
+			},
+			"properties": {
+				"altitude": 2222.9500069242486,
+				"bearing": 159.67938237965487,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 43.jpeg",
+				"createDate": "2023-05-07T11:14:42.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-117.81143055555555,
+					34.348086111111115
+				]
+			},
+			"properties": {
+				"altitude": 2276.119191919192,
+				"bearing": 280.3970336565887,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 44.jpeg",
+				"createDate": "2023-05-07T14:31:25.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-117.9284888888889,
+					34.349583333333335
+				]
+			},
+			"properties": {
+				"altitude": 2105.3,
+				"bearing": 220.635009765625,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 46.jpeg",
+				"createDate": "2023-05-08T14:05:27.000Z"
 			}
 		},
 		{
@@ -3526,39 +3747,8 @@
 				"altitude": 1934.3,
 				"bearing": 9.498486516235554,
 				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "desert - 47.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.22634166666667,
-					34.37770833333333
-				]
-			},
-			"properties": {
-				"altitude": 1692.1,
-				"bearing": 113.94927971188476,
-				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "desert - 49.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.53275277777777,
-					32.65182222222222
-				]
-			},
-			"properties": {
-				"altitude": 957.7,
-				"bearing": 345.7040101845958,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 5.jpeg"
+				"filename": "desert - 47.jpeg",
+				"createDate": "2023-05-08T15:58:27.000Z"
 			}
 		},
 		{
@@ -3574,7 +3764,8 @@
 				"altitude": 1788.347536617843,
 				"bearing": 114.79511059371362,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 48.jpeg"
+				"filename": "desert - 48.jpeg",
+				"createDate": "2023-05-09T23:49:13.000Z"
 			}
 		},
 		{
@@ -3582,15 +3773,49 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-118.26614444444445,
-					34.438044444444444
+					-116.53275277777777,
+					32.65182222222222
 				]
 			},
 			"properties": {
-				"altitude": 693.3240115718419,
-				"bearing": 272.63145428706775,
+				"altitude": 957.7,
+				"bearing": 345.7040101845958,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 5.jpeg",
+				"createDate": "2023-03-27T22:43:46.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.22634166666667,
+					34.37770833333333
+				]
+			},
+			"properties": {
+				"altitude": 1692.1,
+				"bearing": 113.94927971188476,
 				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "desert - 52.jpeg"
+				"filename": "desert - 49.jpeg",
+				"createDate": "2023-05-10T11:07:27.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.25235555555555,
+					34.38751111111111
+				]
+			},
+			"properties": {
+				"altitude": 1275.5364916773367,
+				"lens": "iPhone 14 Pro back triple camera 9mm f/2.8",
+				"filename": "desert - 50.jpeg",
+				"createDate": "2023-05-10T12:50:25.000Z"
 			}
 		},
 		{
@@ -3606,22 +3831,8 @@
 				"altitude": 824.1972789115646,
 				"bearing": 336.52998379254456,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 51.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.25235555555555,
-					34.38751111111111
-				]
-			},
-			"properties": {
-				"altitude": 1275.5364916773367,
-				"lens": "iPhone 14 Pro back triple camera 9mm f/2.8",
-				"filename": "desert - 50.jpeg"
+				"filename": "desert - 51.jpeg",
+				"createDate": "2023-05-10T23:27:41.000Z"
 			}
 		},
 		{
@@ -3637,23 +3848,8 @@
 				"altitude": 683.6,
 				"bearing": 280.9017333984375,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 53.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.31368333333333,
-					34.485572222222224
-				]
-			},
-			"properties": {
-				"altitude": 758.5,
-				"bearing": 303.85203574975174,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 56.jpeg"
+				"filename": "desert - 53.jpeg",
+				"createDate": "2023-05-11T14:29:33.000Z"
 			}
 		},
 		{
@@ -3669,7 +3865,41 @@
 				"altitude": 705.8,
 				"bearing": 277.91682419659736,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 54.jpeg"
+				"filename": "desert - 54.jpeg",
+				"createDate": "2023-05-11T18:50:04.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.26614444444445,
+					34.438044444444444
+				]
+			},
+			"properties": {
+				"altitude": 693.3240115718419,
+				"bearing": 272.63145428706775,
+				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
+				"filename": "desert - 52.jpeg",
+				"createDate": "2023-05-11T13:52:41.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.31099722222221,
+					34.481069444444444
+				]
+			},
+			"properties": {
+				"altitude": 752.6274549918166,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 55.jpeg",
+				"createDate": "2023-05-11T19:15:15.000Z"
 			}
 		},
 		{
@@ -3685,7 +3915,8 @@
 				"altitude": 787.6520930232558,
 				"bearing": 265.98451213216316,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 57.jpeg"
+				"filename": "desert - 57.jpeg",
+				"createDate": "2023-05-11T21:32:24.000Z"
 			}
 		},
 		{
@@ -3693,14 +3924,16 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					-118.31099722222221,
-					34.481069444444444
+					-118.31368333333333,
+					34.485572222222224
 				]
 			},
 			"properties": {
-				"altitude": 752.6274549918166,
+				"altitude": 758.5,
+				"bearing": 303.85203574975174,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 55.jpeg"
+				"filename": "desert - 56.jpeg",
+				"createDate": "2023-05-11T19:29:54.000Z"
 			}
 		},
 		{
@@ -3716,39 +3949,8 @@
 				"altitude": 952.2271880819367,
 				"bearing": 109.43836978131213,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 6.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.6077111111111,
-					34.78760277777778
-				]
-			},
-			"properties": {
-				"altitude": 904,
-				"bearing": 22.388366707533034,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 63.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.55297777777777,
-					34.774655555555555
-				]
-			},
-			"properties": {
-				"altitude": 887.4416586306654,
-				"bearing": 174.7253112033195,
-				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "desert - 62.jpeg"
+				"filename": "desert - 6.jpeg",
+				"createDate": "2023-03-28T18:52:57.000Z"
 			}
 		},
 		{
@@ -3764,7 +3966,42 @@
 				"altitude": 1043.4,
 				"bearing": 22.4467277486911,
 				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "desert - 61.jpeg"
+				"filename": "desert - 61.jpeg",
+				"createDate": "2023-05-14T21:21:56.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.6077111111111,
+					34.78760277777778
+				]
+			},
+			"properties": {
+				"altitude": 904,
+				"bearing": 22.388366707533034,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 63.jpeg",
+				"createDate": "2023-05-16T21:43:54.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.55297777777777,
+					34.774655555555555
+				]
+			},
+			"properties": {
+				"altitude": 887.4416586306654,
+				"bearing": 174.7253112033195,
+				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
+				"filename": "desert - 62.jpeg",
+				"createDate": "2023-05-16T00:12:53.000Z"
 			}
 		},
 		{
@@ -3779,7 +4016,8 @@
 			"properties": {
 				"altitude": 891.7636632200886,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 64.jpeg"
+				"filename": "desert - 64.jpeg",
+				"createDate": "2023-05-16T21:46:47.000Z"
 			}
 		},
 		{
@@ -3795,7 +4033,8 @@
 				"altitude": 1906.1345514950167,
 				"bearing": 275.3957671957672,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 66.jpeg"
+				"filename": "desert - 66.jpeg",
+				"createDate": "2023-05-18T14:08:28.000Z"
 			}
 		},
 		{
@@ -3811,7 +4050,8 @@
 				"altitude": 879.3,
 				"bearing": 347.7371829465731,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 65.jpeg"
+				"filename": "desert - 65.jpeg",
+				"createDate": "2023-05-16T23:16:06.000Z"
 			}
 		},
 		{
@@ -3826,7 +4066,8 @@
 			"properties": {
 				"altitude": 1275.8074433656957,
 				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 69.jpeg"
+				"filename": "desert - 69.jpeg",
+				"createDate": "2023-05-20T15:32:27.000Z"
 			}
 		},
 		{
@@ -3842,39 +4083,8 @@
 				"altitude": 1200.3110008271299,
 				"bearing": 14.1397705078125,
 				"lens": "iPhone 12 Pro back dual wide camera 4.2mm f/1.6",
-				"filename": "desert - 71.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.7088,
-					33.87231388888889
-				]
-			},
-			"properties": {
-				"altitude": 1439.4066147859921,
-				"bearing": 179.4539795464651,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 74.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.53543888888889,
-					33.833419444444445
-				]
-			},
-			"properties": {
-				"altitude": 147.25808055693685,
-				"bearing": 354.96389765159483,
-				"lens": "iPhone 14 Pro front TrueDepth camera 2.69mm f/1.9",
-				"filename": "desert - 72.jpeg"
+				"filename": "desert - 71.jpeg",
+				"createDate": "2023-05-21T01:22:13.000Z"
 			}
 		},
 		{
@@ -3890,7 +4100,42 @@
 				"altitude": 3291.3,
 				"bearing": 63.71759036144579,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 73.jpeg"
+				"filename": "desert - 73.jpeg",
+				"createDate": "2023-05-27T22:23:59.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.53543888888889,
+					33.833419444444445
+				]
+			},
+			"properties": {
+				"altitude": 147.25808055693685,
+				"bearing": 354.96389765159483,
+				"lens": "iPhone 14 Pro front TrueDepth camera 2.69mm f/1.9",
+				"filename": "desert - 72.jpeg",
+				"createDate": "2023-05-27T12:30:11.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.7088,
+					33.87231388888889
+				]
+			},
+			"properties": {
+				"altitude": 1439.4066147859921,
+				"bearing": 179.4539795464651,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 74.jpeg",
+				"createDate": "2023-05-28T23:13:25.000Z"
 			}
 		},
 		{
@@ -3906,7 +4151,8 @@
 				"altitude": 1165.4643004539826,
 				"bearing": 20.389183055975796,
 				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 75.jpeg"
+				"filename": "desert - 75.jpeg",
+				"createDate": "2023-05-29T00:11:01.000Z"
 			}
 		},
 		{
@@ -3922,7 +4168,8 @@
 				"altitude": 378.26971954425943,
 				"bearing": 302.5994263862333,
 				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 76.jpeg"
+				"filename": "desert - 76.jpeg",
+				"createDate": "2023-05-29T13:11:51.000Z"
 			}
 		},
 		{
@@ -3938,7 +4185,8 @@
 				"altitude": 379.5769195820082,
 				"bearing": 260.7085574572127,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 77.jpeg"
+				"filename": "desert - 77.jpeg",
+				"createDate": "2023-05-29T14:12:41.000Z"
 			}
 		},
 		{
@@ -3954,183 +4202,8 @@
 				"altitude": 1670.6,
 				"bearing": 255.17080671871304,
 				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 81.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.22440277777778,
-					35.45066388888889
-				]
-			},
-			"properties": {
-				"altitude": 1504.3,
-				"bearing": 117.5301284162002,
-				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 83.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.14817777777779,
-					35.47077222222222
-				]
-			},
-			"properties": {
-				"altitude": 1665.8,
-				"bearing": 174.09358213175008,
-				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
-				"filename": "desert - 84.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.02686388888888,
-					35.66282777777778
-				]
-			},
-			"properties": {
-				"altitude": 1598.7507082152974,
-				"bearing": 142.78496943545488,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 86.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.1332861111111,
-					35.55304722222222
-				]
-			},
-			"properties": {
-				"altitude": 1638.209081309398,
-				"bearing": 144.68186936936937,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 85.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.02855,
-					35.76899722222222
-				]
-			},
-			"properties": {
-				"altitude": 1593.0754310344828,
-				"bearing": 67.29901125127856,
-				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "desert - 87.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.01340555555555,
-					35.81608333333333
-				]
-			},
-			"properties": {
-				"altitude": 1863.645464025026,
-				"bearing": 31.27597042513863,
-				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
-				"filename": "desert - 88.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.14306666666667,
-					35.92434444444444
-				]
-			},
-			"properties": {
-				"altitude": 1802.5488,
-				"bearing": 292.090087890625,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 89.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-116.48152222222222,
-					32.932602777777774
-				]
-			},
-			"properties": {
-				"altitude": 1662.775,
-				"bearing": 51.40350338045482,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 9.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.14686666666667,
-					35.98566388888889
-				]
-			},
-			"properties": {
-				"altitude": 1790.6934604904632,
-				"bearing": 327.809554973822,
-				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 90.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.10030277777777,
-					35.99022222222222
-				]
-			},
-			"properties": {
-				"altitude": 1914.1459694989107,
-				"bearing": 1.04644775390625,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 92.jpeg"
-			}
-		},
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": [
-					-118.1296,
-					36.02093055555555
-				]
-			},
-			"properties": {
-				"altitude": 1849.3555956678701,
-				"bearing": 114.68396185894683,
-				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
-				"filename": "desert - 91.jpeg"
+				"filename": "desert - 81.jpeg",
+				"createDate": "2023-06-02T20:06:36.000Z"
 			}
 		},
 		{
@@ -4146,7 +4219,195 @@
 				"altitude": 1774.8,
 				"bearing": 241.0261688764829,
 				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
-				"filename": "desert - 82.jpeg"
+				"filename": "desert - 82.jpeg",
+				"createDate": "2023-06-03T13:11:51.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.22440277777778,
+					35.45066388888889
+				]
+			},
+			"properties": {
+				"altitude": 1504.3,
+				"bearing": 117.5301284162002,
+				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
+				"filename": "desert - 83.jpeg",
+				"createDate": "2023-06-04T17:09:05.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.14817777777779,
+					35.47077222222222
+				]
+			},
+			"properties": {
+				"altitude": 1665.8,
+				"bearing": 174.09358213175008,
+				"lens": "iPhone 14 Pro back triple camera 2.22mm f/2.2",
+				"filename": "desert - 84.jpeg",
+				"createDate": "2023-06-05T02:10:51.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.1332861111111,
+					35.55304722222222
+				]
+			},
+			"properties": {
+				"altitude": 1638.209081309398,
+				"bearing": 144.68186936936937,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 85.jpeg",
+				"createDate": "2023-06-05T17:39:55.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.02686388888888,
+					35.66282777777778
+				]
+			},
+			"properties": {
+				"altitude": 1598.7507082152974,
+				"bearing": 142.78496943545488,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 86.jpeg",
+				"createDate": "2023-06-08T16:54:56.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.02855,
+					35.76899722222222
+				]
+			},
+			"properties": {
+				"altitude": 1593.0754310344828,
+				"bearing": 67.29901125127856,
+				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
+				"filename": "desert - 87.jpeg",
+				"createDate": "2023-06-09T16:33:15.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.01340555555555,
+					35.81608333333333
+				]
+			},
+			"properties": {
+				"altitude": 1863.645464025026,
+				"bearing": 31.27597042513863,
+				"lens": "iPhone 14 Pro back dual wide camera 6.86mm f/1.78",
+				"filename": "desert - 88.jpeg",
+				"createDate": "2023-06-10T11:48:52.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.14306666666667,
+					35.92434444444444
+				]
+			},
+			"properties": {
+				"altitude": 1802.5488,
+				"bearing": 292.090087890625,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 89.jpeg",
+				"createDate": "2023-06-10T23:25:01.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-116.48152222222222,
+					32.932602777777774
+				]
+			},
+			"properties": {
+				"altitude": 1662.775,
+				"bearing": 51.40350338045482,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 9.jpeg",
+				"createDate": "2023-03-31T20:17:31.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.14686666666667,
+					35.98566388888889
+				]
+			},
+			"properties": {
+				"altitude": 1790.6934604904632,
+				"bearing": 327.809554973822,
+				"lens": "iPhone 14 Pro front camera 2.69mm f/1.9",
+				"filename": "desert - 90.jpeg",
+				"createDate": "2023-06-11T13:22:02.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.10030277777777,
+					35.99022222222222
+				]
+			},
+			"properties": {
+				"altitude": 1914.1459694989107,
+				"bearing": 1.04644775390625,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 92.jpeg",
+				"createDate": "2023-06-11T21:01:52.000Z"
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-118.1296,
+					36.02093055555555
+				]
+			},
+			"properties": {
+				"altitude": 1849.3555956678701,
+				"bearing": 114.68396185894683,
+				"lens": "iPhone 14 Pro back triple camera 6.86mm f/1.78",
+				"filename": "desert - 91.jpeg",
+				"createDate": "2023-06-11T15:36:46.000Z"
 			}
 		}
 	]
