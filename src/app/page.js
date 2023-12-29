@@ -1,21 +1,17 @@
 'use client'
 import { useRef, useEffect, useState, useCallback } from 'react'
 import mapboxgl from 'mapbox-gl'
-import 'mapbox-gl/dist/mapbox-gl.css'
-// import * as Sentry from "@sentry/nextjs";
 
-import newsletters from '@/data/PCT - Madison - 2023 - Newsletter Points.json'
+import { useSearchParams } from 'next/navigation'
+
 import photos from '@/data/photos.json'
 
 import EyeToggle from '@/components/EyeToggle'
 import ColorCircle from '@/components/ColorCircle'
 import PhotoLightbox from '@/components/PhotoLightbox'
-
-const newslettersSorted = newsletters.features.sort((a, b) => {
-	const aDate = new Date(a.properties.Date)
-	const bDate = new Date(b.properties.Date)
-	return aDate - bDate
-})
+import CustomControl from '@/components/CustomControl'
+import NewsletterDialog from '@/components/NewsletterDialog'
+import CoolStuffDialog from '@/components/CoolStuffDialog'
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 
@@ -31,54 +27,27 @@ const defaults = {
 	},
 }
 
-class CustomControl {
-	constructor({ container }) {
-		this._container = container
-	}
-	onAdd(map) {
-		// const container = this._container
-		// console.log('onAdd', { map, container })
-		this._map = map
-		this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group'
-		return this._container
-	}
-	onRemove() {
-		this._container.parentNode.removeChild(this._container)
-		this._map = undefined
-	}
-}
-
 const Layers = {
 	Madi2023: 'PCT - 2023',
 	Madi2019: 'PCT - 2019',
 	Madi2018: 'PCT - 2018',
 }
 
-// const layerIdToYear = id => {
-// 	switch (id) {
-// 		case Layers.Madi2023:
-// 			return 2023
-// 		case Layers.Madi2019:
-// 			return 2019
-// 		case Layers.Madi2018:
-// 			return 2018
-// 		default:
-// 			return null
-// 	}
-// }
-
 const Home = () => {
 	const mapContainer = useRef(null)
 	const map = useRef(null)
-	const popup = useRef(null)
 	const [showNewslettersDialog, setShowNewslettersDialog] = useState(false)
 	const [showNewslettersLayer, setShowNewslettersLayer] = useState(true)
-	const [showPhotosLayer, setShowPhotosLayer] = useState(false)
+	const [showCoolStuffDialog, setShowCoolStuffDialog] = useState(false)
+	const [showPhotosLayer, setShowPhotosLayer] = useState(true)
 	const [show23, setShow23] = useState(true)
 	const [show19, setShow19] = useState(false)
 	const [show18, setShow18] = useState(true)
 	const [showLightbox, setShowLightbox] = useState(false)
 	const [imageOverride, setImageOverride] = useState(null)
+	const searchParams = useSearchParams()
+
+	const isDebug = !!searchParams.get('debug')
 
 	useEffect(() => {
 		if (showLightbox === false) {
@@ -106,19 +75,25 @@ const Home = () => {
 		[toggleLayer]
 	)
 
+	const copyValues = useCallback(() => {
+		const values = {
+			label: 'Label',
+			zoom: map.current.getZoom(),
+			pitch: map.current.getPitch(),
+			bearing: map.current.getBearing(),
+			center: map.current.getCenter(),
+		}
+		navigator.clipboard.writeText(JSON.stringify(values, null, 2))
+	}, [])
+
 	const reset = useCallback(() => {
-		// popup.current?.remove()
-		map.current.easeTo(
-			{
-				center: [defaults.lng, defaults.lat],
-				zoom: defaults.zoom,
-				pitch: 0,
-				bearing: 0,
-			},
-			{
-				duration: 2000,
-			}
-		)
+		map.current.flyTo({
+			center: [defaults.lng, defaults.lat],
+			zoom: defaults.zoom,
+			pitch: 0,
+			bearing: 0,
+			duration: 2000,
+		})
 	}, [])
 
 	useEffect(() => {
@@ -143,7 +118,7 @@ const Home = () => {
 			customAttribution: 'Map by Shawn',
 		})
 
-		// Year controls
+		// Custom controls
 		const control23 = new CustomControl({
 			container: document.getElementById('toggle-23'),
 		})
@@ -159,22 +134,25 @@ const Home = () => {
 		const controlPhotos = new CustomControl({
 			container: document.getElementById('toggle-photos'),
 		})
+		const controlCoolStuff = new CustomControl({
+			container: document.getElementById('toggle-cool'),
+		})
 		const buttonReset = new CustomControl({
 			container: document.getElementById('button-reset'),
+		})
+		const controlCopy = new CustomControl({
+			container: document.getElementById('button-copy'),
 		})
 
 		// Initialize map
 		map.current = new mapboxgl.Map({
 			container: mapContainer.current,
 			style: process.env.NEXT_PUBLIC_MAPBOX_STYLE,
-			// center: [lng, lat],
 			center: [defaults.lng, defaults.lat],
-			// zoom: zoom,
 			zoom: defaults.zoom,
 			attributionControl: false,
 			minZoom: defaults.zoom - 0.5,
-			// maxBounds: [defaults.bounds.west, defaults.bounds.south, defaults.bounds.east, defaults.bounds.north],
-			// touchZoomRotate: true,
+			bearingSnap: 0,
 		})
 			.addControl(controlNav)
 			.addControl(controlScale)
@@ -187,54 +165,32 @@ const Home = () => {
 			.addControl(controlPhotos, 'top-left')
 			.addControl(buttonReset, 'top-right')
 
-		// window.map = map.current
+		if (isDebug) {
+			map.current.addControl(controlCoolStuff, 'top-left')
+			map.current.addControl(controlCopy, 'top-right')
+		}
 
 		// Wait for the map to laod
 		map.current.on('load', () => {
-			// console.log('Map loaded', { map, zoom, lng, lat })
-			console.log('Map loaded', { map })
+			// console.log('Map loaded', { map })
 
 			// Resize just in case
 			map.current.resize()
 
 			// Create a basic popup
-			const pp = new mapboxgl.Popup({
-				closeButton: false,
-				closeOnClick: false,
-				anchor: 'left',
-				className: 'popup',
-				offset: 10,
-			})
-			popup.current = pp
-
-			// // Show popup on mouseover
-			// map.current.on('mouseover', Object.values(Layers), function (e) {
-			// 	const layerId = e.features[0].layer.id
-			// 	const yearName = layerIdToYear(layerId)
-			// 	if (!yearName) return
-			// 	popup.current
-			// 		.setLngLat(e.lngLat)
-			// 		.setHTML(`<h1 style="color: var(--color-${yearName.toString().slice(-2)})">${yearName}</h1>`)
-			// 		.addTo(map.current)
-			// 	map.current.setPaintProperty(layerId, 'line-width', 5)
-			// })
-
-			// // Add a mouseleave event to the layer and fix the line width
-			// Object.values(Layers).forEach(layer => {
-			// 	map.current.on('mouseleave', layer, function (e) {
-			// 		const yearName = layerIdToYear(layer)
-			// 		if (!yearName) return
-			// 		setTimeout(() => {
-			// 			map.current.setPaintProperty(layer, 'line-width', 3)
-			// 			// popup.current.remove()
-			// 		}, 1000)
-			// 	})
+			// popup.current =
+			// new mapboxgl.Popup({
+			// 	closeButton: false,
+			// 	closeOnClick: false,
+			// 	anchor: 'left',
+			// 	className: 'popup',
+			// 	offset: 10,
 			// })
 
 			// NOTE Show layers one by one
 			map.current.getStyle().layers.forEach((layer, i) => {
 				if (layer.id.includes('PCT -')) {
-					console.log('layer', { layer, i: i - 69 })
+					// console.log('layer', { layer, i: i - 69 })
 					// setTimeout(() => {
 					if (!layer.id.includes('2019')) {
 						map.current.setLayoutProperty(layer.id, 'visibility', 'visible')
@@ -259,9 +215,10 @@ const Home = () => {
 					'source-layer': 'PCT_-_Madison_-_2023_-_Newslette',
 					type: 'circle',
 					layout: {
-						visibility: 'visible',
+						// visibility: 'visible',
+						visibility: showNewslettersLayer ? 'visible' : 'none',
 					},
-					minzoom: 5,
+					minzoom: 4.5,
 					paint: {
 						'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
 						'circle-color': 'hsl(60, 100%, 50%)',
@@ -278,9 +235,10 @@ const Home = () => {
 					'source-layer': 'PCT_-_Madison_-_2023_-_Newslette',
 					type: 'circle',
 					layout: {
-						visibility: 'visible',
+						// visibility: 'visible',
+						visibility: showNewslettersLayer ? 'visible' : 'none',
 					},
-					minzoom: 5,
+					minzoom: 4.5,
 					paint: {
 						'circle-opacity': 0.01,
 						'circle-radius': 18,
@@ -290,12 +248,10 @@ const Home = () => {
 				'newsletter-points'
 			)
 			map.current.on('click', 'newsletter-points-hidden', function (e) {
-				// pp.remove()
-
 				// Copy coordinates array.
 				const coordinates = e.features[0].geometry.coordinates.slice()
 				const props = e.features[0].properties
-				console.log({ props })
+				// console.log({ props })
 				const { Mile, Link } = props
 
 				// Ensure that if the map is zoomed out such that multiple
@@ -330,7 +286,7 @@ const Home = () => {
 					layout: {
 						visibility: showPhotosLayer ? 'visible' : 'none',
 					},
-					minzoom: 5,
+					minzoom: 4.5,
 					paint: {
 						'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
 						'circle-color': 'hsl(190, 100%, 50%)',
@@ -341,44 +297,24 @@ const Home = () => {
 				'newsletter-points' // Add layer below newsletters
 			)
 			map.current.on('click', 'photo-points', function (e) {
-				// Copy coordinates array.
-				const coordinates = e.features[0].geometry.coordinates.slice()
-				const props = e.features[0].properties
-				// console.log({ props })
-				// const { altitude, bearing, lens, filename } = props
-				const { filename } = props
-
+				const { filename } = e.features[0].properties
 				setImageOverride(filename)
 				setShowLightbox(true)
 			})
 
 			// DEBUG STUFF
-			map.current.on('click', function (e) {
-				console.log('click', {
-					zoom: map.current.getZoom(),
-					pitch: map.current.getPitch(),
-					bearing: map.current.getBearing(),
-					center: map.current.getCenter(),
+			if (isDebug) {
+				map.current.on('click', function (e) {
+					console.log('click', {
+						zoom: map.current.getZoom(),
+						pitch: map.current.getPitch(),
+						bearing: map.current.getBearing(),
+						center: map.current.getCenter(),
+					})
 				})
-			})
-			map.current.on('mouseover', Object.values(Layers), function (e) {
-				const c = e.features[0].layer.paint['line-color']
-				const str = `rgba(${c.r}, ${c.g}, ${c.b}, ${c.a})`
-				console.log('LINE HOVER', { c, str })
-			})
-
-			// map.current.on('move', () => {
-			// 	setLng(map.current.getCenter().lng.toFixed(4));
-			// 	setLat(map.current.getCenter().lat.toFixed(4));
-			// 	setZoom(map.current.getZoom().toFixed(2));
-			// 	});
+			}
 		})
-		// }, [lat, lng, zoom])
-	}, [])
-
-	// useEffect(() => {
-	// 	popup.current?.remove()
-	// }, [show18, show19, show23])
+	}, [isDebug, showNewslettersLayer, showPhotosLayer])
 
 	return (
 		<div>
@@ -421,7 +357,6 @@ const Home = () => {
 				</div>
 				{/* PHOTOS */}
 				<div id="toggle-photos">
-					{/* <button className="mapboxgl-ctrl-toggle photo-list" onClick={() => setShowNewslettersDialog(!showNewslettersDialog)}> */}
 					<button className="mapboxgl-ctrl-toggle photo-list" onClick={() => setShowLightbox(true)}>
 						Photos
 					</button>
@@ -431,6 +366,12 @@ const Home = () => {
 						onClick={() => toggleLayers(['photo-points'], setShowPhotosLayer)}
 					>
 						<EyeToggle visible={showPhotosLayer} />
+					</button>
+				</div>
+				{/* COOL STUFF */}
+				<div id="toggle-cool">
+					<button className="mapboxgl-ctrl-toggle cool-list" onClick={() => setShowCoolStuffDialog(!showCoolStuffDialog)}>
+						Cool Stuff
 					</button>
 				</div>
 				{/* RIGHT CONTROLS */}
@@ -443,29 +384,25 @@ const Home = () => {
 						</span>
 					</button>
 				</div>
+				{/* COPY */}
+				<div id="button-copy">
+					<button className="" onClick={copyValues}>
+						<span className="mapboxgl-ctrl-icon madi-icon">
+							<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+								<path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z" />
+							</svg>
+						</span>
+					</button>
+				</div>
 			</div>
 			{/* MAP */}
 			<div ref={mapContainer} className="map-container" />
+
 			{/* NEWSLETTERS */}
-			{showNewslettersDialog && (
-				<nav className="menu-ui">
-					{newslettersSorted.map(letter => (
-						<a
-							href={letter.properties.Link}
-							target="_blank"
-							onClick={() => console.log('CLICK', letter.properties.Link)}
-							key={letter.properties.Mile}
-						>
-							<>{letter.properties.Date.slice(0, -3)}</>
-							&nbsp;&ndash;&nbsp;
-							<>{letter.properties.Title ?? `Mile ${letter.properties.Mile}`}</>
-							<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-								<path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z" />
-							</svg>
-						</a>
-					))}
-				</nav>
-			)}
+			<NewsletterDialog open={showNewslettersDialog} />
+
+			{/* COOL STUFF */}
+			<CoolStuffDialog open={showCoolStuffDialog} map={map} onClick={() => setShowCoolStuffDialog(false)} />
 
 			{/* LIGHTBOX */}
 			<PhotoLightbox isOpen={showLightbox} setIsOpen={setShowLightbox} imageOverride={imageOverride} />

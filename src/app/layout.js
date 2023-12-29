@@ -1,4 +1,5 @@
 import './globals.css'
+import 'mapbox-gl/dist/mapbox-gl.css'
 
 export const metadata = {
 	title: 'PCT Tracker',

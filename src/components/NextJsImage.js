@@ -9,6 +9,8 @@ export default function NextJsImage({ slide, rect }) {
 	const { imageFit } = useLightboxProps().carousel
 	const cover = isImageSlide(slide) && isImageFitCover(slide, imageFit)
 
+	console.log('slide', slide)
+
 	if (!isNextJsImage(slide)) return undefined
 
 	const width = !cover ? Math.round(Math.min(rect.width, (rect.height / slide.height) * slide.width)) : rect.width
