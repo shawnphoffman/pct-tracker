@@ -221,7 +221,7 @@ const Home = () => {
 					minzoom: 4.5,
 					paint: {
 						'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
-						'circle-color': 'hsl(60, 100%, 50%)',
+						'circle-color': 'hsl(60, 99%, 43%)',
 						'circle-stroke-color': 'hsl(64, 100%, 0%)',
 						'circle-stroke-width': ['step', ['zoom'], 1, 5, 2, 8, 3],
 					},
@@ -345,7 +345,7 @@ const Home = () => {
 				{/* NEWSLETTERS */}
 				<div id="toggle-newsletter">
 					<button className="mapboxgl-ctrl-toggle news-list" onClick={() => setShowNewslettersDialog(!showNewslettersDialog)}>
-						Newsletters
+						<>Newsletters</>
 					</button>
 					<span></span>
 					<button
@@ -353,6 +353,7 @@ const Home = () => {
 						onClick={() => toggleLayers(['newsletter-points', 'newsletter-points-hidden'], setShowNewslettersLayer)}
 					>
 						<EyeToggle visible={showNewslettersLayer} />
+						<ColorCircle />
 					</button>
 				</div>
 				{/* PHOTOS */}
@@ -366,6 +367,8 @@ const Home = () => {
 						onClick={() => toggleLayers(['photo-points'], setShowPhotosLayer)}
 					>
 						<EyeToggle visible={showPhotosLayer} />
+
+						<ColorCircle />
 					</button>
 				</div>
 				{/* COOL STUFF */}

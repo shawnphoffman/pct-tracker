@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import { isImageFitCover, isImageSlide, useLightboxProps } from 'yet-another-react-lightbox'
 
+// TODO Add caption lookup
+
 function isNextJsImage(slide) {
 	return isImageSlide(slide) && typeof slide.width === 'number' && typeof slide.height === 'number'
 }
