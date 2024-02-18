@@ -3,10 +3,13 @@ import Counter from 'yet-another-react-lightbox/plugins/counter'
 import NextJsImage from '@/components/NextJsImage'
 import 'yet-another-react-lightbox/styles.css'
 import 'yet-another-react-lightbox/plugins/counter.css'
+import photos from '@/data/photos.json'
+
+const imageList = photos.features.map(photo => photo.properties.filename)
 
 // const images = require.context('../images/', true, /\.(jpg|jpeg|png)$/i)
-const images = require.context('../images/', true, /\.\/.*\.(jpg|jpeg|png)$/i)
-const imageList = images.keys().map(image => images(image).default)
+// const images = require.context('../images/', true, /\.\/.*\.(jpg|jpeg|png)$/i)
+// const imageList = images.keys().map(image => images(image).default)
 
 // console.log('length', JSON.stringify(images.keys().sort(), null, 2))
 
