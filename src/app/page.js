@@ -4,7 +4,7 @@ import mapboxgl from 'mapbox-gl'
 
 import { useSearchParams } from 'next/navigation'
 
-import photos from '@/data/photos.json'
+// import photos from '@/data/photos.json'
 
 import EyeToggle from '@/components/EyeToggle'
 import ColorCircle from '@/components/ColorCircle'
@@ -131,9 +131,9 @@ const Home = () => {
 		const controlNewsletter = new CustomControl({
 			container: document.getElementById('toggle-newsletter'),
 		})
-		const controlPhotos = new CustomControl({
-			container: document.getElementById('toggle-photos'),
-		})
+		// const controlPhotos = new CustomControl({
+		// 	container: document.getElementById('toggle-photos'),
+		// })
 		const controlCoolStuff = new CustomControl({
 			container: document.getElementById('toggle-cool'),
 		})
@@ -162,7 +162,7 @@ const Home = () => {
 			.addControl(control19, 'top-left')
 			.addControl(control18, 'top-left')
 			.addControl(controlNewsletter, 'top-left')
-			.addControl(controlPhotos, 'top-left')
+			// .addControl(controlPhotos, 'top-left')
 			.addControl(buttonReset, 'top-right')
 
 		if (isDebug) {
@@ -273,34 +273,34 @@ const Home = () => {
 			})
 
 			// Add local photo source and layer
-			const photoSource = 'photo-points-data'
-			map.current.addSource(photoSource, {
-				type: 'geojson',
-				data: photos,
-			})
-			map.current.addLayer(
-				{
-					id: 'photo-points',
-					source: photoSource,
-					type: 'circle',
-					layout: {
-						visibility: showPhotosLayer ? 'visible' : 'none',
-					},
-					minzoom: 4.5,
-					paint: {
-						'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
-						'circle-color': 'hsl(190, 100%, 50%)',
-						'circle-stroke-color': 'hsl(64, 100%, 0%)',
-						'circle-stroke-width': ['step', ['zoom'], 1, 5, 2, 8, 3],
-					},
-				},
-				'newsletter-points' // Add layer below newsletters
-			)
-			map.current.on('click', 'photo-points', function (e) {
-				const { filename } = e.features[0].properties
-				setImageOverride(filename)
-				setShowLightbox(true)
-			})
+			// const photoSource = 'photo-points-data'
+			// map.current.addSource(photoSource, {
+			// 	type: 'geojson',
+			// 	data: photos,
+			// })
+			// map.current.addLayer(
+			// 	{
+			// 		id: 'photo-points',
+			// 		source: photoSource,
+			// 		type: 'circle',
+			// 		layout: {
+			// 			visibility: showPhotosLayer ? 'visible' : 'none',
+			// 		},
+			// 		minzoom: 4.5,
+			// 		paint: {
+			// 			'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
+			// 			'circle-color': 'hsl(190, 100%, 50%)',
+			// 			'circle-stroke-color': 'hsl(64, 100%, 0%)',
+			// 			'circle-stroke-width': ['step', ['zoom'], 1, 5, 2, 8, 3],
+			// 		},
+			// 	},
+			// 	'newsletter-points' // Add layer below newsletters
+			// )
+			// map.current.on('click', 'photo-points', function (e) {
+			// 	const { filename } = e.features[0].properties
+			// 	setImageOverride(filename)
+			// 	setShowLightbox(true)
+			// })
 
 			// DEBUG STUFF
 			if (isDebug) {
