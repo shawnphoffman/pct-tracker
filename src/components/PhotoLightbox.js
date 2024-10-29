@@ -17,7 +17,7 @@ export default function PhotoLightbox({ isOpen, setIsOpen, imageOverride }) {
 	let index
 
 	if (imageOverride) {
-		index = imageList.findIndex(image => image.src.includes(imageOverride.replace(/\.jpg|\.jpeg|\.png/, '')))
+		index = imageList.findIndex(image => image.includes(imageOverride.replace(/\.jpg|\.jpeg|\.png/, '')))
 	}
 
 	return (
