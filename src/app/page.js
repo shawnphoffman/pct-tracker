@@ -340,6 +340,11 @@ const Home = () => {
 					const color = YEAR_COLORS[yearKey] || layer.paint['line-color']
 					map.current.setPaintProperty(layer.id, 'line-color', color)
 					document.documentElement.style.setProperty(`--color-${yearKey}`, color)
+					// The Studio style's per-year filters hide some named track features;
+					// the 2023 one wrongly hides a real segment (mi 1100-1103). Normalize
+					// every year to hide only the junk aggregate/unnamed tracks so all real
+					// segments render.
+					map.current.setFilter(layer.id, ['match', ['get', 'name'], ['', 'Madison Sites (0)'], false, true])
 				}
 			})
 
