@@ -1,0 +1,3 @@
+# Raw Garmin track exports — local analysis only, never commit (contains full timestamps + precise locations)
+*
+!.gitignore

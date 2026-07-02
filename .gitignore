@@ -39,3 +39,10 @@ next-env.d.ts
 
 # Sentry Auth Token
 .sentryclirc
+
+# Python
+__pycache__/
+*.pyc
+
+# Local-only Garmin debug layer (never deploy)
+public/unknown.geojson
