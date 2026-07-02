@@ -1,0 +1,7 @@
+{
+	"_comment": "PCT-adjacent segments added BY HAND because they were never logged on Madison's Garmin inReach (e.g. trail crew work with the device off). Keyed by the geojson role passed to pct_segments.py ('trailcrew', 'misc'). Each entry is a PCT mile range drawn as a slice of the real centerline: pct_segments.py appends it to that role's map layer (ids suffixed -mNN), bucket_coverage.py unions it into coverage, and centerline.mjs widens its harvest bbox to include it. Mile ranges + notes only - no dates, timestamps, or raw coordinates - so this stays privacy-clean and committable.",
+	"trailcrew": [
+		{ "fromMile": 1074.0, "toMile": 1081.0, "note": "Carson Pass corridor: from just south of Elephant's Back up through the pass to Meiss Meadow / Upper Truckee River. Trail crew work not captured on the inReach." },
+		{ "fromMile": 1239.0, "toMile": 1244.0, "note": "Castle Rock area (near Sierra City), ~mile 1238-1244. Trail crew work not captured on the inReach." }
+	]
+}

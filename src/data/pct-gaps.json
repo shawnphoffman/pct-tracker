@@ -71,8 +71,8 @@
 		},
 		{
 			"from": 1034,
-			"to": 1081,
-			"miles": 47,
+			"to": 1074,
+			"miles": 40,
 			"region": "Central California",
 			"status": "unknown",
 			"note": ""
@@ -103,8 +103,16 @@
 		},
 		{
 			"from": 1224,
+			"to": 1239,
+			"miles": 15,
+			"region": "Northern California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 1244,
 			"to": 1269,
-			"miles": 45,
+			"miles": 25,
 			"region": "Northern California",
 			"status": "unknown",
 			"note": ""

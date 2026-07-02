@@ -23,6 +23,11 @@ import xml.etree.ElementTree as ET
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 NS = '{http://www.topografix.com/GPX/1/1}'
 BUCKETS = {'2023': 'pct-2023.gpx', '2026': 'pct-2026.gpx', 'trail-crew': 'trail-crew.gpx', 'misc': 'misc.gpx'}
+# Manual, no-Garmin-track segments (scripts/garmin/manual-segments.json) are keyed
+# by geojson role; map each coverage bucket key to its role for the union below.
+MANUAL_ROLE = {'trail-crew': 'trailcrew', 'misc': 'misc'}
+MANUAL_PATH = f'{REPO}/scripts/garmin/manual-segments.json'
+MANUAL = json.load(open(MANUAL_PATH)) if os.path.exists(MANUAL_PATH) else {}
 SNAP_KM = 0.5
 FILL_GAP = 3.0   # matches scripts/build-history-coverage.mjs
 
@@ -62,6 +67,12 @@ for key, fname in BUCKETS.items():
     for pt in ET.parse(path).getroot().iter(NS+'trkpt'):
         mi = snap(float(pt.get('lon')), float(pt.get('lat')))
         if mi is not None: ms.add(round(mi * 2) / 2)
+    # fold in any hand-added mile ranges for this role (fill half-miles so they merge)
+    for seg in MANUAL.get(MANUAL_ROLE.get(key, key), []):
+        m = seg['fromMile']
+        while m <= seg['toMile'] + 1e-9:
+            ms.add(round(m * 2) / 2)
+            m += 0.5
     result[key] = intervals(ms)
     covered = sum(b - a for a, b in result[key])
     print(f'  {key:<11} {len(result[key])} intervals, {covered:.1f} mi')

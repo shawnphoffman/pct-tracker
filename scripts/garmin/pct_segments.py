@@ -24,6 +24,9 @@ FILL_GAP = 2.0
 TOL = 0.0001  # raw-mode RDP tolerance (~11 m)
 
 REPO = __file__.rsplit('/scripts/', 1)[0]
+# Hand-added segments with no Garmin track (see scripts/garmin/manual-segments.json).
+MANUAL_PATH = f'{REPO}/scripts/garmin/manual-segments.json'
+MANUAL = json.load(open(MANUAL_PATH)) if os.path.exists(MANUAL_PATH) else {}
 ENRICHED = json.load(open(f'{REPO}/garmin-export/.enriched.json'))
 # lookup a track's date/miles by its geometry fingerprint (npts, rounded bbox)
 by_fp = {(t['npts'], tuple(t['bbox'])): t for t in ENRICHED}
@@ -147,6 +150,23 @@ def convert(src, dst, role, mode):
                                   'properties': {'role': role, 'id': rid, 'fromMile': a, 'toMile': b},
                                   'geometry': {'type': 'LineString', 'coordinates': rdp(run, TOL)}})
             index[rid] = {'date': date, 'miles': [[a, b] for a, b in ivs]}
+
+    # Hand-added segments (no Garmin track): draw each mile range as a centerline
+    # slice, same as the snapped bucket features. Only meaningful in snap mode.
+    if mode != 'raw':
+        for k, seg in enumerate(MANUAL.get(role, []), 1):
+            a, b = seg['fromMile'], seg['toMile']
+            rid = f'{role}-m{k:02d}'
+            runs = centerline_runs(a, b) if _pieces_mile else []
+            if not runs:   # fallback: connect the 0.5-mi markers
+                coords = [[round(lo, 5), round(la, 5)] for mile, (lo, la) in spine if a <= mile <= b]
+                if len(coords) >= 2: runs = [coords]
+            for run in runs:
+                feats.append({'type': 'Feature',
+                              'properties': {'role': role, 'id': rid, 'fromMile': a, 'toMile': b},
+                              'geometry': {'type': 'LineString', 'coordinates': rdp(run, TOL)}})
+            index[rid] = {'manual': True, 'miles': [[a, b]], 'note': seg.get('note', '')}
+
     json.dump({'type': 'FeatureCollection', 'features': feats}, open(dst, 'w'), separators=(',', ':'))
 
     # merge into the local (gitignored) route index for cross-bucket reference

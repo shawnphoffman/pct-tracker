@@ -41,6 +41,23 @@ for (const f of ['trail-crew', 'misc']) {
 		if (lon < minLon) minLon = lon; if (lon > maxLon) maxLon = lon
 	}
 }
+// Also cover any hand-added segments (scripts/garmin/manual-segments.json): they
+// have no GPS track, so expand the bbox using the mile markers in their ranges.
+const manualPath = path.join(REPO, 'scripts', 'garmin', 'manual-segments.json')
+const markersPath = path.join(EXPORT, '.markers.json')
+if (fs.existsSync(manualPath) && fs.existsSync(markersPath)) {
+	const manual = JSON.parse(fs.readFileSync(manualPath, 'utf8'))
+	const markers = JSON.parse(fs.readFileSync(markersPath, 'utf8'))
+	const ranges = Object.entries(manual).filter(([k]) => k[0] !== '_').flatMap(([, segs]) => segs)
+	for (const { fromMile, toMile } of ranges) {
+		for (const mk of markers) {
+			if (mk.mile < fromMile || mk.mile > toMile) continue
+			if (mk.lat < minLat) minLat = mk.lat; if (mk.lat > maxLat) maxLat = mk.lat
+			if (mk.lon < minLon) minLon = mk.lon; if (mk.lon > maxLon) maxLon = mk.lon
+		}
+	}
+}
+
 minLat -= PAD; minLon -= PAD; maxLat += PAD; maxLon += PAD
 console.error(`bbox lat ${minLat.toFixed(3)}..${maxLat.toFixed(3)} lon ${minLon.toFixed(3)}..${maxLon.toFixed(3)}`)
 
