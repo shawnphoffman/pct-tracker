@@ -198,13 +198,11 @@ export function garminKmlToGeoJSON(kml, { properties = {}, notAfter = null, maxS
 
 	const last = fixes[fixes.length - 1]
 	if (last) {
+		// No timestamp is exposed on purpose: the public map shouldn't reveal when
+		// Madison was at a location.
 		features.push({
 			type: 'Feature',
-			properties: {
-				role: 'latest',
-				time: Number.isFinite(last.time) ? new Date(last.time).toISOString() : null,
-				...properties,
-			},
+			properties: { role: 'latest', ...properties },
 			geometry: { type: 'Point', coordinates: [round5(last.coord[0]), round5(last.coord[1])] },
 		})
 	}

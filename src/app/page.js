@@ -52,17 +52,6 @@ const track2026 = {
 // isn't clipped at the top curve and bottom tip.
 const PIN_SVG = `<svg viewBox="-40 -40 464 592" overflow="visible" xmlns="http://www.w3.org/2000/svg"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>`
 
-// Human-friendly "how long ago" for the latest-position popup. In production the
-// underlying fix is already >=3 days old (safety delay).
-const relativeTime = iso => {
-	const ms = iso ? Date.now() - Date.parse(iso) : NaN
-	if (!Number.isFinite(ms) || ms < 0) return 'recently'
-	const days = Math.floor(ms / 86400000)
-	if (days >= 1) return `${days} day${days > 1 ? 's' : ''} ago`
-	const hours = Math.max(1, Math.floor(ms / 3600000))
-	return `${hours} hour${hours > 1 ? 's' : ''} ago`
-}
-
 // Photos are only enabled once an external image CDN (Cloudflare R2) is
 // configured. Until then the feature stays fully off so it can't touch the
 // Vercel image budget. See docs/photos.md.
@@ -333,11 +322,7 @@ const Home = () => {
 					if (!show26) el.style.display = 'none'
 					latestMarker.current = new mapboxgl.Marker({ element: el, anchor: 'bottom' })
 						.setLngLat(coord)
-						.setPopup(
-							new mapboxgl.Popup({ offset: 28, className: 'popup' }).setHTML(
-								`<div class="latest-popup"><strong>Madison was here</strong><span>${relativeTime(latest.properties.time)}</span></div>`
-							)
-						)
+						.setPopup(new mapboxgl.Popup({ offset: 28, className: 'popup' }).setHTML(`<div class="latest-popup"><strong>Madison was here</strong></div>`))
 						.addTo(map.current)
 
 					// Bring the viewport to her current position on load.
