@@ -1,0 +1,129 @@
+{
+	"_comment": "Interior gaps in Madison's PCT coverage (hitched/jumped/skipped). Edit \"status\" to \"complete\" to count a gap as walked; default \"unknown\" does not count and marks it as still to-do. Regenerate with scripts/build-gaps.mjs (preserves status/note).",
+	"statuses": [
+		"complete",
+		"unknown"
+	],
+	"gaps": [
+		{
+			"from": 181.5,
+			"to": 185.5,
+			"miles": 4,
+			"region": "Southern California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 342,
+			"to": 369,
+			"miles": 27,
+			"region": "Southern California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 375.5,
+			"to": 383,
+			"miles": 7.5,
+			"region": "Southern California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 390.5,
+			"to": 398,
+			"miles": 7.5,
+			"region": "Southern California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 465.5,
+			"to": 478.5,
+			"miles": 13,
+			"region": "Southern California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 485.5,
+			"to": 511,
+			"miles": 25.5,
+			"region": "Southern California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 874.5,
+			"to": 879.5,
+			"miles": 5,
+			"region": "Central California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 910.5,
+			"to": 924,
+			"miles": 13.5,
+			"region": "Central California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 1018,
+			"to": 1092,
+			"miles": 74,
+			"region": "Central California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 1103,
+			"to": 1154.5,
+			"miles": 51.5,
+			"region": "Central California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 1197,
+			"to": 1269,
+			"miles": 72,
+			"region": "Northern California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 1492.5,
+			"to": 1496,
+			"miles": 3.5,
+			"region": "Northern California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 1502,
+			"to": 1507,
+			"miles": 5,
+			"region": "Northern California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 1736.5,
+			"to": 1909,
+			"miles": 172.5,
+			"region": "Oregon",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 2002,
+			"to": 2099.5,
+			"miles": 97.5,
+			"region": "Oregon",
+			"status": "unknown",
+			"note": ""
+		}
+	]
+}

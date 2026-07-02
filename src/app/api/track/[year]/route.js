@@ -1,4 +1,7 @@
 import { garminKmlToGeoJSON } from '@/lib/garmin'
+import { computePctProgress } from '@/lib/pct-progress'
+import historyCoverage from '@/data/pct-history-coverage.json'
+import gapsData from '@/data/pct-gaps.json'
 
 // Server-side proxy for Madison's Garmin inReach MapShare feed. The MapShare
 // password stays in env and never reaches the browser. The upstream KML is
@@ -27,7 +30,27 @@ const DELAY_HOURS = numEnv('GARMIN_DELAY_HOURS', isProd ? 72 : 0)
 // (data only ages into view), fast locally.
 const REVALIDATE_SECONDS = numEnv('GARMIN_REVALIDATE_SECONDS', isProd ? 12 * 3600 : 300)
 
+// PCT progress: snap the track onto this mile-marker tileset via Tilequery.
+const MILE_MARKER_TILESET = process.env.PCT_MILE_MARKER_TILESET || 'shawnhoffman.32639qah'
+const SNAP_RADIUS_M = numEnv('PCT_SNAP_RADIUS_M', 500) // max off-trail distance to count a fix
+const BRIDGE_MAX_MILES = numEnv('PCT_BRIDGE_MAX_MILES', 30) // consecutive fixes farther apart = a jump, not walked
+const TOTAL_MILES = numEnv('PCT_TOTAL_MILES', 2662)
+
+// Pre-snapped covered intervals for the static (pre-2026) years, unioned with
+// the live track for lifetime progress. Drop the JSON's `_comment` key.
+const HISTORY = Object.fromEntries(Object.entries(historyCoverage).filter(([k]) => /^\d{4}$/.test(k)))
+// Hitched/jumped sections; only those marked "complete" count as covered.
+const GAPS = gapsData.gaps || []
+
 const empty = { type: 'FeatureCollection', features: [] }
+
+// Empty track but still surface lifetime progress from the prior years (this
+// does no network when there's no live track). Used when the feed is
+// unavailable so the progress panel keeps working.
+const emptyWithHistory = async () => {
+	const progress = await computePctProgress([], { total: TOTAL_MILES, history: HISTORY, gaps: GAPS }).catch(() => null)
+	return progress ? { ...empty, progress } : empty
+}
 
 const json = (body, { status = 200, note } = {}) =>
 	Response.json(body, {
@@ -45,7 +68,7 @@ export async function GET(request, { params }) {
 	const password = process.env.GARMIN_MAPSHARE_PASSWORD
 	if (!password) {
 		// Not configured yet: serve an empty track so the map still renders.
-		return json(empty, { note: 'no-credentials' })
+		return json(await emptyWithHistory(), { note: 'no-credentials' })
 	}
 
 	const cutoff = Date.now() - DELAY_HOURS * 3600 * 1000
@@ -70,7 +93,7 @@ export async function GET(request, { params }) {
 
 		if (!res.ok) {
 			console.error(`Garmin feed ${config.user} returned ${res.status}`)
-			return json(empty, { note: `upstream-${res.status}` })
+			return json(await emptyWithHistory(), { note: `upstream-${res.status}` })
 		}
 
 		const kml = await res.text()
@@ -78,9 +101,30 @@ export async function GET(request, { params }) {
 			properties: { year: Number(params.year) },
 			notAfter: DELAY_HOURS > 0 ? cutoff : null,
 		})
-		return json(geojson, { note: `ok-${geojson.features.length}` })
+
+		// Lifetime PCT progress: union the live 2026 track (snapped here) with the
+		// pre-snapped prior years, deduped. Computed even when the live track is
+		// empty (prior years still count). Failures must never break the response.
+		const track = geojson.features.find(f => f.properties?.role === 'track')
+		let progress = null
+		try {
+			progress = await computePctProgress(track?.geometry.coordinates ?? [], {
+				token: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
+				tileset: MILE_MARKER_TILESET,
+				radius: SNAP_RADIUS_M,
+				bridgeMaxMiles: BRIDGE_MAX_MILES,
+				total: TOTAL_MILES,
+				history: HISTORY,
+				gaps: GAPS,
+			})
+		} catch (err) {
+			console.error('PCT progress computation failed', err)
+		}
+
+		const body = progress ? { ...geojson, progress } : geojson
+		return json(body, { note: `ok-${geojson.features.length}${progress ? `-p${progress.coveredPercent}` : ''}` })
 	} catch (err) {
 		console.error('Garmin feed fetch failed', err)
-		return json(empty, { note: 'fetch-failed' })
+		return json(await emptyWithHistory(), { note: 'fetch-failed' })
 	}
 }
