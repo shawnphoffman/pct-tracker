@@ -1,0 +1,90 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "mile": 0.5,
+        "label": "SoCal",
+        "region": "Southern California",
+        "divide": "Southern Terminus \u2192 Southern California",
+        "type": "region-divide"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.46667,
+          32.59585
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mile": 652.0,
+        "label": "Central Cal",
+        "region": "Central California",
+        "divide": "Southern California \u2192 Central California",
+        "type": "region-divide"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.03951,
+          35.65813
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mile": 1157.5,
+        "label": "NorCal",
+        "region": "Northern California",
+        "divide": "Central California \u2192 Northern California",
+        "type": "region-divide"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.32999,
+          39.33788
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mile": 1719.0,
+        "label": "Oregon",
+        "region": "Oregon",
+        "divide": "Northern California \u2192 Oregon",
+        "type": "region-divide"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.61077,
+          42.07058
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mile": 2148.5,
+        "label": "Washington",
+        "region": "Washington",
+        "divide": "Oregon \u2192 Washington",
+        "type": "region-divide"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.88739,
+          45.65929
+        ]
+      }
+    }
+  ]
+}
