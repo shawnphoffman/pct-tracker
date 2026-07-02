@@ -1,5 +1,5 @@
 {
-	"_comment": "Covered PCT mile-intervals for the export-only buckets (2026/trail-crew/misc), snapped from garmin-export/buckets. Unioned into coverage + gaps alongside pct-history-coverage.json. Regenerate with scripts/garmin/bucket_coverage.py.",
+	"_comment": "Covered PCT mile-intervals for the export buckets (2026/trail-crew/misc), snapped from garmin-export/buckets. Unioned into coverage + gaps alongside pct-history-coverage.json. 2026 is also counted live from the feed at runtime; this snapshot exists so build-time gap generation excludes her walked 2026 miles. Regenerate with scripts/garmin/bucket_coverage.py.",
 	"2026": [
 		[
 			1018.5,

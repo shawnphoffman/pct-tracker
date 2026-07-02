@@ -39,9 +39,10 @@ const TOTAL_MILES = numEnv('PCT_TOTAL_MILES', 2662)
 
 // Pre-snapped covered intervals for the static (pre-2026) years, unioned with
 // the live track for lifetime progress. Drop the JSON's `_comment` key.
-// Union the tileset-derived years (2018/2019/2023) with the export-only buckets
-// (2026/trail-crew/misc) so coverage counts all of Madison's PCT miles. Drop the
-// `_comment` keys. computePctProgress unions every key's intervals.
+// Union the tileset-derived years (2018/2019/2023) with the export buckets
+// (2026/trail-crew/misc) so coverage counts all of Madison's PCT miles. 2026 is
+// also added live via the feed (liveCoords); the union with its snapshot is
+// idempotent. Drop the `_comment` keys; computePctProgress unions the rest.
 const HISTORY = Object.fromEntries(
 	[...Object.entries(historyCoverage), ...Object.entries(exportCoverage)].filter(([k]) => !k.startsWith('_'))
 )

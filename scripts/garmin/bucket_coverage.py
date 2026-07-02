@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
-"""Compute covered PCT mile-intervals for the export-only buckets (2026,
-trail-crew, misc) by snapping their tracks to the mile markers, and write them
-to src/data/pct-export-coverage.json.
+"""Compute covered PCT mile-intervals for the export buckets (2026, trail-crew,
+misc) by snapping their tracks to the mile markers, and write them to
+src/data/pct-export-coverage.json.
 
 This is unioned into the coverage/progress calc (src/app/api/track/[year]) and
 the gap generator (scripts/build-gaps.mjs) alongside the tileset-derived
-pct-history-coverage.json (2018/2019/2023) and the live 2026 feed - so progress
-% and the pending-gap list account for ALL of Madison's PCT miles, not just the
-baked historical years.
+pct-history-coverage.json (2018/2019/2023) - so progress % and the pending-gap /
+Incomplete list account for these too, not just the baked historical years.
+
+Note on 2026: the runtime progress calc ALSO counts 2026 live from the Garmin
+feed (current + flip-flop-aware; the union with this snapshot is idempotent). We
+still include a 2026 snapshot here because build-gaps.mjs runs at BUILD time and
+can't see the live feed - without it, her already-walked 2026 miles would show
+up as a gap in the Incomplete layer. The snapshot is refreshed each build.
 
     python3 scripts/garmin/bucket_coverage.py
 """
@@ -43,9 +48,11 @@ def intervals(miles):
         else: out.append([m, m])
     return [[a, b] for a, b in out if b > a]
 
-result = {'_comment': 'Covered PCT mile-intervals for the export-only buckets (2026/trail-crew/misc), '
+result = {'_comment': 'Covered PCT mile-intervals for the export buckets (2026/trail-crew/misc), '
                       'snapped from garmin-export/buckets. Unioned into coverage + gaps alongside '
-                      'pct-history-coverage.json. Regenerate with scripts/garmin/bucket_coverage.py.'}
+                      'pct-history-coverage.json. 2026 is also counted live from the feed at runtime; '
+                      'this snapshot exists so build-time gap generation excludes her walked 2026 miles. '
+                      'Regenerate with scripts/garmin/bucket_coverage.py.'}
 for key, fname in BUCKETS.items():
     path = f'{REPO}/garmin-export/buckets/{fname}'
     if not os.path.exists(path):
