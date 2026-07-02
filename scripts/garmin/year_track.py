@@ -20,7 +20,9 @@ import xml.etree.ElementTree as ET
 NS = '{http://www.topografix.com/GPX/1/1}'
 ON_KM = 0.5        # <= this from a marker = on trail
 CORRIDOR_KM = 3.0  # a variant may wander this far; beyond = town/home spur -> drop the whole excursion
-TOL = 0.0001       # RDP simplify (~11 m)
+TOL = 0.0003       # RDP simplify (~33 m); shrinks the served file + sheds GPS jitter.
+                   # Display-only: does NOT affect the coverage % (that's computed from
+                   # pct-history-coverage.json / pct-export-coverage.json, not this file).
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 markers = json.load(open(f'{REPO}/garmin-export/.markers.json'))
