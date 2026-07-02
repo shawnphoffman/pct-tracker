@@ -19,13 +19,21 @@ const CoolStuffDialog = ({ open, map, onClick }) => {
 
 	if (!open) return null
 	return (
-		<nav className="menu-ui">
-			{coolStuff.map(cool => (
-				<div key={cool.label} onClick={() => goTo(cool)}>
-					{cool.label}
-				</div>
-			))}
-		</nav>
+		<div className="menu-ui" role="dialog" aria-label="Cool spots">
+			<header className="menu-ui-header">
+				<h2>Cool Stuff</h2>
+				<button className="menu-ui-close" onClick={onClick} aria-label="Close">
+					&times;
+				</button>
+			</header>
+			<div className="menu-ui-list">
+				{coolStuff.map(cool => (
+					<button className="menu-ui-item" key={cool.label} onClick={() => goTo(cool)}>
+						<span className="menu-ui-title">{cool.label}</span>
+					</button>
+				))}
+			</div>
+		</div>
 	)
 }
 

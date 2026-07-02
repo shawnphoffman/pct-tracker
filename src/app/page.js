@@ -42,9 +42,23 @@ const Layers = {
 const track2026 = {
 	source: 'track-2026',
 	line: Layers.Madi2026,
-	point: 'track-2026-latest',
 	url: '/api/track/2026',
 	color: 'hsl(28, 100%, 52%)',
+}
+
+// Pin marker for Madison's most recent (delay-safe) position. Path is the
+// FontAwesome location-dot (same shape as the old LocationDot component).
+const PIN_SVG = `<svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>`
+
+// Human-friendly "how long ago" for the latest-position popup. In production the
+// underlying fix is already >=3 days old (safety delay).
+const relativeTime = iso => {
+	const ms = iso ? Date.now() - Date.parse(iso) : NaN
+	if (!Number.isFinite(ms) || ms < 0) return 'recently'
+	const days = Math.floor(ms / 86400000)
+	if (days >= 1) return `${days} day${days > 1 ? 's' : ''} ago`
+	const hours = Math.max(1, Math.floor(ms / 3600000))
+	return `${hours} hour${hours > 1 ? 's' : ''} ago`
 }
 
 // Photos are only enabled once an external image CDN (Cloudflare R2) is
@@ -55,6 +69,7 @@ const photosEnabled = !!process.env.NEXT_PUBLIC_PHOTO_CDN
 const Home = () => {
 	const mapContainer = useRef(null)
 	const map = useRef(null)
+	const latestMarker = useRef(null)
 	const [showNewslettersDialog, setShowNewslettersDialog] = useState(false)
 	const [showNewslettersLayer, setShowNewslettersLayer] = useState(true)
 	const [showCoolStuffDialog, setShowCoolStuffDialog] = useState(false)
@@ -74,6 +89,14 @@ const Home = () => {
 			setImageOverride(null)
 		}
 	}, [showLightbox])
+
+	// Keep the current-position pin in sync with the 2026 toggle (it's a DOM
+	// marker, not a style layer, so toggleLayer doesn't reach it).
+	useEffect(() => {
+		if (latestMarker.current) {
+			latestMarker.current.getElement().style.display = show26 ? '' : 'none'
+		}
+	}, [show26])
 
 	const toggleLayer = useCallback(
 		(layerName, stateCallback) => {
@@ -199,32 +222,18 @@ const Home = () => {
 			map.current.addControl(controlCopy, 'top-right')
 		}
 
-		// Wait for the map to laod
+		// Wait for the map to load
 		map.current.on('load', () => {
-			// console.log('Map loaded', { map })
-
 			// Resize just in case
 			map.current.resize()
 
-			// Create a basic popup
-			// popup.current =
-			// new mapboxgl.Popup({
-			// 	closeButton: false,
-			// 	closeOnClick: false,
-			// 	anchor: 'left',
-			// 	className: 'popup',
-			// 	offset: 10,
-			// })
-
-			// NOTE Show layers one by one
-			map.current.getStyle().layers.forEach((layer, i) => {
+			// Reveal the baked-in year layers (all but 2019, which starts hidden) and
+			// capture each year's line colour for the toggle swatches.
+			map.current.getStyle().layers.forEach(layer => {
 				if (layer.id.includes('PCT -')) {
-					// console.log('layer', { layer, i: i - 69 })
-					// setTimeout(() => {
 					if (!layer.id.includes('2019')) {
 						map.current.setLayoutProperty(layer.id, 'visibility', 'visible')
 					}
-					// }, (i - 69) * 1 * 500)
 					const color = layer.paint['line-color']
 					const yearKey = layer.id.slice(-2)
 					document.documentElement.style.setProperty(`--color-${yearKey}`, color)
@@ -276,11 +285,12 @@ const Home = () => {
 				},
 				'newsletter-points'
 			)
-			// 2026 live track (Garmin inReach feed via /api/track/2026).
-			// Mapbox fetches the GeoJSON URL itself and re-fetches when we ask.
+			// 2026 live track (Garmin inReach feed via /api/track/2026). Fetched once
+			// so the same data drives the route line, the current-position pin, and
+			// the fly-to below.
 			map.current.addSource(track2026.source, {
 				type: 'geojson',
-				data: track2026.url,
+				data: { type: 'FeatureCollection', features: [] },
 			})
 			map.current.addLayer(
 				{
@@ -300,29 +310,43 @@ const Home = () => {
 				},
 				'newsletter-points' // keep the route line beneath the newsletter dots
 			)
-			map.current.addLayer({
-				id: track2026.point,
-				source: track2026.source,
-				type: 'circle',
-				filter: ['==', ['get', 'role'], 'latest'],
-				layout: {
-					visibility: show26 ? 'visible' : 'none',
-				},
-				paint: {
-					'circle-radius': ['interpolate', ['linear'], ['zoom'], 4, 3, 10, 6],
-					'circle-color': track2026.color,
-					'circle-stroke-color': '#fff',
-					'circle-stroke-width': 2,
-				},
-			})
 			document.documentElement.style.setProperty('--color-26', track2026.color)
+
+			fetch(track2026.url)
+				.then(r => r.json())
+				.then(geo => {
+					if (!map.current) return
+					map.current.getSource(track2026.source)?.setData(geo)
+
+					const latest = geo.features?.find(f => f.properties?.role === 'latest')
+					if (!latest) return
+					const coord = latest.geometry.coordinates
+
+					// Current-position pin with a "how long ago" popup.
+					const el = document.createElement('div')
+					el.className = 'latest-pin'
+					el.innerHTML = PIN_SVG
+					el.style.color = track2026.color
+					el.setAttribute('aria-label', 'Madison’s most recent position')
+					if (!show26) el.style.display = 'none'
+					latestMarker.current = new mapboxgl.Marker({ element: el, anchor: 'bottom' })
+						.setLngLat(coord)
+						.setPopup(
+							new mapboxgl.Popup({ offset: 28, className: 'popup' }).setHTML(
+								`<div class="latest-popup"><strong>Madison was here</strong><span>${relativeTime(latest.properties.time)}</span></div>`
+							)
+						)
+						.addTo(map.current)
+
+					// Bring the viewport to her current position on load.
+					map.current.flyTo({ center: coord, zoom: Math.max(map.current.getZoom(), 8.5), duration: 3000 })
+				})
+				.catch(() => {})
 
 			map.current.on('click', 'newsletter-points-hidden', function (e) {
 				// Copy coordinates array.
 				const coordinates = e.features[0].geometry.coordinates.slice()
-				const props = e.features[0].properties
-				// console.log({ props })
-				const { Mile, Link } = props
+				const { Mile, Link } = e.features[0].properties
 
 				// Ensure that if the map is zoomed out such that multiple
 				// copies of the feature are visible, the popup appears
@@ -397,7 +421,7 @@ const Home = () => {
 				<div id="toggle-26">
 					<button
 						className={`mapboxgl-ctrl-year year-visible-${show26} year-26`}
-						onClick={() => toggleLayers([Layers.Madi2026, track2026.point], setShow26)}
+						onClick={() => toggleLayer(Layers.Madi2026, setShow26)}
 					>
 						<EyeToggle visible={show26} />
 						<>2026</>
@@ -434,6 +458,7 @@ const Home = () => {
 					<button
 						className={`mapboxgl-ctrl-toggle toggle-eye visible-${showNewslettersLayer}`}
 						onClick={() => toggleLayers(['newsletter-points', 'newsletter-points-hidden'], setShowNewslettersLayer)}
+						aria-label="Toggle newsletter markers"
 					>
 						<EyeToggle visible={showNewslettersLayer} />
 						<ColorCircle />
@@ -449,6 +474,7 @@ const Home = () => {
 						<button
 							className={`mapboxgl-ctrl-toggle toggle-eye visible-${showPhotosLayer}`}
 							onClick={() => toggleLayers(['photo-points'], setShowPhotosLayer)}
+							aria-label="Toggle photo markers"
 						>
 							<EyeToggle visible={showPhotosLayer} />
 
@@ -464,7 +490,7 @@ const Home = () => {
 				</div>
 				{/* RIGHT CONTROLS */}
 				<div id="button-reset">
-					<button className="" onClick={() => reset()}>
+					<button className="" onClick={() => reset()} aria-label="Reset map view">
 						<span className="mapboxgl-ctrl-icon madi-icon">
 							<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
 								<path d="M48.5 224H40c-13.3 0-24-10.7-24-24V72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8H48.5z" />
@@ -474,7 +500,7 @@ const Home = () => {
 				</div>
 				{/* COPY */}
 				<div id="button-copy">
-					<button className="" onClick={copyValues}>
+					<button className="" onClick={copyValues} aria-label="Copy map position">
 						<span className="mapboxgl-ctrl-icon madi-icon">
 							<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
 								<path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z" />
@@ -484,10 +510,10 @@ const Home = () => {
 				</div>
 			</div>
 			{/* MAP */}
-			<div ref={mapContainer} className="map-container" />
+			<div ref={mapContainer} className="map-container" role="application" aria-label="Map of Madison’s Pacific Crest Trail hikes" />
 
 			{/* NEWSLETTERS */}
-			{showNewslettersDialog && <NewsletterDialog open />}
+			{showNewslettersDialog && <NewsletterDialog open onClose={() => setShowNewslettersDialog(false)} />}
 
 			{/* COOL STUFF */}
 			{showCoolStuffDialog && <CoolStuffDialog open map={map} onClick={() => setShowCoolStuffDialog(false)} />}
