@@ -48,7 +48,9 @@ const track2026 = {
 
 // Pin marker for Madison's most recent (delay-safe) position. Path is the
 // FontAwesome location-dot (same shape as the old LocationDot component).
-const PIN_SVG = `<svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>`
+// viewBox is padded (path spans 0..384 / 0..512) so the thick outline stroke
+// isn't clipped at the top curve and bottom tip.
+const PIN_SVG = `<svg viewBox="-40 -40 464 592" overflow="visible" xmlns="http://www.w3.org/2000/svg"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>`
 
 // Human-friendly "how long ago" for the latest-position popup. In production the
 // underlying fix is already >=3 days old (safety delay).

@@ -113,10 +113,11 @@ body,
 
 /* Current-position pin (2026 live track) */
 .latest-pin {
-	width: 30px;
-	height: 30px;
+	width: 42px;
+	height: 42px;
 	cursor: pointer;
-	filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+	/* Soft ground shadow so the pin lifts off the map on any terrain. */
+	filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.55));
 	transition: transform 0.1s ease;
 }
 .latest-pin:hover {
@@ -125,9 +126,11 @@ body,
 .latest-pin svg {
 	width: 100%;
 	height: 100%;
+	overflow: visible;
 	fill: currentColor;
-	stroke: #fff;
-	stroke-width: 18px;
+	/* Thick dark outline for contrast against light terrain. */
+	stroke: #1a1a1a;
+	stroke-width: 66px;
 	paint-order: stroke;
 }
 .latest-popup {
