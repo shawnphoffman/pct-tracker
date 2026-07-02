@@ -128,9 +128,10 @@ const Home = () => {
 	const [show23, setShow23] = useState(true)
 	const [show19, setShow19] = useState(false)
 	const [show18, setShow18] = useState(true)
-	// Trail Crew + Misc: PCT-adjacent tracks drawn as PCT segments (static GeoJSON, lazy-loaded).
-	const [showTrailCrew, setShowTrailCrew] = useState(false)
-	const [showMisc, setShowMisc] = useState(false)
+	// Trail Crew + Misc: PCT-adjacent tracks drawn as PCT segments (static GeoJSON).
+	// Default on; eager-loaded on map load (see the load handler).
+	const [showTrailCrew, setShowTrailCrew] = useState(true)
+	const [showMisc, setShowMisc] = useState(true)
 	const [showUnknown, setShowUnknown] = useState(false)
 	const [showIncomplete, setShowIncomplete] = useState(false)
 	const [showLightbox, setShowLightbox] = useState(false)
@@ -459,6 +460,17 @@ const Home = () => {
 				},
 				'newsletter-points'
 			)
+
+			// Trail crew + misc default to visible, so eager-load their data here
+			// (the lazy fetch in toggleLazyLine only fires on a toggle click).
+			if (showTrailCrew) {
+				trailCrewLoaded.current = true
+				fetch(trackTrailCrew.url).then(r => r.json()).then(geo => map.current?.getSource(trackTrailCrew.source)?.setData(geo)).catch(() => {})
+			}
+			if (showMisc) {
+				miscLoaded.current = true
+				fetch(trackMisc.url).then(r => r.json()).then(geo => map.current?.getSource(trackMisc.source)?.setData(geo)).catch(() => {})
+			}
 
 			// LOCAL-ONLY: the Unknown debug layer + route-id hover popovers.
 			if (isLocal) {
