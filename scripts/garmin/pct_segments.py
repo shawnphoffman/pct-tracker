@@ -58,6 +58,36 @@ def intervals(miles):
         else: out.append([m, m])
     return [iv for iv in out if iv[1] > iv[0]]
 
+# PCT centerline pieces (from centerline.mjs): real trail geometry so segments
+# hug the trail instead of chording between 0.5-mi markers. Each piece is a
+# per-tile LineString in vertex order; tag each vertex with its nearest mile.
+def nearest_mile(lon, lat):
+    base = round(lat * 10); best = None; bd = 1e9
+    for k in (base-1, base, base+1):
+        for mlon, mlat, mile in idx.get(k, []):
+            d = hav(lon, lat, mlon, mlat)
+            if d < bd: bd = d; best = mile
+    return best   # centerline is on-trail, so no distance cap
+CL_PATH = f'{REPO}/garmin-export/.centerline.json'
+_pieces_mile = []
+if os.path.exists(CL_PATH):
+    for piece in json.load(open(CL_PATH)):
+        _pieces_mile.append([(lon, lat, nearest_mile(lon, lat)) for lon, lat in piece])
+
+def centerline_runs(a, b):
+    """Maximal runs of consecutive centerline vertices with mile in [a, b]."""
+    runs = []
+    for piece in _pieces_mile:
+        cur = []
+        for lon, lat, mile in piece:
+            if mile is not None and a <= mile <= b:
+                cur.append([lon, lat])
+            else:
+                if len(cur) >= 2: runs.append(cur)
+                cur = []
+        if len(cur) >= 2: runs.append(cur)
+    return runs
+
 def perp(p, a, b):
     dx, dy = b[0]-a[0], b[1]-a[1]
     if dx == 0 and dy == 0: return ((p[0]-a[0])**2 + (p[1]-a[1])**2) ** 0.5
@@ -108,11 +138,14 @@ def convert(src, dst, role, mode):
             miles = {snap(lon, lat) for lon, lat in pts}; miles.discard(None)
             ivs = intervals(miles)
             for a, b in ivs:
-                coords = [[round(lo, 5), round(la, 5)] for mile, (lo, la) in spine if a <= mile <= b]
-                if len(coords) >= 2:
+                runs = centerline_runs(a, b) if _pieces_mile else []
+                if not runs:   # fallback: connect the 0.5-mi markers
+                    coords = [[round(lo, 5), round(la, 5)] for mile, (lo, la) in spine if a <= mile <= b]
+                    if len(coords) >= 2: runs = [coords]
+                for run in runs:
                     feats.append({'type': 'Feature',
                                   'properties': {'role': role, 'id': rid, 'fromMile': a, 'toMile': b},
-                                  'geometry': {'type': 'LineString', 'coordinates': coords}})
+                                  'geometry': {'type': 'LineString', 'coordinates': rdp(run, TOL)}})
             index[rid] = {'date': date, 'miles': [[a, b] for a, b in ivs]}
     json.dump({'type': 'FeatureCollection', 'features': feats}, open(dst, 'w'), separators=(',', ':'))
 

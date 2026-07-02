@@ -26,8 +26,12 @@ pipeline auto-selects the newest `explore_*.gpx`.
 4. **`pct_segments.py`** writes the map's web layers, one feature per track with
    a stable route id (`misc-03`, `trailcrew-01`, ...):
    - `snap` mode (`trail-crew`, `misc`) draws each track's covered mile range(s)
-     as slices of the PCT centerline (back-and-forth/spurs/driving drop away) ->
-     `public/trail-crew.geojson`, `public/misc.geojson` (committed + served).
+     as slices of the real PCT centerline (back-and-forth/spurs/driving drop
+     away, and the line hugs the trail's curves) -> `public/trail-crew.geojson`,
+     `public/misc.geojson` (committed + served). The centerline geometry comes
+     from `centerline.mjs` (harvested from tileset `shawnhoffman.8efdsxdm`,
+     scoped to the buckets' bbox, cached at `garmin-export/.centerline.json`);
+     it falls back to connecting 0.5-mi markers if that cache is absent.
 5. **`unknown_layer.py`** builds the local-only debug layer. Garmin's junk
    aggregate ("Madison Sites (0)": 432 points strung across 2018-2022 with huge
    teleports) is split at its distance/time gaps into ~40 small dated logical

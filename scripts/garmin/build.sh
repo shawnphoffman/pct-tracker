@@ -15,6 +15,10 @@ for f in garmin-export/buckets/*.gpx; do
 done
 [ "$fail" = 0 ] && echo "verified: all buckets clean" || { echo "PII LEAK - do not commit/expose"; exit 1; }
 
+# Harvest the real PCT centerline around these buckets so the segments hug the
+# trail (instead of chording between 0.5-mi markers). Cached; scoped to bbox.
+node scripts/garmin/centerline.mjs
+
 # Web layers: the two PCT-adjacent buckets drawn as clean PCT-trail segments
 # (follows the mile marks; drops back-and-forth/spurs). These land in public/
 # and are committed + served on the site.
