@@ -75,7 +75,7 @@ const trackMisc = {
 	source: 'track-misc',
 	line: 'misc-line',
 	url: '/misc.geojson',
-	color: '#db2777',
+	color: '#f472b6',
 }
 
 // Unknown: LOCAL-ONLY debug layer (the junk aggregate track, raw geometry).
