@@ -46,6 +46,15 @@ const track2026 = {
 	color: 'hsl(28, 100%, 52%)',
 }
 
+// Start of each PCT section (mile-marker coords from the shawnhoffman.32639qah
+// tileset; SoCal omitted since it's mile 0). Matches the progress region bounds.
+const SECTION_STARTS = [
+	{ label: 'Central', coord: [-118.03951, 35.65813] },
+	{ label: 'NorCal', coord: [-120.32999, 39.33788] },
+	{ label: 'Oregon', coord: [-122.61077, 42.07058] },
+	{ label: 'Washington', coord: [-121.88739, 45.65929] },
+]
+
 // Pin marker for Madison's most recent (delay-safe) position. Path is the
 // FontAwesome location-dot (same shape as the old LocationDot component).
 // viewBox is padded (path spans 0..384 / 0..512) so the thick outline stroke
@@ -62,15 +71,17 @@ const Home = () => {
 	const map = useRef(null)
 	const latestMarker = useRef(null)
 	const [showNewslettersDialog, setShowNewslettersDialog] = useState(false)
-	const [showNewslettersLayer, setShowNewslettersLayer] = useState(true)
+	const [showNewslettersLayer, setShowNewslettersLayer] = useState(false)
 	const [showCoolStuffDialog, setShowCoolStuffDialog] = useState(false)
-	const [showPhotosLayer, setShowPhotosLayer] = useState(true)
+	const [showPhotosLayer, setShowPhotosLayer] = useState(false)
 	const [show26, setShow26] = useState(true)
 	const [show23, setShow23] = useState(true)
 	const [show19, setShow19] = useState(false)
 	const [show18, setShow18] = useState(true)
 	const [showLightbox, setShowLightbox] = useState(false)
 	const [imageOverride, setImageOverride] = useState(null)
+	const [progress, setProgress] = useState(null)
+	const [progressOpen, setProgressOpen] = useState(true)
 	const searchParams = useSearchParams()
 
 	const isDebug = !!searchParams.get('debug')
@@ -303,11 +314,20 @@ const Home = () => {
 			)
 			document.documentElement.style.setProperty('--color-26', track2026.color)
 
+			// Section-start markers: labeled dots at the start of each PCT section.
+			SECTION_STARTS.forEach(s => {
+				const el = document.createElement('div')
+				el.className = 'section-marker'
+				el.innerHTML = `<span class="section-dot"></span><span class="section-label">${s.label}</span>`
+				new mapboxgl.Marker({ element: el, anchor: 'left' }).setLngLat(s.coord).addTo(map.current)
+			})
+
 			fetch(track2026.url)
 				.then(r => r.json())
 				.then(geo => {
 					if (!map.current) return
 					map.current.getSource(track2026.source)?.setData(geo)
+					setProgress(geo.progress || null)
 
 					const latest = geo.features?.find(f => f.properties?.role === 'latest')
 					if (!latest) return
@@ -372,7 +392,7 @@ const Home = () => {
 							minzoom: 4.5,
 							paint: {
 								'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
-								'circle-color': 'hsl(190, 100%, 50%)',
+								'circle-color': 'hsl(330, 68%, 52%)',
 								'circle-stroke-color': 'hsl(64, 100%, 0%)',
 								'circle-stroke-width': ['step', ['zoom'], 1, 5, 2, 8, 3],
 							},
@@ -498,6 +518,46 @@ const Home = () => {
 			</div>
 			{/* MAP */}
 			<div ref={mapContainer} className="map-container" role="application" aria-label="Map of Madison’s Pacific Crest Trail hikes" />
+
+			{/* LIFETIME PCT PROGRESS: miles/percent covered across all years, snapped
+			    to the trail and deduped so a mile hiked twice counts once.
+			    Collapsible via the chart icon in the header. */}
+			{progress && (
+				<div className={`progress-panel${progressOpen ? ' open' : ''}`}>
+					<button
+						className="progress-head"
+						onClick={() => setProgressOpen(o => !o)}
+						aria-expanded={progressOpen}
+						aria-label="Toggle PCT progress details"
+					>
+						<svg className="progress-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+							<path d="M32 32c17.7 0 32 14.3 32 32V400c0 8.8 7.2 16 16 16H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H80c-44.2 0-80-35.8-80-80V64C0 46.3 14.3 32 32 32zm96 288c-17.7 0-32-14.3-32-32V192c0-17.7 14.3-32 32-32s32 14.3 32 32v96c0 17.7-14.3 32-32 32zm128-32c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32s32 14.3 32 32V288zm64 32c-17.7 0-32-14.3-32-32V256c0-17.7 14.3-32 32-32s32 14.3 32 32v32c0 17.7-14.3 32-32 32zm128-32c0 17.7-14.3 32-32 32s-32-14.3-32-32V160c0-17.7 14.3-32 32-32s32 14.3 32 32V288z" />
+						</svg>
+						<span className="progress-title">PCT progress</span>
+						<span className="progress-pct">{progress.coveredPercent}%</span>
+					</button>
+					<div className="progress-body">
+						<div className="progress-body-inner">
+							<div className="progress-sub">
+								{progress.coveredMiles} of {progress.total} mi
+							</div>
+							<div className="progress-regions">
+								{progress.regions.map(r => (
+									<div className="progress-region" key={r.name}>
+										<div className="progress-region-top">
+											<span>{r.name}</span>
+											<span>{r.percent}%</span>
+										</div>
+										<div className="progress-bar">
+											<div className="progress-bar-fill" style={{ width: `${Math.min(100, r.percent)}%` }} />
+										</div>
+									</div>
+								))}
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
 
 			{/* NEWSLETTERS */}
 			{showNewslettersDialog && <NewsletterDialog open onClose={() => setShowNewslettersDialog(false)} />}
