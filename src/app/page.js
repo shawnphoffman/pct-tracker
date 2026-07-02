@@ -43,8 +43,12 @@ const track2026 = {
 	source: 'track-2026',
 	line: Layers.Madi2026,
 	url: '/api/track/2026',
-	color: 'hsl(28, 100%, 52%)',
+	color: '#84cc16',
 }
+
+// Distinct year colours; override the older Mapbox-style line colours in code.
+// Keys are the 2-digit year suffix the toggles use.
+const YEAR_COLORS = { 26: '#84cc16', 23: '#dc2626', 19: '#2563eb', 18: '#9333ea' }
 
 // Start of each PCT section (mile-marker coords from the shawnhoffman.32639qah
 // tileset; SoCal omitted since it's mile 0). Matches the progress region bounds.
@@ -78,10 +82,13 @@ const Home = () => {
 	const [show23, setShow23] = useState(true)
 	const [show19, setShow19] = useState(false)
 	const [show18, setShow18] = useState(true)
+	// Trail Crew: placeholder toggle (TBD). Will eventually control multi-year
+	// trail-crew project tracks that count toward coverage.
+	const [showTrailCrew, setShowTrailCrew] = useState(false)
 	const [showLightbox, setShowLightbox] = useState(false)
 	const [imageOverride, setImageOverride] = useState(null)
 	const [progress, setProgress] = useState(null)
-	const [progressOpen, setProgressOpen] = useState(true)
+	const [progressOpen, setProgressOpen] = useState(false)
 	const searchParams = useSearchParams()
 
 	const isDebug = !!searchParams.get('debug')
@@ -176,6 +183,9 @@ const Home = () => {
 		const control18 = new CustomControl({
 			container: document.getElementById('toggle-18'),
 		})
+		const controlTrailCrew = new CustomControl({
+			container: document.getElementById('toggle-trailcrew'),
+		})
 		const controlNewsletter = new CustomControl({
 			container: document.getElementById('toggle-newsletter'),
 		})
@@ -212,6 +222,7 @@ const Home = () => {
 			.addControl(control23, 'top-left')
 			.addControl(control19, 'top-left')
 			.addControl(control18, 'top-left')
+			.addControl(controlTrailCrew, 'top-left')
 			.addControl(controlNewsletter, 'top-left')
 			.addControl(buttonReset, 'top-right')
 
@@ -236,8 +247,9 @@ const Home = () => {
 					if (!layer.id.includes('2019')) {
 						map.current.setLayoutProperty(layer.id, 'visibility', 'visible')
 					}
-					const color = layer.paint['line-color']
 					const yearKey = layer.id.slice(-2)
+					const color = YEAR_COLORS[yearKey] || layer.paint['line-color']
+					map.current.setPaintProperty(layer.id, 'line-color', color)
 					document.documentElement.style.setProperty(`--color-${yearKey}`, color)
 				}
 			})
@@ -261,7 +273,7 @@ const Home = () => {
 					minzoom: 4.5,
 					paint: {
 						'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
-						'circle-color': 'hsl(60, 99%, 43%)',
+						'circle-color': '#eab308',
 						'circle-stroke-color': 'hsl(64, 100%, 0%)',
 						'circle-stroke-width': ['step', ['zoom'], 1, 5, 2, 8, 3],
 					},
@@ -392,7 +404,7 @@ const Home = () => {
 							minzoom: 4.5,
 							paint: {
 								'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
-								'circle-color': 'hsl(330, 68%, 52%)',
+								'circle-color': '#14b8a6',
 								'circle-stroke-color': 'hsl(64, 100%, 0%)',
 								'circle-stroke-width': ['step', ['zoom'], 1, 5, 2, 8, 3],
 							},
@@ -453,6 +465,14 @@ const Home = () => {
 					<button className={`mapboxgl-ctrl-year year-visible-${show18} year-18`} onClick={() => toggleLayer(Layers.Madi2018, setShow18)}>
 						<EyeToggle visible={show18} />
 						<>2018</>
+						<ColorCircle />
+					</button>
+				</div>
+				{/* TRAIL CREW (placeholder — not wired to a layer yet) */}
+				<div id="toggle-trailcrew">
+					<button className={`mapboxgl-ctrl-year year-visible-${showTrailCrew} year-tc`} onClick={() => setShowTrailCrew(v => !v)}>
+						<EyeToggle visible={showTrailCrew} />
+						<>Trail Crew</>
 						<ColorCircle />
 					</button>
 				</div>
@@ -533,7 +553,7 @@ const Home = () => {
 						<svg className="progress-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 							<path d="M32 32c17.7 0 32 14.3 32 32V400c0 8.8 7.2 16 16 16H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H80c-44.2 0-80-35.8-80-80V64C0 46.3 14.3 32 32 32zm96 288c-17.7 0-32-14.3-32-32V192c0-17.7 14.3-32 32-32s32 14.3 32 32v96c0 17.7-14.3 32-32 32zm128-32c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32s32 14.3 32 32V288zm64 32c-17.7 0-32-14.3-32-32V256c0-17.7 14.3-32 32-32s32 14.3 32 32v32c0 17.7-14.3 32-32 32zm128-32c0 17.7-14.3 32-32 32s-32-14.3-32-32V160c0-17.7 14.3-32 32-32s32 14.3 32 32V288z" />
 						</svg>
-						<span className="progress-title">PCT progress</span>
+						<span className="progress-title">PCT Progress</span>
 						<span className="progress-pct">{progress.coveredPercent}%</span>
 					</button>
 					<div className="progress-body">

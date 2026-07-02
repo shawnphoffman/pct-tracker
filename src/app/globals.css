@@ -84,13 +84,24 @@ body,
 .mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-18 svg:last-of-type {
 	fill: var(--color-18);
 }
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-tc svg:last-of-type {
+	fill: #f97316;
+}
 #toggle-newsletter.mapboxgl-ctrl-group button.mapboxgl-ctrl-toggle svg:last-of-type {
-	fill: hsl(190, 100%, 50%);
+	fill: #eab308;
 	margin-left: 4px;
 }
 #toggle-photos.mapboxgl-ctrl-group button.mapboxgl-ctrl-toggle svg:last-of-type {
-	fill: hsl(330, 68%, 52%);
+	fill: #14b8a6;
 	margin-left: 4px;
+}
+
+/* Black border on all legend colour swatches */
+.color-circle {
+	stroke: #000;
+	stroke-width: 60px;
+	paint-order: stroke;
+	overflow: visible;
 }
 
 #toggle-newsletter,
@@ -147,7 +158,8 @@ body,
 
 /* Section-start markers (Central / NorCal / Oregon / Washington) */
 .section-marker {
-	display: flex;
+	/* Temporarily hidden — labels need rework. Set back to flex to re-enable. */
+	display: none;
 	align-items: center;
 	gap: 5px;
 	pointer-events: none;
@@ -175,9 +187,9 @@ body,
 	bottom: 34px;
 	right: 10px;
 	z-index: 2;
-	width: 220px;
+	width: fit-content;
 	max-width: calc(100vw - 20px);
-	padding: 4px 12px;
+	padding: 0 12px;
 	background: rgba(255, 255, 255, 0.95);
 	border-radius: 8px;
 	box-shadow: var(--shadow);
@@ -190,7 +202,7 @@ body,
 	align-items: center;
 	gap: 8px;
 	width: 100%;
-	padding: 6px 0;
+	padding: 10px 0;
 	border: none;
 	background: transparent;
 	cursor: pointer;
@@ -218,21 +230,20 @@ body,
 	font-size: 1.15rem;
 	color: var(--accent);
 }
-/* Collapse/expand: animate the body height with a grid-rows trick (no fixed
-   height needed) plus a fade. */
+/* Percentage only shows when expanded. */
+.progress-panel:not(.open) .progress-pct {
+	display: none;
+}
+/* Collapsed: the body is removed from layout so the panel hugs the compact head
+   (no more empty gap); expanded gives the region bars a fixed width. */
 .progress-body {
-	display: grid;
-	grid-template-rows: 0fr;
-	opacity: 0;
-	transition: grid-template-rows 0.32s ease, opacity 0.32s ease;
+	display: none;
 }
 .progress-panel.open .progress-body {
-	grid-template-rows: 1fr;
-	opacity: 1;
+	display: block;
 }
 .progress-body-inner {
-	overflow: hidden;
-	min-height: 0;
+	width: 208px;
 	padding-bottom: 10px;
 }
 .progress-sub {
