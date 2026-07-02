@@ -340,11 +340,11 @@ const Home = () => {
 					const color = YEAR_COLORS[yearKey] || layer.paint['line-color']
 					map.current.setPaintProperty(layer.id, 'line-color', color)
 					document.documentElement.style.setProperty(`--color-${yearKey}`, color)
-					// The Studio style's per-year filters hide some named track features;
-					// the 2023 one wrongly hides a real segment (mi 1100-1103). Normalize
-					// every year to hide only the junk aggregate/unnamed tracks so all real
-					// segments render.
-					map.current.setFilter(layer.id, ['match', ['get', 'name'], ['', 'Madison Sites (0)'], false, true])
+					// Do NOT clear the style's per-year filters: the 2023 filter hides the
+					// track feature `Madison Sites (23344013)` on purpose because it runs off
+					// the trail to Madison's HOME. The mi 1100-1103 gap is the cost of that;
+					// the real fix is trimming that track at the trailhead (in Studio, or by
+					// serving our own sanitized 2023 track). PRIVACY: never reveal it.
 				}
 			})
 
