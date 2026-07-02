@@ -46,6 +46,19 @@ const track2026 = {
 	color: '#84cc16',
 }
 
+// 2023 is served from our OWN sanitized track (public/pct-2023.geojson, generated
+// by scripts/garmin/year_track.py) instead of the Mapbox tileset. The tileset
+// hides a whole track feature to protect Madison's home, which left a gap at
+// mi 1100-1103; our version is clipped to the trail corridor (home/town spurs
+// dropped) so it's gapless AND home-safe. The tileset 'PCT - 2023' layer stays
+// hidden. Colour matches YEAR_COLORS[23].
+const track2023 = {
+	source: 'track-2023',
+	line: 'pct-2023-line',
+	url: '/pct-2023.geojson',
+	color: '#dc2626',
+}
+
 // Trail-crew project tracks (2020-2022 + 2026 pre-season), a static sanitized
 // GeoJSON in public/ (geometry only, no timestamps). Generated from the Garmin
 // export by scripts/garmin/bucket_to_geojson.py; lazy-loaded on first toggle.
@@ -115,6 +128,7 @@ const Home = () => {
 	const mapContainer = useRef(null)
 	const map = useRef(null)
 	const latestMarker = useRef(null)
+	const year2023Loaded = useRef(false)
 	const trailCrewLoaded = useRef(false)
 	const miscLoaded = useRef(false)
 	const unknownLoaded = useRef(false)
@@ -333,7 +347,9 @@ const Home = () => {
 			// capture each year's line colour for the toggle swatches.
 			map.current.getStyle().layers.forEach(layer => {
 				if (layer.id.includes('PCT -')) {
-					if (!layer.id.includes('2019')) {
+					// 2019 starts hidden; 2023's tileset layer stays hidden for good (we
+					// render 2023 from our own home-safe GeoJSON instead - see track2023).
+					if (!layer.id.includes('2019') && !layer.id.includes('2023')) {
 						map.current.setLayoutProperty(layer.id, 'visibility', 'visible')
 					}
 					const yearKey = layer.id.slice(-2)
@@ -419,6 +435,30 @@ const Home = () => {
 				'newsletter-points' // keep the route line beneath the newsletter dots
 			)
 			document.documentElement.style.setProperty('--color-26', track2026.color)
+
+			// 2023 line from our own home-safe GeoJSON (replaces the hidden tileset
+			// layer). Default on, so eager-load it below.
+			map.current.addSource(track2023.source, {
+				type: 'geojson',
+				data: { type: 'FeatureCollection', features: [] },
+			})
+			map.current.addLayer(
+				{
+					id: track2023.line,
+					source: track2023.source,
+					type: 'line',
+					layout: { 'line-join': 'round', 'line-cap': 'round', visibility: show23 ? 'visible' : 'none' },
+					paint: {
+						'line-color': track2023.color,
+						'line-width': ['interpolate', ['linear'], ['zoom'], 4, 1.5, 10, 3.5],
+					},
+				},
+				'newsletter-points'
+			)
+			if (show23) {
+				year2023Loaded.current = true
+				fetch(track2023.url).then(r => r.json()).then(geo => map.current?.getSource(track2023.source)?.setData(geo)).catch(() => {})
+			}
 
 			// Trail-crew line: empty source now, data fetched lazily by toggleTrailCrew.
 			map.current.addSource(trackTrailCrew.source, {
@@ -656,7 +696,7 @@ const Home = () => {
 				})
 			}
 		})
-	}, [isDebug, isLocal, showNewslettersLayer, showPhotosLayer, show26, showTrailCrew, showMisc, showUnknown, showIncomplete])
+	}, [isDebug, isLocal, showNewslettersLayer, showPhotosLayer, show23, show26, showTrailCrew, showMisc, showUnknown, showIncomplete])
 
 	return (
 		<div>
@@ -674,7 +714,7 @@ const Home = () => {
 					</button>
 				</div>
 				<div id="toggle-23">
-					<button className={`mapboxgl-ctrl-year year-visible-${show23} year-23`} onClick={() => toggleLayer(Layers.Madi2023, setShow23)}>
+					<button className={`mapboxgl-ctrl-year year-visible-${show23} year-23`} onClick={() => toggleLazyLine(track2023, year2023Loaded, setShow23)}>
 						<EyeToggle visible={show23} />
 						<>2023</>
 						<ColorCircle />

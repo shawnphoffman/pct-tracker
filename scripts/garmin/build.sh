@@ -22,6 +22,10 @@ node scripts/garmin/centerline.mjs
 # Web layers: the two PCT-adjacent buckets drawn as clean PCT-trail segments
 # (follows the mile marks; drops back-and-forth/spurs). These land in public/
 # and are committed + served on the site.
+# 2023: our own home-safe track (clipped to the trail corridor; town/home spurs
+# dropped) - replaces the Mapbox tileset's 2023 layer, which hid a whole track to
+# protect the home and left a gap at mi 1100-1103. Committed + served.
+python3 scripts/garmin/year_track.py garmin-export/buckets/pct-2023.gpx public/pct-2023.geojson track2023
 python3 scripts/garmin/pct_segments.py garmin-export/buckets/trail-crew.gpx public/trail-crew.geojson trailcrew
 python3 scripts/garmin/pct_segments.py garmin-export/buckets/misc.gpx       public/misc.geojson       misc
 # Unknown: LOCAL-ONLY debug layer. Splits Garmin's junk aggregate track at its
