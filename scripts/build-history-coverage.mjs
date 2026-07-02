@@ -25,10 +25,13 @@ if (!TOKEN) {
 }
 
 const MARKER = { tileset: 'shawnhoffman.32639qah', layer: 'Full_PCT_Mile_Marker_shapefil-9o39kw', z: 10, bounds: [-123.258, 32.5958, -116.4127, 49.058] }
+// 2023 is NOT harvested here anymore: its coverage now comes from the Garmin
+// export bucket via scripts/garmin/bucket_coverage.py (pct-export-coverage.json),
+// so the % matches the 2023 line we draw from the same export. Only 2018/2019
+// (which have no export-bucket coverage of their own) still come from tilesets.
 const YEARS = [
 	{ year: 2018, tileset: 'shawnhoffman.8f35lgg6', layer: 'PCT_-_Madison_-_2018-12dy82', z: 12, bounds: [-119.34, 36.56, -118.06, 37.88] },
 	{ year: 2019, tileset: 'shawnhoffman.0psf6y5h', layer: 'tracks', z: 13, bounds: [-119.75, 37.88, -119.36, 38.33] },
-	{ year: 2023, tileset: 'shawnhoffman.c9bih0kj', layer: 'tracks-brwydz', z: 10, bounds: [-123.26, 32.59, -116.41, 45.66] },
 ]
 const FILL_GAP = 3 // miles: bridge sorted snapped miles within this gap (dense track sampling)
 const MAX_SNAP_KM = 0.5 // >500m off any marker = not on trail, skip the vertex

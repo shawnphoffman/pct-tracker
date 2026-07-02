@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Compute covered PCT mile-intervals for the export buckets (2026, trail-crew,
-misc) by snapping their tracks to the mile markers, and write them to
+"""Compute covered PCT mile-intervals for the export buckets (2023, 2026,
+trail-crew, misc) by snapping their tracks to the mile markers, and write them to
 src/data/pct-export-coverage.json.
 
 This is unioned into the coverage/progress calc (src/app/api/track/[year]) and
 the gap generator (scripts/build-gaps.mjs) alongside the tileset-derived
-pct-history-coverage.json (2018/2019/2023) - so progress % and the pending-gap /
-Incomplete list account for these too, not just the baked historical years.
+pct-history-coverage.json (2018/2019 only now) - so progress % and the pending-gap
+/ Incomplete list account for these too. 2023 moved here from the tileset so its
+coverage matches the 2023 line we draw from the same export.
 
 Note on 2026: the runtime progress calc ALSO counts 2026 live from the Garmin
 feed (current + flip-flop-aware; the union with this snapshot is idempotent). We
@@ -21,7 +22,7 @@ import xml.etree.ElementTree as ET
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 NS = '{http://www.topografix.com/GPX/1/1}'
-BUCKETS = {'2026': 'pct-2026.gpx', 'trail-crew': 'trail-crew.gpx', 'misc': 'misc.gpx'}
+BUCKETS = {'2023': 'pct-2023.gpx', '2026': 'pct-2026.gpx', 'trail-crew': 'trail-crew.gpx', 'misc': 'misc.gpx'}
 SNAP_KM = 0.5
 FILL_GAP = 3.0   # matches scripts/build-history-coverage.mjs
 
@@ -48,7 +49,7 @@ def intervals(miles):
         else: out.append([m, m])
     return [[a, b] for a, b in out if b > a]
 
-result = {'_comment': 'Covered PCT mile-intervals for the export buckets (2026/trail-crew/misc), '
+result = {'_comment': 'Covered PCT mile-intervals for the export buckets (2023/2026/trail-crew/misc), '
                       'snapped from garmin-export/buckets. Unioned into coverage + gaps alongside '
                       'pct-history-coverage.json. 2026 is also counted live from the feed at runtime; '
                       'this snapshot exists so build-time gap generation excludes her walked 2026 miles. '
