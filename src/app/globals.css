@@ -87,6 +87,18 @@ body,
 .mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-tc svg:last-of-type {
 	fill: #f97316;
 }
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-misc svg:last-of-type {
+	fill: #db2777;
+}
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-unknown svg:last-of-type {
+	fill: #facc15;
+}
+.route-id {
+	font-size: 12px;
+	font-weight: 600;
+	font-family: ui-monospace, monospace;
+	white-space: nowrap;
+}
 #toggle-newsletter.mapboxgl-ctrl-group button.mapboxgl-ctrl-toggle svg:last-of-type {
 	fill: #eab308;
 	margin-left: 4px;

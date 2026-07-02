@@ -46,6 +46,38 @@ const track2026 = {
 	color: '#84cc16',
 }
 
+// Trail-crew project tracks (2020-2022 + 2026 pre-season), a static sanitized
+// GeoJSON in public/ (geometry only, no timestamps). Generated from the Garmin
+// export by scripts/garmin/bucket_to_geojson.py; lazy-loaded on first toggle.
+const trackTrailCrew = {
+	source: 'track-trailcrew',
+	line: 'trail-crew-line',
+	url: '/trail-crew.geojson',
+	color: '#f97316',
+}
+
+// Misc: other PCT-adjacent tracks (2020-2022), also drawn as PCT segments.
+// Same static-GeoJSON + lazy-load treatment as trail crew.
+const trackMisc = {
+	source: 'track-misc',
+	line: 'misc-line',
+	url: '/misc.geojson',
+	color: '#db2777',
+}
+
+// Unknown: LOCAL-ONLY debug layer (the junk aggregate track, raw geometry).
+// public/unknown.geojson is gitignored so it never deploys; rendered only in dev.
+const trackUnknown = {
+	source: 'track-unknown',
+	line: 'unknown-line',
+	url: '/unknown.geojson',
+	color: '#facc15',
+}
+
+// Layers that get a dev-only hover popover showing the route id (for reference
+// when moving tracks between buckets).
+const HOVER_ID_LAYERS = [trackTrailCrew.line, trackMisc.line, trackUnknown.line]
+
 // Distinct year colours; override the older Mapbox-style line colours in code.
 // Keys are the 2-digit year suffix the toggles use.
 const YEAR_COLORS = { 26: '#84cc16', 23: '#dc2626', 19: '#2563eb', 18: '#9333ea' }
@@ -74,6 +106,9 @@ const Home = () => {
 	const mapContainer = useRef(null)
 	const map = useRef(null)
 	const latestMarker = useRef(null)
+	const trailCrewLoaded = useRef(false)
+	const miscLoaded = useRef(false)
+	const unknownLoaded = useRef(false)
 	const [showNewslettersDialog, setShowNewslettersDialog] = useState(false)
 	const [showNewslettersLayer, setShowNewslettersLayer] = useState(false)
 	const [showCoolStuffDialog, setShowCoolStuffDialog] = useState(false)
@@ -82,9 +117,10 @@ const Home = () => {
 	const [show23, setShow23] = useState(true)
 	const [show19, setShow19] = useState(false)
 	const [show18, setShow18] = useState(true)
-	// Trail Crew: placeholder toggle (TBD). Will eventually control multi-year
-	// trail-crew project tracks that count toward coverage.
+	// Trail Crew + Misc: PCT-adjacent tracks drawn as PCT segments (static GeoJSON, lazy-loaded).
 	const [showTrailCrew, setShowTrailCrew] = useState(false)
+	const [showMisc, setShowMisc] = useState(false)
+	const [showUnknown, setShowUnknown] = useState(false)
 	const [showLightbox, setShowLightbox] = useState(false)
 	const [imageOverride, setImageOverride] = useState(null)
 	const [progress, setProgress] = useState(null)
@@ -92,6 +128,9 @@ const Home = () => {
 	const searchParams = useSearchParams()
 
 	const isDebug = !!searchParams.get('debug')
+	// Local-only tooling: the Unknown debug layer + the route-id hover popovers.
+	// Never on the deployed (production) site. process.env.NODE_ENV is inlined by Next.
+	const isLocal = process.env.NODE_ENV !== 'production'
 
 	useEffect(() => {
 		if (showLightbox === false) {
@@ -126,6 +165,24 @@ const Home = () => {
 		},
 		[toggleLayer]
 	)
+
+	// Toggle a lazy static-GeoJSON line, fetching its data the first time it's shown.
+	const toggleLazyLine = useCallback(
+		(track, loadedRef, stateCallback) => {
+			if (!loadedRef.current) {
+				loadedRef.current = true
+				fetch(track.url)
+					.then(r => r.json())
+					.then(geo => map.current?.getSource(track.source)?.setData(geo))
+					.catch(() => {})
+			}
+			toggleLayer(track.line, stateCallback)
+		},
+		[toggleLayer]
+	)
+	const toggleTrailCrew = useCallback(() => toggleLazyLine(trackTrailCrew, trailCrewLoaded, setShowTrailCrew), [toggleLazyLine])
+	const toggleMisc = useCallback(() => toggleLazyLine(trackMisc, miscLoaded, setShowMisc), [toggleLazyLine])
+	const toggleUnknown = useCallback(() => toggleLazyLine(trackUnknown, unknownLoaded, setShowUnknown), [toggleLazyLine])
 
 	const copyValues = useCallback(() => {
 		const values = {
@@ -186,6 +243,12 @@ const Home = () => {
 		const controlTrailCrew = new CustomControl({
 			container: document.getElementById('toggle-trailcrew'),
 		})
+		const controlMisc = new CustomControl({
+			container: document.getElementById('toggle-misc'),
+		})
+		const controlUnknown = new CustomControl({
+			container: document.getElementById('toggle-unknown'),
+		})
 		const controlNewsletter = new CustomControl({
 			container: document.getElementById('toggle-newsletter'),
 		})
@@ -223,11 +286,16 @@ const Home = () => {
 			.addControl(control19, 'top-left')
 			.addControl(control18, 'top-left')
 			.addControl(controlTrailCrew, 'top-left')
+			.addControl(controlMisc, 'top-left')
 			.addControl(controlNewsletter, 'top-left')
 			.addControl(buttonReset, 'top-right')
 
 		if (photosEnabled) {
 			map.current.addControl(controlPhotos, 'top-left')
+		}
+
+		if (isLocal) {
+			map.current.addControl(controlUnknown, 'top-left')
 		}
 
 		if (isDebug) {
@@ -325,6 +393,89 @@ const Home = () => {
 				'newsletter-points' // keep the route line beneath the newsletter dots
 			)
 			document.documentElement.style.setProperty('--color-26', track2026.color)
+
+			// Trail-crew line: empty source now, data fetched lazily by toggleTrailCrew.
+			map.current.addSource(trackTrailCrew.source, {
+				type: 'geojson',
+				data: { type: 'FeatureCollection', features: [] },
+			})
+			map.current.addLayer(
+				{
+					id: trackTrailCrew.line,
+					source: trackTrailCrew.source,
+					type: 'line',
+					layout: {
+						'line-join': 'round',
+						'line-cap': 'round',
+						visibility: showTrailCrew ? 'visible' : 'none',
+					},
+					paint: {
+						'line-color': trackTrailCrew.color,
+						'line-width': ['interpolate', ['linear'], ['zoom'], 4, 1.5, 10, 3.5],
+					},
+				},
+				'newsletter-points'
+			)
+
+			// Misc line: same lazy pattern as trail crew.
+			map.current.addSource(trackMisc.source, {
+				type: 'geojson',
+				data: { type: 'FeatureCollection', features: [] },
+			})
+			map.current.addLayer(
+				{
+					id: trackMisc.line,
+					source: trackMisc.source,
+					type: 'line',
+					layout: {
+						'line-join': 'round',
+						'line-cap': 'round',
+						visibility: showMisc ? 'visible' : 'none',
+					},
+					paint: {
+						'line-color': trackMisc.color,
+						'line-width': ['interpolate', ['linear'], ['zoom'], 4, 1.5, 10, 3.5],
+					},
+				},
+				'newsletter-points'
+			)
+
+			// LOCAL-ONLY: the Unknown debug layer + route-id hover popovers.
+			if (isLocal) {
+				map.current.addSource(trackUnknown.source, {
+					type: 'geojson',
+					data: { type: 'FeatureCollection', features: [] },
+				})
+				map.current.addLayer(
+					{
+						id: trackUnknown.line,
+						source: trackUnknown.source,
+						type: 'line',
+						layout: { 'line-join': 'round', 'line-cap': 'round', visibility: showUnknown ? 'visible' : 'none' },
+						paint: {
+							'line-color': trackUnknown.color,
+							'line-width': ['interpolate', ['linear'], ['zoom'], 4, 1.5, 10, 3.5],
+							'line-dasharray': [2, 1],
+						},
+					},
+					'newsletter-points'
+				)
+
+				// Hover any debug line to see its route id (e.g. "misc-03 · mi 943–944").
+				const hoverPopup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, className: 'popup route-id-popup' })
+				HOVER_ID_LAYERS.forEach(layer => {
+					map.current.on('mousemove', layer, e => {
+						map.current.getCanvas().style.cursor = 'pointer'
+						const { id, fromMile, toMile, label } = e.features[0].properties
+						const detail = fromMile != null ? ` · mi ${fromMile}–${toMile}` : label ? ` · ${label}` : ''
+						hoverPopup.setLngLat(e.lngLat).setHTML(`<div class="route-id">${id}${detail}</div>`).addTo(map.current)
+					})
+					map.current.on('mouseleave', layer, () => {
+						map.current.getCanvas().style.cursor = ''
+						hoverPopup.remove()
+					})
+				})
+			}
 
 			// Section-start markers: labeled dots at the start of each PCT section.
 			SECTION_STARTS.forEach(s => {
@@ -430,7 +581,7 @@ const Home = () => {
 				})
 			}
 		})
-	}, [isDebug, showNewslettersLayer, showPhotosLayer, show26])
+	}, [isDebug, isLocal, showNewslettersLayer, showPhotosLayer, show26, showTrailCrew, showMisc, showUnknown])
 
 	return (
 		<div>
@@ -468,14 +619,32 @@ const Home = () => {
 						<ColorCircle />
 					</button>
 				</div>
-				{/* TRAIL CREW (placeholder — not wired to a layer yet) */}
+				{/* TRAIL CREW */}
 				<div id="toggle-trailcrew">
-					<button className={`mapboxgl-ctrl-year year-visible-${showTrailCrew} year-tc`} onClick={() => setShowTrailCrew(v => !v)}>
+					<button className={`mapboxgl-ctrl-year year-visible-${showTrailCrew} year-tc`} onClick={toggleTrailCrew}>
 						<EyeToggle visible={showTrailCrew} />
 						<>Trail Crew</>
 						<ColorCircle />
 					</button>
 				</div>
+				{/* MISC */}
+				<div id="toggle-misc">
+					<button className={`mapboxgl-ctrl-year year-visible-${showMisc} year-misc`} onClick={toggleMisc}>
+						<EyeToggle visible={showMisc} />
+						<>Misc</>
+						<ColorCircle />
+					</button>
+				</div>
+				{/* UNKNOWN (local-only debug) */}
+				{isLocal && (
+					<div id="toggle-unknown">
+						<button className={`mapboxgl-ctrl-year year-visible-${showUnknown} year-unknown`} onClick={toggleUnknown}>
+							<EyeToggle visible={showUnknown} />
+							<>Unknown</>
+							<ColorCircle />
+						</button>
+					</div>
+				)}
 				{/* NEWSLETTERS */}
 				<div id="toggle-newsletter">
 					<button className="mapboxgl-ctrl-toggle news-list" onClick={() => setShowNewslettersDialog(!showNewslettersDialog)}>
