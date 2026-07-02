@@ -24,8 +24,12 @@ const historyPath = path.join(dataDir, 'pct-history-coverage.json')
 const gapsPath = path.join(dataDir, 'pct-gaps.json')
 
 const history = JSON.parse(fs.readFileSync(historyPath, 'utf8'))
-const intervals = Object.entries(history)
-	.filter(([k]) => /^\d{4}$/.test(k))
+// Also fold in the export-only buckets (2026/trail-crew/misc) so their walked
+// miles don't show up as gaps. See scripts/garmin/bucket_coverage.py.
+const exportPath = path.join(dataDir, 'pct-export-coverage.json')
+const exportCov = fs.existsSync(exportPath) ? JSON.parse(fs.readFileSync(exportPath, 'utf8')) : {}
+const intervals = [...Object.entries(history), ...Object.entries(exportCov)]
+	.filter(([k]) => !k.startsWith('_'))
 	.flatMap(([, v]) => v)
 
 // Union all covered intervals, folding sub-seam gaps into coverage.

@@ -1,6 +1,7 @@
 import { garminKmlToGeoJSON } from '@/lib/garmin'
 import { computePctProgress } from '@/lib/pct-progress'
 import historyCoverage from '@/data/pct-history-coverage.json'
+import exportCoverage from '@/data/pct-export-coverage.json'
 import gapsData from '@/data/pct-gaps.json'
 
 // Server-side proxy for Madison's Garmin inReach MapShare feed. The MapShare
@@ -38,7 +39,12 @@ const TOTAL_MILES = numEnv('PCT_TOTAL_MILES', 2662)
 
 // Pre-snapped covered intervals for the static (pre-2026) years, unioned with
 // the live track for lifetime progress. Drop the JSON's `_comment` key.
-const HISTORY = Object.fromEntries(Object.entries(historyCoverage).filter(([k]) => /^\d{4}$/.test(k)))
+// Union the tileset-derived years (2018/2019/2023) with the export-only buckets
+// (2026/trail-crew/misc) so coverage counts all of Madison's PCT miles. Drop the
+// `_comment` keys. computePctProgress unions every key's intervals.
+const HISTORY = Object.fromEntries(
+	[...Object.entries(historyCoverage), ...Object.entries(exportCoverage)].filter(([k]) => !k.startsWith('_'))
+)
 // Hitched/jumped sections; only those marked "complete" count as covered.
 const GAPS = gapsData.gaps || []
 

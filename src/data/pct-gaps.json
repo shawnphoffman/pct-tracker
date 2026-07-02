@@ -70,25 +70,41 @@
 			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
 		{
-			"from": 1018,
-			"to": 1092,
-			"miles": 74,
+			"from": 1034,
+			"to": 1081,
+			"miles": 47,
 			"region": "Central California",
 			"status": "unknown",
 			"note": ""
 		},
 		{
-			"from": 1103,
+			"from": 1104.5,
+			"to": 1110.5,
+			"miles": 6,
+			"region": "Central California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 1112.5,
 			"to": 1154.5,
-			"miles": 51.5,
+			"miles": 42,
 			"region": "Central California",
 			"status": "unknown",
 			"note": ""
 		},
 		{
 			"from": 1197,
+			"to": 1221,
+			"miles": 24,
+			"region": "Northern California",
+			"status": "unknown",
+			"note": ""
+		},
+		{
+			"from": 1224,
 			"to": 1269,
-			"miles": 72,
+			"miles": 45,
 			"region": "Northern California",
 			"status": "unknown",
 			"note": ""
