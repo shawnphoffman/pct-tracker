@@ -72,6 +72,9 @@ body,
 .mapboxgl-ctrl-group button.mapboxgl-ctrl-year svg:last-of-type {
 	margin-left: 5px;
 }
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-26 svg:last-of-type {
+	fill: var(--color-26);
+}
 .mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-23 svg:last-of-type {
 	fill: var(--color-23);
 }

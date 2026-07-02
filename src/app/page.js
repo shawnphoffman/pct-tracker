@@ -1,17 +1,19 @@
 'use client'
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useRef, useEffect, useState, useCallback, Suspense } from 'react'
 import mapboxgl from 'mapbox-gl'
 
 import { useSearchParams } from 'next/navigation'
-
-// import photos from '@/data/photos.json'
+import dynamic from 'next/dynamic'
 
 import EyeToggle from '@/components/EyeToggle'
 import ColorCircle from '@/components/ColorCircle'
-import PhotoLightbox from '@/components/PhotoLightbox'
 import CustomControl from '@/components/CustomControl'
-import NewsletterDialog from '@/components/NewsletterDialog'
-import CoolStuffDialog from '@/components/CoolStuffDialog'
+
+// Interaction-only UI: keep the lightbox library + JSON data out of the initial
+// bundle and load each on first use.
+const PhotoLightbox = dynamic(() => import('@/components/PhotoLightbox'), { ssr: false })
+const NewsletterDialog = dynamic(() => import('@/components/NewsletterDialog'), { ssr: false })
+const CoolStuffDialog = dynamic(() => import('@/components/CoolStuffDialog'), { ssr: false })
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 
@@ -28,10 +30,27 @@ const defaults = {
 }
 
 const Layers = {
+	Madi2026: 'PCT - 2026',
 	Madi2023: 'PCT - 2023',
 	Madi2019: 'PCT - 2019',
 	Madi2018: 'PCT - 2018',
 }
+
+// 2026 is a live GeoJSON track sourced from Madison's Garmin inReach feed
+// (proxied + cleaned by /api/track/2026), unlike the older years which are
+// baked into the Mapbox style.
+const track2026 = {
+	source: 'track-2026',
+	line: Layers.Madi2026,
+	point: 'track-2026-latest',
+	url: '/api/track/2026',
+	color: 'hsl(28, 100%, 52%)',
+}
+
+// Photos are only enabled once an external image CDN (Cloudflare R2) is
+// configured. Until then the feature stays fully off so it can't touch the
+// Vercel image budget. See docs/photos.md.
+const photosEnabled = !!process.env.NEXT_PUBLIC_PHOTO_CDN
 
 const Home = () => {
 	const mapContainer = useRef(null)
@@ -40,6 +59,7 @@ const Home = () => {
 	const [showNewslettersLayer, setShowNewslettersLayer] = useState(true)
 	const [showCoolStuffDialog, setShowCoolStuffDialog] = useState(false)
 	const [showPhotosLayer, setShowPhotosLayer] = useState(true)
+	const [show26, setShow26] = useState(true)
 	const [show23, setShow23] = useState(true)
 	const [show19, setShow19] = useState(false)
 	const [show18, setShow18] = useState(true)
@@ -57,7 +77,7 @@ const Home = () => {
 
 	const toggleLayer = useCallback(
 		(layerName, stateCallback) => {
-			if (!map.current) {
+			if (!map.current || !map.current.getLayer(layerName)) {
 				return
 			}
 			const visibility = map.current.getLayoutProperty(layerName, 'visibility')
@@ -119,6 +139,9 @@ const Home = () => {
 		})
 
 		// Custom controls
+		const control26 = new CustomControl({
+			container: document.getElementById('toggle-26'),
+		})
 		const control23 = new CustomControl({
 			container: document.getElementById('toggle-23'),
 		})
@@ -131,9 +154,9 @@ const Home = () => {
 		const controlNewsletter = new CustomControl({
 			container: document.getElementById('toggle-newsletter'),
 		})
-		// const controlPhotos = new CustomControl({
-		// 	container: document.getElementById('toggle-photos'),
-		// })
+		const controlPhotos = new CustomControl({
+			container: document.getElementById('toggle-photos'),
+		})
 		const controlCoolStuff = new CustomControl({
 			container: document.getElementById('toggle-cool'),
 		})
@@ -153,17 +176,23 @@ const Home = () => {
 			attributionControl: false,
 			minZoom: defaults.zoom - 0.5,
 			bearingSnap: 0,
+			// mapbox-gl v3 defaults to the globe projection; keep the flat map we designed for.
+			projection: 'mercator',
 		})
 			.addControl(controlNav)
 			.addControl(controlScale)
 			.addControl(controlFullscreen)
 			.addControl(controlAttribution)
+			.addControl(control26, 'top-left')
 			.addControl(control23, 'top-left')
 			.addControl(control19, 'top-left')
 			.addControl(control18, 'top-left')
 			.addControl(controlNewsletter, 'top-left')
-			// .addControl(controlPhotos, 'top-left')
 			.addControl(buttonReset, 'top-right')
+
+		if (photosEnabled) {
+			map.current.addControl(controlPhotos, 'top-left')
+		}
 
 		if (isDebug) {
 			map.current.addControl(controlCoolStuff, 'top-left')
@@ -247,6 +276,47 @@ const Home = () => {
 				},
 				'newsletter-points'
 			)
+			// 2026 live track (Garmin inReach feed via /api/track/2026).
+			// Mapbox fetches the GeoJSON URL itself and re-fetches when we ask.
+			map.current.addSource(track2026.source, {
+				type: 'geojson',
+				data: track2026.url,
+			})
+			map.current.addLayer(
+				{
+					id: track2026.line,
+					source: track2026.source,
+					type: 'line',
+					filter: ['==', ['get', 'role'], 'track'],
+					layout: {
+						'line-join': 'round',
+						'line-cap': 'round',
+						visibility: show26 ? 'visible' : 'none',
+					},
+					paint: {
+						'line-color': track2026.color,
+						'line-width': ['interpolate', ['linear'], ['zoom'], 4, 1.5, 10, 3.5],
+					},
+				},
+				'newsletter-points' // keep the route line beneath the newsletter dots
+			)
+			map.current.addLayer({
+				id: track2026.point,
+				source: track2026.source,
+				type: 'circle',
+				filter: ['==', ['get', 'role'], 'latest'],
+				layout: {
+					visibility: show26 ? 'visible' : 'none',
+				},
+				paint: {
+					'circle-radius': ['interpolate', ['linear'], ['zoom'], 4, 3, 10, 6],
+					'circle-color': track2026.color,
+					'circle-stroke-color': '#fff',
+					'circle-stroke-width': 2,
+				},
+			})
+			document.documentElement.style.setProperty('--color-26', track2026.color)
+
 			map.current.on('click', 'newsletter-points-hidden', function (e) {
 				// Copy coordinates array.
 				const coordinates = e.features[0].geometry.coordinates.slice()
@@ -272,35 +342,38 @@ const Home = () => {
 					.addTo(map.current)
 			})
 
-			// Add local photo source and layer
-			// const photoSource = 'photo-points-data'
-			// map.current.addSource(photoSource, {
-			// 	type: 'geojson',
-			// 	data: photos,
-			// })
-			// map.current.addLayer(
-			// 	{
-			// 		id: 'photo-points',
-			// 		source: photoSource,
-			// 		type: 'circle',
-			// 		layout: {
-			// 			visibility: showPhotosLayer ? 'visible' : 'none',
-			// 		},
-			// 		minzoom: 4.5,
-			// 		paint: {
-			// 			'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
-			// 			'circle-color': 'hsl(190, 100%, 50%)',
-			// 			'circle-stroke-color': 'hsl(64, 100%, 0%)',
-			// 			'circle-stroke-width': ['step', ['zoom'], 1, 5, 2, 8, 3],
-			// 		},
-			// 	},
-			// 	'newsletter-points' // Add layer below newsletters
-			// )
-			// map.current.on('click', 'photo-points', function (e) {
-			// 	const { filename } = e.features[0].properties
-			// 	setImageOverride(filename)
-			// 	setShowLightbox(true)
-			// })
+			// Photo markers: cheap circles from photos.json. The images themselves
+			// load lazily in the lightbox (from R2), so browsing the map costs no
+			// image bandwidth. photos.json is dynamically imported to stay out of
+			// the initial bundle, and the whole thing is gated on the CDN.
+			if (photosEnabled) {
+				import('@/data/photos.json').then(({ default: photos }) => {
+					if (!map.current) return
+					map.current.addSource('photo-points-data', { type: 'geojson', data: photos })
+					map.current.addLayer(
+						{
+							id: 'photo-points',
+							source: 'photo-points-data',
+							type: 'circle',
+							layout: {
+								visibility: showPhotosLayer ? 'visible' : 'none',
+							},
+							minzoom: 4.5,
+							paint: {
+								'circle-radius': ['step', ['zoom'], 2, 5, 4, 8, 5],
+								'circle-color': 'hsl(190, 100%, 50%)',
+								'circle-stroke-color': 'hsl(64, 100%, 0%)',
+								'circle-stroke-width': ['step', ['zoom'], 1, 5, 2, 8, 3],
+							},
+						},
+						'newsletter-points' // Add layer below newsletters
+					)
+					map.current.on('click', 'photo-points', function (e) {
+						setImageOverride(e.features[0].properties.filename)
+						setShowLightbox(true)
+					})
+				})
+			}
 
 			// DEBUG STUFF
 			if (isDebug) {
@@ -314,13 +387,23 @@ const Home = () => {
 				})
 			}
 		})
-	}, [isDebug, showNewslettersLayer, showPhotosLayer])
+	}, [isDebug, showNewslettersLayer, showPhotosLayer, show26])
 
 	return (
 		<div>
 			<div className="controls">
 				{/* LEFT CONTROLS */}
 				{/* YEAR TOGGLES */}
+				<div id="toggle-26">
+					<button
+						className={`mapboxgl-ctrl-year year-visible-${show26} year-26`}
+						onClick={() => toggleLayers([Layers.Madi2026, track2026.point], setShow26)}
+					>
+						<EyeToggle visible={show26} />
+						<>2026</>
+						<ColorCircle />
+					</button>
+				</div>
 				<div id="toggle-23">
 					<button className={`mapboxgl-ctrl-year year-visible-${show23} year-23`} onClick={() => toggleLayer(Layers.Madi2023, setShow23)}>
 						<EyeToggle visible={show23} />
@@ -356,21 +439,23 @@ const Home = () => {
 						<ColorCircle />
 					</button>
 				</div>
-				{/* PHOTOS */}
-				<div id="toggle-photos">
-					<button className="mapboxgl-ctrl-toggle photo-list" onClick={() => setShowLightbox(true)}>
-						Photos
-					</button>
-					<span></span>
-					<button
-						className={`mapboxgl-ctrl-toggle toggle-eye visible-${showPhotosLayer}`}
-						onClick={() => toggleLayers(['photo-points'], setShowPhotosLayer)}
-					>
-						<EyeToggle visible={showPhotosLayer} />
+				{/* PHOTOS (only when an image CDN is configured) */}
+				{photosEnabled && (
+					<div id="toggle-photos">
+						<button className="mapboxgl-ctrl-toggle photo-list" onClick={() => setShowLightbox(true)}>
+							Photos
+						</button>
+						<span></span>
+						<button
+							className={`mapboxgl-ctrl-toggle toggle-eye visible-${showPhotosLayer}`}
+							onClick={() => toggleLayers(['photo-points'], setShowPhotosLayer)}
+						>
+							<EyeToggle visible={showPhotosLayer} />
 
-						<ColorCircle />
-					</button>
-				</div>
+							<ColorCircle />
+						</button>
+					</div>
+				)}
 				{/* COOL STUFF */}
 				<div id="toggle-cool">
 					<button className="mapboxgl-ctrl-toggle cool-list" onClick={() => setShowCoolStuffDialog(!showCoolStuffDialog)}>
@@ -402,15 +487,22 @@ const Home = () => {
 			<div ref={mapContainer} className="map-container" />
 
 			{/* NEWSLETTERS */}
-			<NewsletterDialog open={showNewslettersDialog} />
+			{showNewslettersDialog && <NewsletterDialog open />}
 
 			{/* COOL STUFF */}
-			<CoolStuffDialog open={showCoolStuffDialog} map={map} onClick={() => setShowCoolStuffDialog(false)} />
+			{showCoolStuffDialog && <CoolStuffDialog open map={map} onClick={() => setShowCoolStuffDialog(false)} />}
 
 			{/* LIGHTBOX */}
-			<PhotoLightbox isOpen={showLightbox} setIsOpen={setShowLightbox} imageOverride={imageOverride} />
+			{showLightbox && <PhotoLightbox isOpen setIsOpen={setShowLightbox} imageOverride={imageOverride} />}
 		</div>
 	)
 }
 
-export default Home
+// useSearchParams() requires a Suspense boundary under the App Router.
+const Page = () => (
+	<Suspense>
+		<Home />
+	</Suspense>
+)
+
+export default Page
