@@ -10,8 +10,8 @@
 			"to": 185.5,
 			"miles": 4,
 			"region": "Southern California",
-			"status": "unknown",
-			"note": ""
+			"status": "complete",
+			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
 		{
 			"from": 342,
@@ -26,16 +26,16 @@
 			"to": 383,
 			"miles": 7.5,
 			"region": "Southern California",
-			"status": "unknown",
-			"note": ""
+			"status": "complete",
+			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
 		{
 			"from": 390.5,
 			"to": 398,
 			"miles": 7.5,
 			"region": "Southern California",
-			"status": "unknown",
-			"note": ""
+			"status": "complete",
+			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
 		{
 			"from": 465.5,
@@ -58,16 +58,16 @@
 			"to": 879.5,
 			"miles": 5,
 			"region": "Central California",
-			"status": "unknown",
-			"note": ""
+			"status": "complete",
+			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
 		{
 			"from": 910.5,
 			"to": 924,
 			"miles": 13.5,
 			"region": "Central California",
-			"status": "unknown",
-			"note": ""
+			"status": "complete",
+			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
 		{
 			"from": 1018,
@@ -98,16 +98,16 @@
 			"to": 1496,
 			"miles": 3.5,
 			"region": "Northern California",
-			"status": "unknown",
-			"note": ""
+			"status": "complete",
+			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
 		{
 			"from": 1502,
 			"to": 1507,
 			"miles": 5,
 			"region": "Northern California",
-			"status": "unknown",
-			"note": ""
+			"status": "complete",
+			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
 		{
 			"from": 1736.5,
