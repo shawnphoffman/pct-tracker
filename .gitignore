@@ -46,3 +46,6 @@ __pycache__/
 
 # Local-only Garmin debug layer (never deploy)
 public/unknown.geojson
+
+# Local-only incomplete-sections debug layer (never deploy)
+public/incomplete.geojson

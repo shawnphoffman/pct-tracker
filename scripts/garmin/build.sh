@@ -29,3 +29,6 @@ python3 scripts/garmin/pct_segments.py garmin-export/buckets/misc.gpx       publ
 # timestamps). public/unknown.geojson is gitignored -> never deployed; the map's
 # Unknown toggle only renders in dev.
 python3 scripts/garmin/unknown_layer.py
+# Incomplete: LOCAL-ONLY debug layer of the pending (non-"complete") gaps from
+# src/data/pct-gaps.json - the sections that don't count toward coverage yet.
+python3 scripts/garmin/incomplete_layer.py

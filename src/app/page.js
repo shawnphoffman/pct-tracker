@@ -74,9 +74,18 @@ const trackUnknown = {
 	color: '#facc15',
 }
 
+// Incomplete: LOCAL-ONLY debug layer of the PCT sections that don't count toward
+// coverage yet (pending gaps). public/incomplete.geojson is gitignored.
+const trackIncomplete = {
+	source: 'track-incomplete',
+	line: 'incomplete-line',
+	url: '/incomplete.geojson',
+	color: '#000000',
+}
+
 // Layers that get a dev-only hover popover showing the route id (for reference
-// when moving tracks between buckets).
-const HOVER_ID_LAYERS = [trackTrailCrew.line, trackMisc.line, trackUnknown.line]
+// when moving tracks between buckets / adjudicating gaps).
+const HOVER_ID_LAYERS = [trackTrailCrew.line, trackMisc.line, trackUnknown.line, trackIncomplete.line]
 
 // Distinct year colours; override the older Mapbox-style line colours in code.
 // Keys are the 2-digit year suffix the toggles use.
@@ -109,6 +118,7 @@ const Home = () => {
 	const trailCrewLoaded = useRef(false)
 	const miscLoaded = useRef(false)
 	const unknownLoaded = useRef(false)
+	const incompleteLoaded = useRef(false)
 	const throbTimer = useRef(null)
 	const [showNewslettersDialog, setShowNewslettersDialog] = useState(false)
 	const [showNewslettersLayer, setShowNewslettersLayer] = useState(false)
@@ -122,6 +132,7 @@ const Home = () => {
 	const [showTrailCrew, setShowTrailCrew] = useState(false)
 	const [showMisc, setShowMisc] = useState(false)
 	const [showUnknown, setShowUnknown] = useState(false)
+	const [showIncomplete, setShowIncomplete] = useState(false)
 	const [showLightbox, setShowLightbox] = useState(false)
 	const [imageOverride, setImageOverride] = useState(null)
 	const [progress, setProgress] = useState(null)
@@ -187,6 +198,7 @@ const Home = () => {
 	const toggleTrailCrew = useCallback(() => toggleLazyLine(trackTrailCrew, trailCrewLoaded, setShowTrailCrew), [toggleLazyLine])
 	const toggleMisc = useCallback(() => toggleLazyLine(trackMisc, miscLoaded, setShowMisc), [toggleLazyLine])
 	const toggleUnknown = useCallback(() => toggleLazyLine(trackUnknown, unknownLoaded, setShowUnknown), [toggleLazyLine])
+	const toggleIncomplete = useCallback(() => toggleLazyLine(trackIncomplete, incompleteLoaded, setShowIncomplete), [toggleLazyLine])
 
 	const copyValues = useCallback(() => {
 		const values = {
@@ -253,6 +265,9 @@ const Home = () => {
 		const controlUnknown = new CustomControl({
 			container: document.getElementById('toggle-unknown'),
 		})
+		const controlIncomplete = new CustomControl({
+			container: document.getElementById('toggle-incomplete'),
+		})
 		const controlNewsletter = new CustomControl({
 			container: document.getElementById('toggle-newsletter'),
 		})
@@ -300,6 +315,7 @@ const Home = () => {
 
 		if (isLocal) {
 			map.current.addControl(controlUnknown, 'top-left')
+			map.current.addControl(controlIncomplete, 'top-left')
 		}
 
 		if (isDebug) {
@@ -464,6 +480,23 @@ const Home = () => {
 					},
 					'newsletter-points'
 				)
+				map.current.addSource(trackIncomplete.source, {
+					type: 'geojson',
+					data: { type: 'FeatureCollection', features: [] },
+				})
+				map.current.addLayer(
+					{
+						id: trackIncomplete.line,
+						source: trackIncomplete.source,
+						type: 'line',
+						layout: { 'line-join': 'round', 'line-cap': 'round', visibility: showIncomplete ? 'visible' : 'none' },
+						paint: {
+							'line-color': trackIncomplete.color,
+							'line-width': ['interpolate', ['linear'], ['zoom'], 4, 2, 10, 4.5],
+						},
+					},
+					'newsletter-points'
+				)
 
 				// Hover any debug line to see its route id (e.g. "misc-03 · mi 943–944").
 				const hoverPopup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, className: 'popup route-id-popup' })
@@ -606,7 +639,7 @@ const Home = () => {
 				})
 			}
 		})
-	}, [isDebug, isLocal, showNewslettersLayer, showPhotosLayer, show26, showTrailCrew, showMisc, showUnknown])
+	}, [isDebug, isLocal, showNewslettersLayer, showPhotosLayer, show26, showTrailCrew, showMisc, showUnknown, showIncomplete])
 
 	return (
 		<div>
@@ -660,12 +693,21 @@ const Home = () => {
 						<ColorCircle />
 					</button>
 				</div>
-				{/* UNKNOWN (local-only debug) */}
+				{/* UNKNOWN + INCOMPLETE (local-only debug) */}
 				{isLocal && (
 					<div id="toggle-unknown">
 						<button className={`mapboxgl-ctrl-year year-visible-${showUnknown} year-unknown`} onClick={toggleUnknown}>
 							<EyeToggle visible={showUnknown} />
 							<>Unknown</>
+							<ColorCircle />
+						</button>
+					</div>
+				)}
+				{isLocal && (
+					<div id="toggle-incomplete">
+						<button className={`mapboxgl-ctrl-year year-visible-${showIncomplete} year-incomplete`} onClick={toggleIncomplete}>
+							<EyeToggle visible={showIncomplete} />
+							<>Incomplete</>
 							<ColorCircle />
 						</button>
 					</div>
