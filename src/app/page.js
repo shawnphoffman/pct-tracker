@@ -109,6 +109,7 @@ const Home = () => {
 	const trailCrewLoaded = useRef(false)
 	const miscLoaded = useRef(false)
 	const unknownLoaded = useRef(false)
+	const throbTimer = useRef(null)
 	const [showNewslettersDialog, setShowNewslettersDialog] = useState(false)
 	const [showNewslettersLayer, setShowNewslettersLayer] = useState(false)
 	const [showCoolStuffDialog, setShowCoolStuffDialog] = useState(false)
@@ -137,6 +138,9 @@ const Home = () => {
 			setImageOverride(null)
 		}
 	}, [showLightbox])
+
+	// Stop the map-dot throb loop on unmount.
+	useEffect(() => () => clearInterval(throbTimer.current), [])
 
 	// Keep the current-position pin in sync with the 2026 toggle (it's a DOM
 	// marker, not a style layer, so toggleLayer doesn't reach it).
@@ -567,6 +571,27 @@ const Home = () => {
 						setShowLightbox(true)
 					})
 				})
+			}
+
+			// Throb the newsletter + photo dots' colours (easing between the base
+			// colour and a brighter tint) so they read differently from the static
+			// year/track lines. Only repaints while a dot layer is actually visible,
+			// and honours reduced-motion.
+			if (!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+				const THROB = [
+					{ layer: 'newsletter-points', from: [0xea, 0xb3, 0x08], to: [0xfd, 0xe0, 0x47] },
+					{ layer: 'photo-points', from: [0x14, 0xb8, 0xa6], to: [0x99, 0xf6, 0xe4] },
+				]
+				throbTimer.current = setInterval(() => {
+					if (!map.current) return
+					const k = 0.5 + 0.5 * Math.sin(Date.now() / 300)
+					for (const { layer, from, to } of THROB) {
+						if (!map.current.getLayer(layer)) continue
+						if (map.current.getLayoutProperty(layer, 'visibility') !== 'visible') continue
+						const c = from.map((f, i) => Math.round(f + (to[i] - f) * k))
+						map.current.setPaintProperty(layer, 'circle-color', `rgb(${c[0]},${c[1]},${c[2]})`)
+					}
+				}, 60)
 			}
 
 			// DEBUG STUFF

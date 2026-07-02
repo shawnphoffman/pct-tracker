@@ -108,10 +108,27 @@ body,
 	margin-left: 4px;
 }
 
+/* Throb the newsletter + photo legend swatches' COLOUR (not size) so they read
+   as different from the static year/track swatches. Matches the map dots' pulse. */
+@keyframes dot-throb {
+	0%, 100% { filter: brightness(1) saturate(1); }
+	50% { filter: brightness(1.55) saturate(1.4); }
+}
+#toggle-newsletter.mapboxgl-ctrl-group button.mapboxgl-ctrl-toggle svg:last-of-type,
+#toggle-photos.mapboxgl-ctrl-group button.mapboxgl-ctrl-toggle svg:last-of-type {
+	animation: dot-throb 1.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+	#toggle-newsletter.mapboxgl-ctrl-group button.mapboxgl-ctrl-toggle svg:last-of-type,
+	#toggle-photos.mapboxgl-ctrl-group button.mapboxgl-ctrl-toggle svg:last-of-type {
+		animation: none;
+	}
+}
+
 /* Black border on all legend colour swatches */
 .color-circle {
 	stroke: #000;
-	stroke-width: 60px;
+	stroke-width: 100px;
 	paint-order: stroke;
 	overflow: visible;
 }
