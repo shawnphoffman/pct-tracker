@@ -49,6 +49,53 @@ const parseCoord = (raw, sep) => {
 
 const text = v => (v && typeof v === 'object' ? v['#text'] : v)
 
+const R_KM = 6371
+const toRad = d => (d * Math.PI) / 180
+const haversineKm = ([lon1, lat1], [lon2, lat2]) => {
+	const dLat = toRad(lat2 - lat1)
+	const dLon = toRad(lon2 - lon1)
+	const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2
+	return 2 * R_KM * Math.asin(Math.sqrt(a))
+}
+
+const round5 = n => Math.round(n * 1e5) / 1e5 // ~1m precision, trims payload
+
+// Perpendicular distance (degree space) from p to segment a-b.
+const perpDist = (p, a, b) => {
+	const dx = b[0] - a[0]
+	const dy = b[1] - a[1]
+	if (dx === 0 && dy === 0) return Math.hypot(p[0] - a[0], p[1] - a[1])
+	const t = ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy)
+	const cx = a[0] + t * dx
+	const cy = a[1] + t * dy
+	return Math.hypot(p[0] - cx, p[1] - cy)
+}
+
+// Ramer-Douglas-Peucker line simplification (iterative, tolerance in degrees).
+const simplify = (points, tol) => {
+	if (points.length <= 2 || !tol) return points
+	const keep = new Array(points.length).fill(false)
+	keep[0] = keep[points.length - 1] = true
+	const stack = [[0, points.length - 1]]
+	while (stack.length) {
+		const [start, end] = stack.pop()
+		let maxD = 0
+		let idx = -1
+		for (let i = start + 1; i < end; i++) {
+			const d = perpDist(points[i], points[start], points[end])
+			if (d > maxD) {
+				maxD = d
+				idx = i
+			}
+		}
+		if (maxD > tol && idx !== -1) {
+			keep[idx] = true
+			stack.push([start, idx], [idx, end])
+		}
+	}
+	return points.filter((_, i) => keep[i])
+}
+
 // Pull the numeric epoch (ms) from a Placemark's <TimeStamp><when> or ExtendedData.
 const placemarkTime = pm => {
 	const when = text(pm?.TimeStamp?.when)
@@ -68,11 +115,13 @@ const placemarkTime = pm => {
 /**
  * Convert a Garmin MapShare KML string into ordered track fixes.
  * @param {string} kml
- * @param {{ notAfter?: number }} [opts] notAfter: drop fixes newer than this epoch-ms
- *   (used for the deployed safety delay). Untimed fixes are dropped when set.
+ * @param {{ notAfter?: number, maxSpeedKmh?: number }} [opts]
+ *   notAfter: drop fixes newer than this epoch-ms (deployed safety delay; untimed
+ *   fixes are dropped when set). maxSpeedKmh: drop a fix implying a faster-than-this
+ *   move from the last good fix (removes GPS spikes/teleports).
  * @returns {{ fixes: Array<{coord: [number, number], time: number}> }}
  */
-export function parseGarminFixes(kml, { notAfter = null } = {}) {
+export function parseGarminFixes(kml, { notAfter = null, maxSpeedKmh = 160 } = {}) {
 	if (!kml || typeof kml !== 'string' || !kml.includes('<')) return { fixes: [] }
 
 	let root
@@ -116,6 +165,11 @@ export function parseGarminFixes(kml, { notAfter = null } = {}) {
 		if (notAfter != null && (!Number.isFinite(fix.time) || fix.time > notAfter)) continue
 		const prev = cleaned[cleaned.length - 1]
 		if (prev && prev.coord[0] === fix.coord[0] && prev.coord[1] === fix.coord[1]) continue
+		// Drop GPS spikes: a fix implying an impossible speed from the last good fix.
+		if (maxSpeedKmh && prev && Number.isFinite(fix.time) && Number.isFinite(prev.time) && fix.time > prev.time) {
+			const hours = (fix.time - prev.time) / 3600000
+			if (hours > 0 && haversineKm(prev.coord, fix.coord) / hours > maxSpeedKmh) continue
+		}
 		cleaned.push(fix)
 	}
 
@@ -126,15 +180,19 @@ export function parseGarminFixes(kml, { notAfter = null } = {}) {
  * Build a GeoJSON FeatureCollection (track LineString + latest Point) from a
  * Garmin MapShare KML string. Returns empty features when there is no data.
  */
-export function garminKmlToGeoJSON(kml, { properties = {}, notAfter = null } = {}) {
-	const { fixes } = parseGarminFixes(kml, { notAfter })
+export function garminKmlToGeoJSON(kml, { properties = {}, notAfter = null, maxSpeedKmh = 160, simplifyTolerance = 0.0001 } = {}) {
+	const { fixes } = parseGarminFixes(kml, { notAfter, maxSpeedKmh })
 	const features = []
 
 	if (fixes.length >= 2) {
+		const coordinates = simplify(
+			fixes.map(f => f.coord),
+			simplifyTolerance
+		).map(([lon, lat]) => [round5(lon), round5(lat)])
 		features.push({
 			type: 'Feature',
 			properties: { role: 'track', ...properties },
-			geometry: { type: 'LineString', coordinates: fixes.map(f => f.coord) },
+			geometry: { type: 'LineString', coordinates },
 		})
 	}
 
@@ -147,7 +205,7 @@ export function garminKmlToGeoJSON(kml, { properties = {}, notAfter = null } = {
 				time: Number.isFinite(last.time) ? new Date(last.time).toISOString() : null,
 				...properties,
 			},
-			geometry: { type: 'Point', coordinates: last.coord },
+			geometry: { type: 'Point', coordinates: [round5(last.coord[0]), round5(last.coord[1])] },
 		})
 	}
 
