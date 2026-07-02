@@ -30,6 +30,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# migrated photos, built for R2 upload (never recommit full-res images)
+/photos-dist
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

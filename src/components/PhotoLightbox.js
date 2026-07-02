@@ -5,19 +5,16 @@ import 'yet-another-react-lightbox/styles.css'
 import 'yet-another-react-lightbox/plugins/counter.css'
 import photos from '@/data/photos.json'
 
-const imageList = photos.features.map(photo => photo.properties.filename)
-
-// const images = require.context('../images/', true, /\.(jpg|jpeg|png)$/i)
-// const images = require.context('../images/', true, /\.\/.*\.(jpg|jpeg|png)$/i)
-// const imageList = images.keys().map(image => images(image).default)
-
-// console.log('length', JSON.stringify(images.keys().sort(), null, 2))
+// Slides carry the R2 object key (== photos.json filename); NextJsImage resolves
+// the URL via the CDN loader.
+const imageList = photos.features.map(photo => ({ src: photo.properties.filename }))
 
 export default function PhotoLightbox({ isOpen, setIsOpen, imageOverride }) {
 	let index
 
 	if (imageOverride) {
-		index = imageList.findIndex(image => image.includes(imageOverride.replace(/\.jpg|\.jpeg|\.png/, '')))
+		const key = imageOverride.replace(/\.jpg|\.jpeg|\.png/, '')
+		index = imageList.findIndex(slide => slide.src.includes(key))
 	}
 
 	return (
