@@ -5,8 +5,10 @@ The Garmin export contains off-trail spurs to town/roads/HOME (up to ~10 km off
 the PCT). We keep the on-trail hike (A) plus near-trail *variant* excursions that
 stay within CORRIDOR_KM (B, e.g. the JMT), and DROP any excursion that ever
 leaves the corridor - the whole excursion, so no partial home-approach leaks.
-Output is geometry only (no timestamps). A hard safety gate aborts if any kept
-point exceeds the corridor.
+A few named variants run farther than CORRIDOR_KM but only in places where a
+wider corridor can't leak home/town (e.g. Eagle Creek in the Columbia Gorge);
+those get a scoped, wider corridor via CORRIDOR_BOXES. Output is geometry only
+(no timestamps). A hard safety gate aborts if any kept point exceeds its corridor.
 
 This exists because the Mapbox tileset's 2023 layer hides an entire track feature
 to protect the home (leaving a visible gap at mi 1100-1103); serving our own
@@ -23,6 +25,21 @@ CORRIDOR_KM = 3.0  # a variant may wander this far; beyond = town/home spur -> d
 TOL = 0.0003       # RDP simplify (~33 m); shrinks the served file + sheds GPS jitter.
                    # Display-only: does NOT affect the coverage % (that's computed from
                    # pct-history-coverage.json / pct-export-coverage.json, not this file).
+
+# Scoped corridor exceptions: legit PCT variants that run farther than CORRIDOR_KM
+# off the official line, in a place where a wider corridor can't leak home/town.
+# Each is (lat_min, lat_max, lon_min, lon_max, corridor_km). Points inside the box
+# use its wider corridor; everywhere else the strict CORRIDOR_KM still applies.
+# Columbia Gorge (~1000 mi from home): Eagle Creek Alternate down Eagle Creek Trail
+# #440 reaches ~3.9 km off the ridge PCT before rejoining at the Bridge of the Gods.
+CORRIDOR_BOXES = [
+    (45.45, 45.75, -122.05, -121.65, 4.0),  # Columbia Gorge / Eagle Creek
+]
+def corridor_km(lon, lat):
+    for la0, la1, lo0, lo1, km in CORRIDOR_BOXES:
+        if la0 <= lat <= la1 and lo0 <= lon <= lo1:
+            return km
+    return CORRIDOR_KM
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 markers = json.load(open(f'{REPO}/garmin-export/.markers.json'))
@@ -68,7 +85,9 @@ def clip_segment(pts):
             j = i
             while j < len(pts) and pts[j][2] > ON_KM:
                 j += 1
-            if max(pts[k][2] for k in range(i, j)) > CORRIDOR_KM:   # town/home spur
+            # Drop the excursion if any point strays past ITS local corridor (a
+            # town/home spur); a scoped-box variant like Eagle Creek is kept.
+            if any(pts[k][2] > corridor_km(pts[k][0], pts[k][1]) for k in range(i, j)):
                 for k in range(i, j): keep[k] = False
             i = j
         else:
@@ -86,6 +105,7 @@ def clip_segment(pts):
 def convert(src, dst, role):
     feats = []
     max_kept = 0.0
+    worst_over = 0.0   # how far any kept point strays past ITS local corridor
     for trk in ET.parse(src).getroot().iter(NS+'trk'):
         for seg in trk.iter(NS+'trkseg'):
             pts = []
@@ -94,18 +114,22 @@ def convert(src, dst, role):
                 pts.append((lon, lat, dist_to_trail(lon, lat)))
             for run in clip_segment(pts):
                 for lon, lat in run:
-                    max_kept = max(max_kept, dist_to_trail(lon, lat))
+                    d = dist_to_trail(lon, lat)
+                    max_kept = max(max_kept, d)
+                    worst_over = max(worst_over, d - corridor_km(lon, lat))
                 simp = rdp(run, TOL)
                 if len(simp) >= 2:
                     feats.append({'type': 'Feature', 'properties': {'role': role},
                                   'geometry': {'type': 'LineString', 'coordinates': simp}})
-    # HARD SAFETY GATE: nothing beyond the corridor may ship.
-    if max_kept > CORRIDOR_KM + 1e-6:
-        sys.exit(f'ABORT: kept a point {max_kept:.1f} km off trail (> {CORRIDOR_KM} km corridor) - possible PII leak')
+    # HARD SAFETY GATE: nothing may ship beyond its corridor (wider only inside a
+    # CORRIDOR_BOXES exception; strict CORRIDOR_KM everywhere else).
+    if worst_over > 1e-6:
+        sys.exit(f'ABORT: kept a point {worst_over:.1f} km past its corridor (max {max_kept:.1f} km off trail) - possible PII leak')
     json.dump({'type': 'FeatureCollection', 'features': feats}, open(dst, 'w'), separators=(',', ':'))
     pts_total = sum(len(f['geometry']['coordinates']) for f in feats)
     print(f'{src} -> {dst}: {len(feats)} segments, {pts_total} points, '
-          f'max {max_kept:.2f} km off trail (corridor {CORRIDOR_KM} km), {os.path.getsize(dst)//1024} KB')
+          f'max {max_kept:.2f} km off trail (corridor {CORRIDOR_KM} km, wider in scoped boxes), '
+          f'{os.path.getsize(dst)//1024} KB')
 
 if __name__ == '__main__':
     convert(sys.argv[1], sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else 'year')
