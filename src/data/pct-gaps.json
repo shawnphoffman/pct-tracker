@@ -1,9 +1,15 @@
 {
-	"_comment": "Interior gaps in Madison's PCT coverage (hitched/jumped/skipped). Edit \"status\" to \"complete\" to count a gap as walked; default \"unknown\" does not count and marks it as still to-do. Regenerate with scripts/build-gaps.mjs (preserves status/note).",
+	"_comment": "Interior gaps in Madison's PCT coverage (hitched/jumped/skipped). Edit \"status\" to \"complete\" to count a gap as walked; default \"unknown\" does not count and marks it as still to-do. \"remaining\" is the stretch from her furthest point to the Canadian terminus (drawn by the incomplete layer, not counted in coverage/pending). Regenerate with scripts/build-gaps.mjs (preserves status/note).",
 	"statuses": [
 		"complete",
 		"unknown"
 	],
+	"remaining": {
+		"from": 2130,
+		"to": 2662,
+		"miles": 532,
+		"region": "Washington"
+	},
 	"gaps": [
 		{
 			"from": 181.5,

@@ -51,6 +51,16 @@ for (let i = 1; i < merged.length; i++) {
 	if (to > from) gaps.push({ from, to, region: regionAt((from + to) / 2) })
 }
 
+// The trail still ahead of her furthest point, on to the Canadian terminus.
+// Kept separate from `gaps` (which are interior hitches/jumps) so it stays out
+// of the coverage/pending math, but the incomplete map layer can still draw it.
+const TOTAL = PCT_REGIONS[PCT_REGIONS.length - 1].to
+const furthest = merged.length ? round1(merged[merged.length - 1][1]) : 0
+const remaining =
+	furthest < TOTAL
+		? { from: furthest, to: TOTAL, miles: round1(TOTAL - furthest), region: regionAt((furthest + TOTAL) / 2) }
+		: null
+
 // Preserve manual status/note from any existing file, matched by from-to.
 let prior = {}
 if (fs.existsSync(gapsPath)) {
@@ -62,8 +72,9 @@ if (fs.existsSync(gapsPath)) {
 
 const body = {
 	_comment:
-		'Interior gaps in Madison\'s PCT coverage (hitched/jumped/skipped). Edit "status" to "complete" to count a gap as walked; default "unknown" does not count and marks it as still to-do. Regenerate with scripts/build-gaps.mjs (preserves status/note).',
+		'Interior gaps in Madison\'s PCT coverage (hitched/jumped/skipped). Edit "status" to "complete" to count a gap as walked; default "unknown" does not count and marks it as still to-do. "remaining" is the stretch from her furthest point to the Canadian terminus (drawn by the incomplete layer, not counted in coverage/pending). Regenerate with scripts/build-gaps.mjs (preserves status/note).',
 	statuses: ['complete', 'unknown'],
+	remaining,
 	gaps: gaps.map(g => {
 		const p = prior[`${g.from}-${g.to}`]
 		return {
@@ -79,4 +90,5 @@ const body = {
 
 fs.writeFileSync(gapsPath, JSON.stringify(body, null, '\t') + '\n')
 const pending = body.gaps.filter(g => g.status !== 'complete').reduce((s, g) => s + g.miles, 0)
-console.log(`Wrote ${body.gaps.length} gaps (${round1(pending)} mi not yet complete) to ${gapsPath}`)
+const tail = remaining ? `, ${remaining.miles} mi remaining to terminus (mile ${remaining.from}->${remaining.to})` : ''
+console.log(`Wrote ${body.gaps.length} gaps (${round1(pending)} mi not yet complete)${tail} to ${gapsPath}`)
