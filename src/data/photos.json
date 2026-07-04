@@ -4871,6 +4871,20 @@
 				],
 				"type": "Point"
 			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"filename": "pct26 - 1.jpeg",
+				"createDate": "2026-07-01T18:57:06.000Z"
+			},
+			"geometry": {
+				"coordinates": [
+					-119.63597778,
+					38.33020278
+				],
+				"type": "Point"
+			}
 		}
 	]
 }

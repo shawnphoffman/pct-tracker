@@ -88,31 +88,34 @@ Note the public base URL, e.g. `https://pub-xxxx.r2.dev` or
 
 ## Step 3 — Upload
 
-Upload the `web/` folder under a `web/` key prefix. With wrangler
-(`npm i -g wrangler`):
+Upload the **contents** of the local `web/` folder to the **bucket root** (no
+key prefix). The live CDN serves images from the bucket root, e.g.
+`https://photos.madison.rocks/sierras%20-%209.jpeg` — the local folder is named
+`web/` but the R2 keys are bare basenames. With wrangler (`npm i -g wrangler`):
 
 ```bash
-wrangler r2 object put pct-tracker-photos/web --file ./photos-dist/web --recursive
+# single file
+wrangler r2 object put "pct-tracker-photos/<filename>.jpeg" --file "./photos-dist/web/<filename>.jpeg" --remote
 ```
 
 Or rclone (configure an `r2` remote with your R2 S3 credentials first):
 
 ```bash
-rclone copy ./photos-dist/web r2:pct-tracker-photos/web --progress \
+rclone copy ./photos-dist/web r2:pct-tracker-photos --progress \
   --header-upload "Cache-Control: public, max-age=31536000, immutable"
 ```
 
-Verify one loads: open `<PUBLIC_BASE_URL>/web/sierras%20-%2023.jpeg`.
+Verify one loads: open `<PUBLIC_BASE_URL>/sierras%20-%2023.jpeg`.
 
 ---
 
 ## Step 4 — Flip it on
 
-Set the CDN base (the folder that directly contains the image files) in
-`.env.local` and in the Vercel project env:
+Set the CDN base (the folder that directly contains the image files, i.e. the
+bucket root) in `.env.local` and in the Vercel project env:
 
 ```
-NEXT_PUBLIC_PHOTO_CDN=https://<PUBLIC_BASE_URL>/web
+NEXT_PUBLIC_PHOTO_CDN=https://<PUBLIC_BASE_URL>
 ```
 
 `NEXT_PUBLIC_` because the loader runs in the browser. Redeploy (or restart
