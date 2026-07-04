@@ -134,6 +134,25 @@ place and gated on this var:
 
 ---
 
+## Adding a new photo later
+
+Steps 1–4 above are the one-time migration. To add a single new photo once the
+feature is live, use [`scripts/add-photo.py`](../scripts/add-photo.py) — it reads
+the photo's GPS, recompresses + **strips EXIF/GPS** (required, see CLAUDE.md),
+appends the feature to `photos.json`, and prints the upload + commit commands.
+Needs `exiftool` + ImageMagick.
+
+```bash
+scripts/add-photo.py IMG_4521.jpg --name "pct26 - 2"           # process + register
+scripts/add-photo.py IMG_4521.jpg --name "pct26 - 2" --upload  # also rclone to R2
+```
+
+Then commit `photos.json` and push (the printed command). Use `--coords LON,LAT`
+if the photo has no embedded GPS. R2 keys are bare basenames at the bucket root
+(no `web/` prefix) — the script already targets the right key.
+
+---
+
 ## Cost guardrails
 
 - **Never** commit originals to the repo or `/public` again — that was the trap.
