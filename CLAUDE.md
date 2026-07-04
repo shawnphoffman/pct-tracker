@@ -22,6 +22,11 @@ Concretely:
   no message text, no timestamps (the public map must not reveal *when* Madison
   was somewhere). Keep it that way: never add message/desc/timestamp fields to
   the `/api/track/[year]` payload or any map popup.
+- The ONLY sanctioned exception to the location safety delay is the
+  secret-keyed live preview (`?live=<GARMIN_LIVE_SECRET>` on the site and on
+  `/api/track/[year]`). It drops the delay for trusted viewers but still serves
+  geometry only, and live responses are never shared-cached. Never commit or
+  log the secret; rotate it in the Vercel env vars if it leaks.
 - **To share any track file, sanitize it first:**
   `python3 scripts/garmin/sanitize.py in.gpx out.gpx`. It strips all
   human-authored text and keeps only geometry. Verify with

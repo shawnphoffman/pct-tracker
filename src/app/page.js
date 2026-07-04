@@ -164,9 +164,15 @@ const Home = () => {
 	const [imageOverride, setImageOverride] = useState(null)
 	const [progress, setProgress] = useState(null)
 	const [progressOpen, setProgressOpen] = useState(false)
+	// True once the track API confirms the ?live= secret was accepted (drives
+	// the LIVE badge). A bad key silently shows the normal delayed feed.
+	const [isLiveFeed, setIsLiveFeed] = useState(false)
 	const searchParams = useSearchParams()
 
 	const isDebug = !!searchParams.get('debug')
+	// Live preview: pass ?live=<secret> through to the track API, which drops
+	// the location safety delay only when the secret matches its env var.
+	const liveKey = searchParams.get('live')
 	// Local-only tooling: the Unknown debug layer + the route-id hover popovers.
 	// Never on the deployed (production) site. process.env.NODE_ENV is inlined by Next.
 	const isLocal = process.env.NODE_ENV !== 'production'
@@ -611,12 +617,13 @@ const Home = () => {
 				new mapboxgl.Marker({ element: el, anchor: 'left' }).setLngLat(s.coord).addTo(map.current)
 			})
 
-			fetch(track2026.url)
+			fetch(liveKey ? `${track2026.url}?live=${encodeURIComponent(liveKey)}` : track2026.url)
 				.then(r => r.json())
 				.then(geo => {
 					if (!map.current) return
 					map.current.getSource(track2026.source)?.setData(geo)
 					setProgress(geo.progress || null)
+					setIsLiveFeed(!!geo.live)
 
 					const latest = geo.features?.find(f => f.properties?.role === 'latest')
 					if (!latest) return
@@ -728,7 +735,7 @@ const Home = () => {
 				})
 			}
 		})
-	}, [isDebug, isLocal, showNewslettersLayer, showPhotosLayer, show23, show26, showTrailCrew, showMisc, showUnknown, showIncomplete])
+	}, [isDebug, isLocal, liveKey, showNewslettersLayer, showPhotosLayer, show23, show26, showTrailCrew, showMisc, showUnknown, showIncomplete])
 
 	return (
 		<div>
@@ -863,6 +870,10 @@ const Home = () => {
 			</div>
 			{/* MAP */}
 			<div ref={mapContainer} className="map-container" role="application" aria-label="Map of Madison’s Pacific Crest Trail hikes" />
+
+			{/* LIVE badge: only when the ?live= secret was accepted, i.e. the 2026
+			    track is real-time with no safety delay. */}
+			{isLiveFeed && <div className="live-badge">LIVE</div>}
 
 			{/* LIFETIME PCT PROGRESS: miles/percent covered across all years, snapped
 			    to the trail and deduped so a mile hiked twice counts once.
