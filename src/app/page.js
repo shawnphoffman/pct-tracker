@@ -9,6 +9,18 @@ import EyeToggle from '@/components/EyeToggle'
 import ColorCircle from '@/components/ColorCircle'
 import CustomControl from '@/components/CustomControl'
 
+// Newsletter dots are driven by these local per-year GeoJSON files (the single
+// source of truth, also read by NewsletterDialog and edited via
+// /admin/newsletters) rather than a baked Mapbox tileset, so edits show up on the
+// map on next deploy. All years share one source/layer/toggle; merge them here.
+import newsletterPoints2023 from '@/data/PCT - Madison - 2023 - Newsletter Points.json'
+import newsletterPoints2026 from '@/data/PCT - Madison - 2026 - Newsletter Points.json'
+
+const newsletterPoints = {
+	type: 'FeatureCollection',
+	features: [...newsletterPoints2026.features, ...newsletterPoints2023.features],
+}
+
 // Interaction-only UI: keep the lightbox library + JSON data out of the initial
 // bundle and load each on first use.
 const PhotoLightbox = dynamic(() => import('@/components/PhotoLightbox'), { ssr: false })
@@ -367,14 +379,13 @@ const Home = () => {
 			// Add newsletter source and layer
 			const newsletterSource = 'newsletter-points'
 			map.current.addSource(newsletterSource, {
-				type: 'vector',
-				url: 'mapbox://shawnhoffman.cln29xsgu00fw2noxeyy2w94s-9r9pg',
+				type: 'geojson',
+				data: newsletterPoints,
 			})
 			map.current.addLayer(
 				{
 					id: 'newsletter-points',
 					source: newsletterSource,
-					'source-layer': 'PCT_-_Madison_-_2023_-_Newslette',
 					type: 'circle',
 					layout: {
 						// visibility: 'visible',
@@ -394,7 +405,6 @@ const Home = () => {
 				{
 					id: 'newsletter-points-hidden',
 					source: newsletterSource,
-					'source-layer': 'PCT_-_Madison_-_2023_-_Newslette',
 					type: 'circle',
 					layout: {
 						// visibility: 'visible',

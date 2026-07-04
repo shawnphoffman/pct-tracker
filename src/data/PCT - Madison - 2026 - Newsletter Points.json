@@ -1,0 +1,21 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"properties": {
+				"Mile": 0,
+				"Link": "https://madisonsites.substack.com/p/out-touching-grass",
+				"Date": "7/2/26",
+				"Title": "Out Touching Grass"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-119.63724039322433,
+					38.32797121605532
+				]
+			}
+		}
+	]
+}
