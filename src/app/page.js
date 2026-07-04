@@ -581,6 +581,28 @@ const Home = () => {
 				})
 			}
 
+			// Stack the track lines to match the on-page toggle hierarchy so the more
+			// recent hike wins wherever routes overlap: 2026 on top, older years
+			// beneath, then the trail-crew/misc buckets, with the local-only debug
+			// layers at the bottom. All stay below the newsletter dots. The 2018/2019
+			// lines are baked into the style at an arbitrary depth, so we can't rely
+			// on add-order - move every layer explicitly. Mapbox draws layers in list
+			// order (later = on top) and moveLayer(id, 'newsletter-points') drops id
+			// just below the newsletters, so moving bottom-to-top leaves 2026 topmost.
+			const trackStackBottomToTop = [
+				trackIncomplete.line, // local-only debug
+				trackUnknown.line, // local-only debug
+				trackMisc.line,
+				trackTrailCrew.line,
+				Layers.Madi2018,
+				Layers.Madi2019,
+				track2023.line,
+				track2026.line,
+			]
+			for (const id of trackStackBottomToTop) {
+				if (map.current.getLayer(id)) map.current.moveLayer(id, 'newsletter-points')
+			}
+
 			// Section-start markers: labeled dots at the start of each PCT section.
 			SECTION_STARTS.forEach(s => {
 				const el = document.createElement('div')
