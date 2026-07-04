@@ -176,24 +176,59 @@ export function parseGarminFixes(kml, { notAfter = null, maxSpeedKmh = 160 } = {
 	return { fixes: cleaned }
 }
 
+// Split ordered fixes into contiguous runs, breaking wherever two consecutive
+// fixes are more than maxGapKm apart. Such a gap is a shuttle/hitch/flip (e.g.
+// off-trail at Ebbetts, back on at Carson), not a walked path - drawing a
+// straight line across it is a lie. Each returned run is walked ground.
+const splitOnGaps = (fixes, maxGapKm) => {
+	if (!maxGapKm) return [fixes.map(f => f.coord)]
+	const runs = []
+	let run = []
+	for (const fix of fixes) {
+		const prev = run[run.length - 1]
+		if (prev && haversineKm(prev, fix.coord) > maxGapKm) {
+			runs.push(run)
+			run = []
+		}
+		run.push(fix.coord)
+	}
+	if (run.length) runs.push(run)
+	return runs
+}
+
 /**
- * Build a GeoJSON FeatureCollection (track LineString + latest Point) from a
- * Garmin MapShare KML string. Returns empty features when there is no data.
+ * Build a GeoJSON FeatureCollection (track line + latest Point) from a Garmin
+ * MapShare KML string. Returns empty features when there is no data.
+ *
+ * The track is a MultiLineString when the fixes contain a jump wider than
+ * maxGapKm (rendered as a break, not a bogus straight connector), otherwise a
+ * plain LineString. Consumers that need the flat vertex list (e.g. progress
+ * snapping) should flatten MultiLineString coordinates one level.
  */
-export function garminKmlToGeoJSON(kml, { properties = {}, notAfter = null, maxSpeedKmh = 160, simplifyTolerance = 0.0001 } = {}) {
+export function garminKmlToGeoJSON(kml, { properties = {}, notAfter = null, maxSpeedKmh = 160, simplifyTolerance = 0.0001, maxGapKm = 5 } = {}) {
 	const { fixes } = parseGarminFixes(kml, { notAfter, maxSpeedKmh })
 	const features = []
 
 	if (fixes.length >= 2) {
-		const coordinates = simplify(
-			fixes.map(f => f.coord),
-			simplifyTolerance
-		).map(([lon, lat]) => [round5(lon), round5(lat)])
-		features.push({
-			type: 'Feature',
-			properties: { role: 'track', ...properties },
-			geometry: { type: 'LineString', coordinates },
-		})
+		// Simplify each walked run on its own, then keep only runs that still have
+		// a drawable segment (>= 2 vertices).
+		const lines = splitOnGaps(fixes, maxGapKm)
+			.map(run => simplify(run, simplifyTolerance).map(([lon, lat]) => [round5(lon), round5(lat)]))
+			.filter(line => line.length >= 2)
+
+		if (lines.length === 1) {
+			features.push({
+				type: 'Feature',
+				properties: { role: 'track', ...properties },
+				geometry: { type: 'LineString', coordinates: lines[0] },
+			})
+		} else if (lines.length > 1) {
+			features.push({
+				type: 'Feature',
+				properties: { role: 'track', ...properties },
+				geometry: { type: 'MultiLineString', coordinates: lines },
+			})
+		}
 	}
 
 	const last = fixes[fixes.length - 1]

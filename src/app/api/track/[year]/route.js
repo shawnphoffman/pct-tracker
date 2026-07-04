@@ -35,6 +35,9 @@ const REVALIDATE_SECONDS = numEnv('GARMIN_REVALIDATE_SECONDS', isProd ? 12 * 360
 const MILE_MARKER_TILESET = process.env.PCT_MILE_MARKER_TILESET || 'shawnhoffman.32639qah'
 const SNAP_RADIUS_M = numEnv('PCT_SNAP_RADIUS_M', 500) // max off-trail distance to count a fix
 const BRIDGE_MAX_MILES = numEnv('PCT_BRIDGE_MAX_MILES', 30) // consecutive fixes farther apart = a jump, not walked
+// Consecutive fixes farther apart than this break the drawn line (a hitch/flip,
+// e.g. off-trail at Ebbetts and back on at Carson, isn't a walked straight line).
+const MAX_GAP_KM = numEnv('PCT_MAX_GAP_KM', 5)
 const TOTAL_MILES = numEnv('PCT_TOTAL_MILES', 2662)
 
 // Pre-snapped covered intervals for the static (pre-2026) years, unioned with
@@ -107,15 +110,20 @@ export async function GET(request, { params }) {
 		const geojson = garminKmlToGeoJSON(kml, {
 			properties: { year: Number(params.year) },
 			notAfter: DELAY_HOURS > 0 ? cutoff : null,
+			maxGapKm: MAX_GAP_KM,
 		})
 
 		// Lifetime PCT progress: union the live 2026 track (snapped here) with the
 		// pre-snapped prior years, deduped. Computed even when the live track is
 		// empty (prior years still count). Failures must never break the response.
 		const track = geojson.features.find(f => f.properties?.role === 'track')
+		// Flatten MultiLineString (jump-split) to the ordered vertex list snapping
+		// wants; bridgeMaxMiles still keeps the jump from counting as walked.
+		const trackCoords =
+			track?.geometry.type === 'MultiLineString' ? track.geometry.coordinates.flat() : track?.geometry.coordinates ?? []
 		let progress = null
 		try {
-			progress = await computePctProgress(track?.geometry.coordinates ?? [], {
+			progress = await computePctProgress(trackCoords, {
 				token: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
 				tileset: MILE_MARKER_TILESET,
 				radius: SNAP_RADIUS_M,
