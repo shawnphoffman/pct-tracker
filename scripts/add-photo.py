@@ -2,15 +2,17 @@
 """Add a new trail photo to the map: process + register + upload in one step.
 
 For each image you point it at, this script:
-  1. reads GPS + capture time from the image's EXIF          (needs exiftool)
+  1. reads GPS coordinates from the image's EXIF             (needs exiftool)
   2. recompresses it to <=1600px @ q72 and STRIPS EXIF/GPS   (needs ImageMagick)
      into photos-dist/web/<name>.jpeg  (the R2 upload staging dir, gitignored)
-  3. appends a feature (filename + coordinates) to src/data/photos.json, which
-     drives the map marker + lightbox slide.
+  3. appends a feature (filename + coordinates ONLY) to src/data/photos.json,
+     which drives the map marker + lightbox slide.
 
 Then it prints the R2 upload + git commit commands, or runs the upload for you
 with --upload. The strip in step 2 is a privacy requirement, not a nicety:
-originals embed Madison's precise location + timestamp (see CLAUDE.md).
+originals embed Madison's precise location + timestamp (see CLAUDE.md). Only the
+location (coordinates) is kept in photos.json -- no timestamp, altitude,
+bearing, or device/lens metadata.
 
 Usage:
   scripts/add-photo.py IMG_4521.jpg --name "pct26 - 2"      # one photo, nice name
@@ -33,7 +35,6 @@ import json
 import os
 import subprocess
 import sys
-from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -46,19 +47,19 @@ BUCKET = os.environ.get("R2_BUCKET", "pct-tracker-photos")
 CACHE = "public, max-age=31536000, immutable"
 
 # Trailing-style feature block (tabs), matching the tail of photos.json so the
-# append is a clean 1-feature diff rather than a full reserialize.
+# append is a clean 1-feature diff rather than a full reserialize. Properties are
+# deliberately filename-only -- no timestamp/device metadata (see CLAUDE.md).
 FEATURE = """\t\t{{
 \t\t\t"type": "Feature",
 \t\t\t"properties": {{
-\t\t\t\t"filename": "{filename}",
-\t\t\t\t"createDate": "{create_date}"
+\t\t\t\t"filename": "{filename}"
 \t\t\t}},
 \t\t\t"geometry": {{
+\t\t\t\t"type": "Point",
 \t\t\t\t"coordinates": [
 \t\t\t\t\t{lon:.8f},
 \t\t\t\t\t{lat:.8f}
-\t\t\t\t],
-\t\t\t\t"type": "Point"
+\t\t\t\t]
 \t\t\t}}
 \t\t}}"""
 
@@ -68,36 +69,16 @@ def die(msg):
     sys.exit(1)
 
 
-def read_exif(path):
-    """Return (lon, lat_or_None, create_date_iso). GPS via -n is signed decimal."""
+def read_coords(path):
+    """Return (lon, lat) or (None, None). GPS via -n is signed decimal.
+    Only location is read -- capture time / device metadata are intentionally
+    ignored so they never reach photos.json (see CLAUDE.md)."""
     out = subprocess.run(
-        ["exiftool", "-j", "-n",
-         "-GPSLatitude", "-GPSLongitude",
-         "-DateTimeOriginal", "-CreateDate", "-OffsetTimeOriginal", str(path)],
+        ["exiftool", "-j", "-n", "-GPSLatitude", "-GPSLongitude", str(path)],
         capture_output=True, text=True, check=True,
     ).stdout
     tags = json.loads(out)[0]
-    lat = tags.get("GPSLatitude")
-    lon = tags.get("GPSLongitude")
-    stamp = tags.get("DateTimeOriginal") or tags.get("CreateDate")
-    return lon, lat, iso_utc(stamp, tags.get("OffsetTimeOriginal"))
-
-
-def iso_utc(stamp, offset):
-    """EXIF 'YYYY:MM:DD HH:MM:SS' (+ optional '-07:00') -> UTC ISO 'Z' string.
-    createDate is not read by the app; if the offset is absent the wall-clock
-    time is stored as-is with a 'Z', which is only approximate. It exists purely
-    to match the schema of the other 293 features."""
-    if not stamp:
-        return ""
-    try:
-        dt = datetime.strptime(stamp, "%Y:%m:%d %H:%M:%S")
-    except ValueError:
-        return ""
-    if offset and len(offset) == 6:  # e.g. -07:00
-        sign = 1 if offset[0] == "+" else -1
-        dt = dt - sign * timedelta(hours=int(offset[1:3]), minutes=int(offset[4:6]))
-    return dt.replace(tzinfo=timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+    return tags.get("GPSLongitude"), tags.get("GPSLatitude")
 
 
 def process_image(src, dest):
@@ -119,14 +100,14 @@ def process_image(src, dest):
         die(f"GPS survived strip on {dest.name}: {leftover!r}")
 
 
-def add_feature(filename, lon, lat, create_date):
+def add_feature(filename, lon, lat):
     """Text-append one feature before the closing ']}' of photos.json.
     Returns False (no-op) if the filename is already registered."""
     text = PHOTOS_JSON.read_text()
     data = json.loads(text)  # also validates the file parses
     if any(f["properties"]["filename"] == filename for f in data["features"]):
         return False
-    block = FEATURE.format(filename=filename, create_date=create_date, lon=lon, lat=lat)
+    block = FEATURE.format(filename=filename, lon=lon, lat=lat)
     body = text.rstrip("\n")
     close = body.rfind("\n\t]")  # start of the features-array closer
     if close == -1:
@@ -159,16 +140,16 @@ def main():
         filename = f"{name}.jpeg"
         dest = OUT / filename
 
-        lon, lat, create_date = read_exif(src)
+        lon, lat = read_coords(src)
         if override:
             lon, lat = override
         if lon is None or lat is None:
             die(f"{src.name} has no GPS; pass --coords LON,LAT")
 
         process_image(src, dest)
-        added = add_feature(filename, lon, lat, create_date)
+        added = add_feature(filename, lon, lat)
         status = "registered" if added else "already in photos.json (image refreshed)"
-        print(f"  {filename}: [{lon:.5f}, {lat:.5f}]  {create_date or 'no date'}  -> {status}")
+        print(f"  {filename}: [{lon:.5f}, {lat:.5f}]  -> {status}")
         uploaded.append(filename)
 
     print("\nProcessed into photos-dist/web/ (gitignored). Next:")
