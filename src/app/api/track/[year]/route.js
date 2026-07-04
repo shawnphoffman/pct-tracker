@@ -1,3 +1,5 @@
+import { timingSafeEqual } from 'node:crypto'
+
 import { garminKmlToGeoJSON } from '@/lib/garmin'
 import { computePctProgress } from '@/lib/pct-progress'
 import historyCoverage from '@/data/pct-history-coverage.json'
@@ -26,6 +28,22 @@ const numEnv = (name, fallback) => {
 // SAFETY DELAY: the public/deployed map must NOT reveal Madison's near-real-time
 // location. We only surface fixes at least this old. Fresh locally for testing.
 const DELAY_HOURS = numEnv('GARMIN_DELAY_HOURS', isProd ? 72 : 0)
+
+// LIVE PREVIEW: `?live=<secret>` bypasses the safety delay so trusted viewers
+// can see the real-time track on the deployed site. The secret lives only in
+// env (set GARMIN_LIVE_SECRET in Vercel); unset disables the bypass entirely.
+// A wrong or missing key silently gets the normal delayed feed, so the
+// endpoint never confirms whether a guess was close. The payload stays
+// geometry-only either way (src/lib/garmin.js) - the secret removes the time
+// delay, nothing else. Rotate by changing the env var; the secret rides in a
+// URL, so treat it as semi-durable (browser history, access logs).
+const isLiveKey = key => {
+	const secret = process.env.GARMIN_LIVE_SECRET
+	if (!secret || !key) return false
+	const a = Buffer.from(String(key))
+	const b = Buffer.from(secret)
+	return a.length === b.length && timingSafeEqual(a, b)
+}
 
 // How long a cached response is served before refetching Garmin. Slow in prod
 // (data only ages into view), fast locally.
@@ -62,11 +80,13 @@ const emptyWithHistory = async () => {
 	return progress ? { ...empty, progress } : empty
 }
 
-const json = (body, { status = 200, note } = {}) =>
+const json = (body, { status = 200, note, live = false } = {}) =>
 	Response.json(body, {
 		status,
 		headers: {
-			'Cache-Control': `public, s-maxage=${REVALIDATE_SECONDS}, stale-while-revalidate=3600`,
+			// Live (secret-keyed) responses are never shared-cached: the point is
+			// fresh data, and no copy keyed by the secret URL should sit in a CDN.
+			'Cache-Control': live ? 'private, no-store' : `public, s-maxage=${REVALIDATE_SECONDS}, stale-while-revalidate=3600`,
 			...(note ? { 'X-Track-Status': note } : {}),
 		},
 	})
@@ -75,20 +95,24 @@ export async function GET(request, { params }) {
 	const config = YEARS[params.year]
 	if (!config) return json(empty, { status: 404, note: 'unknown-year' })
 
+	// Secret-keyed live preview: a valid key drops the safety delay to zero.
+	const live = isLiveKey(new URL(request.url).searchParams.get('live'))
+	const delayHours = live ? 0 : DELAY_HOURS
+
 	const password = process.env.GARMIN_MAPSHARE_PASSWORD
 	if (!password) {
 		// Not configured yet: serve an empty track so the map still renders.
-		return json(await emptyWithHistory(), { note: 'no-credentials' })
+		return json(await emptyWithHistory(), { note: 'no-credentials', live })
 	}
 
-	const cutoff = Date.now() - DELAY_HOURS * 3600 * 1000
+	const cutoff = Date.now() - delayHours * 3600 * 1000
 
 	// Bound the feed window: d1 = season start, d2 = cutoff so Garmin doesn't
 	// even send fixes newer than the delay allows. Converter re-filters as a
 	// safety net (belt and suspenders on the location delay).
 	const query = new URLSearchParams()
 	if (config.start) query.set('d1', config.start)
-	if (DELAY_HOURS > 0) query.set('d2', new Date(cutoff).toISOString())
+	if (delayHours > 0) query.set('d2', new Date(cutoff).toISOString())
 	const qs = query.toString()
 	const url = `https://share.garmin.com/Feed/Share/${config.user}${qs ? `?${qs}` : ''}`
 
@@ -98,18 +122,20 @@ export async function GET(request, { params }) {
 				// Garmin MapShare uses HTTP Basic auth with a blank username.
 				Authorization: 'Basic ' + Buffer.from(`:${password}`).toString('base64'),
 			},
-			next: { revalidate: REVALIDATE_SECONDS },
+			// Live previews always refetch Garmin; the public feed can lean on the
+			// data cache since its data only ages into view.
+			...(live ? { cache: 'no-store' } : { next: { revalidate: REVALIDATE_SECONDS } }),
 		})
 
 		if (!res.ok) {
 			console.error(`Garmin feed ${config.user} returned ${res.status}`)
-			return json(await emptyWithHistory(), { note: `upstream-${res.status}` })
+			return json(await emptyWithHistory(), { note: `upstream-${res.status}`, live })
 		}
 
 		const kml = await res.text()
 		const geojson = garminKmlToGeoJSON(kml, {
 			properties: { year: Number(params.year) },
-			notAfter: DELAY_HOURS > 0 ? cutoff : null,
+			notAfter: delayHours > 0 ? cutoff : null,
 			maxGapKm: MAX_GAP_KM,
 		})
 
@@ -136,10 +162,12 @@ export async function GET(request, { params }) {
 			console.error('PCT progress computation failed', err)
 		}
 
-		const body = progress ? { ...geojson, progress } : geojson
-		return json(body, { note: `ok-${geojson.features.length}${progress ? `-p${progress.coveredPercent}` : ''}` })
+		// `live: true` tells the map the key was accepted (it renders a badge);
+		// a rejected key just yields the delayed body with no marker.
+		const body = { ...geojson, ...(progress ? { progress } : {}), ...(live ? { live: true } : {}) }
+		return json(body, { note: `ok-${geojson.features.length}${progress ? `-p${progress.coveredPercent}` : ''}`, live })
 	} catch (err) {
 		console.error('Garmin feed fetch failed', err)
-		return json(await emptyWithHistory(), { note: 'fetch-failed' })
+		return json(await emptyWithHistory(), { note: 'fetch-failed', live })
 	}
 }

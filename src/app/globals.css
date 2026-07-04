@@ -213,6 +213,24 @@ body,
 	text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 2px #fff;
 }
 
+/* "LIVE" badge: shown only when the ?live= secret was accepted and the 2026
+   track is being served without the location safety delay. */
+.live-badge {
+	position: absolute;
+	bottom: 34px;
+	left: 10px;
+	z-index: 2;
+	padding: 4px 10px;
+	background: #dc2626;
+	color: #fff;
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	border-radius: 8px;
+	box-shadow: var(--shadow);
+	pointer-events: none;
+}
+
 /* Lifetime PCT progress panel (miles/percent covered, all years). Collapsible. */
 .progress-panel {
 	--accent: hsl(178, 62%, 26%); /* darkish teal */
