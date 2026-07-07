@@ -16,6 +16,22 @@
 					38.32797121605532
 				]
 			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"Mile": 1050,
+				"Link": "https://madisonsites.substack.com/p/mile-1050",
+				"Date": "07/7/26",
+				"Title": "Mile 1050"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-119.81297241947054,
+					38.54945535720054
+				]
+			}
 		}
 	]
 }
