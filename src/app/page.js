@@ -681,6 +681,31 @@ const Home = () => {
 					},
 					'newsletter-points'
 				)
+
+				// Hover a mile-marker dot to see its mile (+ section). Only once
+				// zoomed in enough that the 0.5-mi markers are separable - farther
+				// out they overlap and the readout would be ambiguous.
+				const MILE_HOVER_MIN_ZOOM = 9
+				const milePopup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 8, className: 'popup mile-marker-popup' })
+				map.current.on('mousemove', mileMarkers.layer, e => {
+					if (map.current.getZoom() < MILE_HOVER_MIN_ZOOM) {
+						map.current.getCanvas().style.cursor = ''
+						milePopup.remove()
+						return
+					}
+					map.current.getCanvas().style.cursor = 'pointer'
+					const { Mile, Section_Na } = e.features[0].properties
+					const section = typeof Section_Na === 'string' ? Section_Na.replace(/ Mile Marker$/, '') : ''
+					const sub = section ? `<span class="mile-sub">${section}</span>` : ''
+					milePopup
+						.setLngLat(e.features[0].geometry.coordinates.slice())
+						.setHTML(`<div class="mile-popup"><strong>Mile ${Mile}</strong>${sub}</div>`)
+						.addTo(map.current)
+				})
+				map.current.on('mouseleave', mileMarkers.layer, () => {
+					map.current.getCanvas().style.cursor = ''
+					milePopup.remove()
+				})
 			}
 
 			// LOCAL-ONLY: the Unknown debug layer + route-id hover popovers.

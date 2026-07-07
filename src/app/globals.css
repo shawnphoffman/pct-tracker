@@ -493,6 +493,23 @@ body,
 	color: #555;
 }
 
+/* Mile-marker hover readout: "Mile N" + section subtitle. */
+.mile-popup {
+	font-size: 0.75rem;
+	white-space: nowrap;
+	padding: 1px 3px;
+	line-height: 1.2;
+}
+.mile-popup strong {
+	font-weight: 600;
+}
+.mile-sub {
+	display: block;
+	font-size: 0.7rem;
+	font-weight: 400;
+	color: #555;
+}
+
 .madi-icon svg {
 	height: 29px;
 	padding: 5px;
