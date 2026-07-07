@@ -18,15 +18,21 @@ Concretely:
 - **`garmin-export/` is gitignored and must stay so.** It holds the raw exports
   (full messages + timestamps) and the sanitized buckets. Never commit anything
   from it. Never remove its `.gitignore`.
-- **The live feed parser `src/lib/garmin.js` emits geometry only** - no `desc`,
-  no message text, no timestamps (the public map must not reveal *when* Madison
-  was somewhere). Keep it that way: never add message/desc/timestamp fields to
-  the `/api/track/[year]` payload or any map popup.
-- The ONLY sanctioned exception to the location safety delay is the
-  secret-keyed live preview (`?live=<GARMIN_LIVE_SECRET>` on the site and on
-  `/api/track/[year]`). It drops the delay for trusted viewers but still serves
-  geometry only, and live responses are never shared-cached. Never commit or
-  log the secret; rotate it in the Vercel env vars if it leaks.
+- **The public/delayed feed emits geometry only** - no `desc`, no message text,
+  no timestamps (the public map must not reveal *when* Madison was somewhere).
+  Keep it that way: never add message/desc/timestamp fields to the DELAYED
+  `/api/track/[year]` payload or any popup shown to public (non-live) viewers.
+- The sanctioned exceptions, BOTH gated on the secret-keyed live preview
+  (`?live=<GARMIN_LIVE_SECRET>` on the site and on `/api/track/[year]`), for
+  trusted viewers only:
+  - **Safety delay:** the live key drops the location delay to zero.
+  - **Timestamps:** with the key accepted, `garminKmlToGeoJSON`'s `includeTimes`
+    emits per-fix times (hoverable `role: 'fix'` points), stamps the latest pin
+    with its time, and returns a `daily` per-Pacific-day mileage summary. This
+    reveals *when* Madison was at a location, so it is LIVE-ONLY. Never pass
+    `includeTimes` (or surface `t`/`daily`) on the public/delayed path.
+  Live responses are always `private, no-store` (never shared-cached). Never
+  commit or log the secret; rotate it in the Vercel env vars if it leaks.
 - **To share any track file, sanitize it first:**
   `python3 scripts/garmin/sanitize.py in.gpx out.gpx`. It strips all
   human-authored text and keeps only geometry. Verify with

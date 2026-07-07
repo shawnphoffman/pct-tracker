@@ -54,6 +54,8 @@ const Layers = {
 const track2026 = {
 	source: 'track-2026',
 	line: Layers.Madi2026,
+	// Live-only hoverable fix points (role: 'fix'); shares the 2026 source.
+	fixes: 'track-2026-fixes',
 	url: '/api/track/2026',
 	color: '#84cc16',
 }
@@ -131,6 +133,29 @@ const SECTION_STARTS = [
 // isn't clipped at the top curve and bottom tip.
 const PIN_SVG = `<svg viewBox="-40 -40 464 592" overflow="visible" xmlns="http://www.w3.org/2000/svg"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>`
 
+// Live-mode timestamp formatting (Pacific). Fix hover + latest pin show the
+// wall-clock date/time; the daily panel labels each day. Only ever fed data on
+// the secret-keyed live path (see includeTimes in /api/track/[year]).
+const FIX_TIME_FMT = new Intl.DateTimeFormat('en-US', {
+	timeZone: 'America/Los_Angeles',
+	weekday: 'short',
+	month: 'short',
+	day: 'numeric',
+	hour: 'numeric',
+	minute: '2-digit',
+})
+// 'YYYY-MM-DD' (already a Pacific calendar day from the API) -> "Sun, Jul 5".
+// Rebuild as a UTC instant and format in UTC so the label doesn't shift a day.
+const fmtDay = iso => {
+	const [y, m, d] = iso.split('-').map(Number)
+	return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-US', {
+		timeZone: 'UTC',
+		weekday: 'short',
+		month: 'short',
+		day: 'numeric',
+	})
+}
+
 // Photos are only enabled once an external image CDN (Cloudflare R2) is
 // configured. Until then the feature stays fully off so it can't touch the
 // Vercel image budget. See docs/photos.md.
@@ -164,6 +189,9 @@ const Home = () => {
 	const [imageOverride, setImageOverride] = useState(null)
 	const [progress, setProgress] = useState(null)
 	const [progressOpen, setProgressOpen] = useState(false)
+	// Live-only: per-day mileage summary (from the secret-keyed feed) + its panel state.
+	const [daily, setDaily] = useState(null)
+	const [dailyOpen, setDailyOpen] = useState(false)
 	// True once the track API confirms the ?live= secret was accepted (drives
 	// the LIVE badge). A bad key silently shows the normal delayed feed.
 	const [isLiveFeed, setIsLiveFeed] = useState(false)
@@ -191,6 +219,10 @@ const Home = () => {
 	useEffect(() => {
 		if (latestMarker.current) {
 			latestMarker.current.getElement().style.display = show26 ? '' : 'none'
+		}
+		// Live-only fix points are a style layer; keep them in sync with the toggle.
+		if (map.current?.getLayer(track2026.fixes)) {
+			map.current.setLayoutProperty(track2026.fixes, 'visibility', show26 ? 'visible' : 'none')
 		}
 	}, [show26])
 
@@ -452,6 +484,48 @@ const Home = () => {
 			)
 			document.documentElement.style.setProperty('--color-26', track2026.color)
 
+			// LIVE ONLY: hoverable fix points (role: 'fix'), added only when a live
+			// key is being attempted. The feed only returns 'fix' features when the
+			// secret is accepted, so a wrong key just leaves this layer empty. Hover
+			// reveals each fix's Pacific date/time.
+			if (liveKey) {
+				map.current.addLayer(
+					{
+						id: track2026.fixes,
+						source: track2026.source,
+						type: 'circle',
+						// Only render dots once zoomed in enough to hover them; the line
+						// still shows at every zoom, so continental view stays uncluttered.
+						minzoom: 8,
+						filter: ['==', ['get', 'role'], 'fix'],
+						layout: { visibility: show26 ? 'visible' : 'none' },
+						paint: {
+							'circle-radius': ['interpolate', ['linear'], ['zoom'], 6, 2, 12, 4],
+							'circle-color': track2026.color,
+							'circle-opacity': 0.7,
+							'circle-stroke-width': 1,
+							'circle-stroke-color': '#fff',
+						},
+					},
+					'newsletter-points'
+				)
+
+				const fixPopup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 8, className: 'popup fix-time-popup' })
+				map.current.on('mousemove', track2026.fixes, e => {
+					map.current.getCanvas().style.cursor = 'pointer'
+					const t = e.features[0].properties.t
+					const coord = e.features[0].geometry.coordinates.slice()
+					fixPopup
+						.setLngLat(coord)
+						.setHTML(`<div class="fix-popup">${Number.isFinite(t) ? `${FIX_TIME_FMT.format(t)} PT` : ''}</div>`)
+						.addTo(map.current)
+				})
+				map.current.on('mouseleave', track2026.fixes, () => {
+					map.current.getCanvas().style.cursor = ''
+					fixPopup.remove()
+				})
+			}
+
 			// 2023 line from our own home-safe GeoJSON (replaces the hidden tileset
 			// layer). Default on, so eager-load it below.
 			map.current.addSource(track2023.source, {
@@ -604,6 +678,7 @@ const Home = () => {
 				Layers.Madi2019,
 				track2023.line,
 				track2026.line,
+				track2026.fixes, // live-only points sit above the 2026 line (hoverable)
 			]
 			for (const id of trackStackBottomToTop) {
 				if (map.current.getLayer(id)) map.current.moveLayer(id, 'newsletter-points')
@@ -624,10 +699,15 @@ const Home = () => {
 					map.current.getSource(track2026.source)?.setData(geo)
 					setProgress(geo.progress || null)
 					setIsLiveFeed(!!geo.live)
+					// daily only rides along on the accepted-secret (live) response.
+					setDaily(geo.daily?.length ? geo.daily : null)
 
 					const latest = geo.features?.find(f => f.properties?.role === 'latest')
 					if (!latest) return
 					const coord = latest.geometry.coordinates
+					// Live only: the latest fix carries its Pacific time; show it on the pin.
+					const latestT = latest.properties?.t
+					const whenHtml = Number.isFinite(latestT) ? `<span class="latest-when">${FIX_TIME_FMT.format(latestT)} PT</span>` : ''
 
 					// Current-position pin with a "how long ago" popup.
 					const el = document.createElement('div')
@@ -638,7 +718,7 @@ const Home = () => {
 					if (!show26) el.style.display = 'none'
 					latestMarker.current = new mapboxgl.Marker({ element: el, anchor: 'bottom' })
 						.setLngLat(coord)
-						.setPopup(new mapboxgl.Popup({ offset: 28, className: 'popup' }).setHTML(`<div class="latest-popup"><strong>Madison was here</strong></div>`))
+						.setPopup(new mapboxgl.Popup({ offset: 28, className: 'popup' }).setHTML(`<div class="latest-popup"><strong>Madison was here</strong>${whenHtml}</div>`))
 						.addTo(map.current)
 
 					// Bring the viewport to her current position on load.
@@ -874,6 +954,49 @@ const Home = () => {
 			{/* LIVE badge: only when the ?live= secret was accepted, i.e. the 2026
 			    track is real-time with no safety delay. */}
 			{isLiveFeed && <div className="live-badge">LIVE</div>}
+
+			{/* DAILY MILEAGE (live only): total distance walked per Pacific day, from
+			    the secret-keyed feed. Collapsible; sits above the LIVE badge. */}
+			{isLiveFeed &&
+				daily?.length > 0 &&
+				(() => {
+					const total = Math.round(daily.reduce((s, d) => s + d.miles, 0) * 10) / 10
+					const max = Math.max(1, ...daily.map(d => d.miles))
+					return (
+						<div className={`daily-panel${dailyOpen ? ' open' : ''}`}>
+							<button
+								className="daily-head"
+								onClick={() => setDailyOpen(o => !o)}
+								aria-expanded={dailyOpen}
+								aria-label="Toggle daily mileage"
+							>
+								<svg className="daily-icon" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+									<path d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192z" />
+								</svg>
+								<span className="daily-title">2026 by day</span>
+								<span className="daily-total">{total} mi</span>
+							</button>
+							<div className="daily-body">
+								<div className="daily-body-inner">
+									<div className="daily-sub">
+										{daily.length} {daily.length === 1 ? 'day' : 'days'} · {total} mi total
+									</div>
+									<div className="daily-rows">
+										{daily.map(d => (
+											<div className="daily-row" key={d.date}>
+												<span className="daily-date">{fmtDay(d.date)}</span>
+												<div className="daily-bar">
+													<div className="daily-bar-fill" style={{ width: `${(d.miles / max) * 100}%` }} />
+												</div>
+												<span className="daily-miles">{d.miles}</span>
+											</div>
+										))}
+									</div>
+								</div>
+							</div>
+						</div>
+					)
+				})()}
 
 			{/* LIFETIME PCT PROGRESS: miles/percent covered across all years, snapped
 			    to the trail and deduped so a mile hiked twice counts once.

@@ -196,6 +196,38 @@ const splitOnGaps = (fixes, maxGapKm) => {
 	return runs
 }
 
+const KM_PER_MILE = 1.609344
+
+// Bucket an epoch (ms) into a YYYY-MM-DD calendar day in `timeZone`. en-CA
+// formats as ISO-ish (2026-07-05), so the strings sort chronologically.
+const dayKey = (epochMs, timeZone) =>
+	new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(epochMs)
+
+/**
+ * Sum walked miles per calendar day (in `timeZone`) from ordered fixes. A
+ * segment longer than maxGapKm is a hitch/flip, not walked ground, so it's
+ * skipped - mirrors splitOnGaps. Each segment's distance is credited to the day
+ * of its earlier fix. Fixes without a finite time can't be bucketed and are
+ * skipped. PRIVACY: exposes when Madison moved, so callers must gate this on the
+ * secret-keyed live path only (see src/app/api/track/[year]/route.js).
+ * @returns {Array<{ date: string, miles: number }>} ascending by date
+ */
+export function summarizeDailyMiles(fixes, { maxGapKm = 5, timeZone = 'America/Los_Angeles' } = {}) {
+	const byDay = new Map()
+	for (let i = 1; i < fixes.length; i++) {
+		const a = fixes[i - 1]
+		const b = fixes[i]
+		if (!Number.isFinite(a.time) || !Number.isFinite(b.time)) continue
+		const km = haversineKm(a.coord, b.coord)
+		if (maxGapKm && km > maxGapKm) continue
+		const day = dayKey(a.time, timeZone)
+		byDay.set(day, (byDay.get(day) || 0) + km)
+	}
+	return [...byDay.entries()]
+		.sort(([d1], [d2]) => (d1 < d2 ? -1 : d1 > d2 ? 1 : 0))
+		.map(([date, km]) => ({ date, miles: Math.round((km / KM_PER_MILE) * 10) / 10 }))
+}
+
 /**
  * Build a GeoJSON FeatureCollection (track line + latest Point) from a Garmin
  * MapShare KML string. Returns empty features when there is no data.
@@ -204,8 +236,17 @@ const splitOnGaps = (fixes, maxGapKm) => {
  * maxGapKm (rendered as a break, not a bogus straight connector), otherwise a
  * plain LineString. Consumers that need the flat vertex list (e.g. progress
  * snapping) should flatten MultiLineString coordinates one level.
+ *
+ * PRIVACY: `includeTimes` additionally emits a `role: 'fix'` Point per timed
+ * fix (with `t` = epoch ms), stamps the latest Point with its `t`, and attaches
+ * a `daily` mileage summary to the returned object. This reveals WHEN Madison
+ * was at a location, so it is ONLY safe on the secret-keyed live path - never
+ * pass it for the public/delayed feed. Defaults to geometry-only.
  */
-export function garminKmlToGeoJSON(kml, { properties = {}, notAfter = null, maxSpeedKmh = 160, simplifyTolerance = 0.0001, maxGapKm = 5 } = {}) {
+export function garminKmlToGeoJSON(
+	kml,
+	{ properties = {}, notAfter = null, maxSpeedKmh = 160, simplifyTolerance = 0.0001, maxGapKm = 5, includeTimes = false, timeZone = 'America/Los_Angeles' } = {}
+) {
 	const { fixes } = parseGarminFixes(kml, { notAfter, maxSpeedKmh })
 	const features = []
 
@@ -233,14 +274,33 @@ export function garminKmlToGeoJSON(kml, { properties = {}, notAfter = null, maxS
 
 	const last = fixes[fixes.length - 1]
 	if (last) {
-		// No timestamp is exposed on purpose: the public map shouldn't reveal when
-		// Madison was at a location.
+		// Timestamp is exposed ONLY on the live path (includeTimes). The public
+		// map must not reveal when Madison was at a location.
 		features.push({
 			type: 'Feature',
-			properties: { role: 'latest', ...properties },
+			properties: {
+				role: 'latest',
+				...(includeTimes && Number.isFinite(last.time) ? { t: last.time } : {}),
+				...properties,
+			},
 			geometry: { type: 'Point', coordinates: [round5(last.coord[0]), round5(last.coord[1])] },
 		})
 	}
 
-	return { type: 'FeatureCollection', features }
+	// LIVE ONLY: one hoverable Point per timed fix (t = epoch ms) so trusted
+	// viewers can read the date/time of each fix, plus a per-day mileage summary.
+	if (includeTimes) {
+		for (const fix of fixes) {
+			if (!Number.isFinite(fix.time)) continue
+			features.push({
+				type: 'Feature',
+				properties: { role: 'fix', t: fix.time, ...properties },
+				geometry: { type: 'Point', coordinates: [round5(fix.coord[0]), round5(fix.coord[1])] },
+			})
+		}
+	}
+
+	const result = { type: 'FeatureCollection', features }
+	if (includeTimes) result.daily = summarizeDailyMiles(fixes, { maxGapKm, timeZone })
+	return result
 }

@@ -33,10 +33,11 @@ const DELAY_HOURS = numEnv('GARMIN_DELAY_HOURS', isProd ? 72 : 0)
 // can see the real-time track on the deployed site. The secret lives only in
 // env (set GARMIN_LIVE_SECRET in Vercel); unset disables the bypass entirely.
 // A wrong or missing key silently gets the normal delayed feed, so the
-// endpoint never confirms whether a guess was close. The payload stays
-// geometry-only either way (src/lib/garmin.js) - the secret removes the time
-// delay, nothing else. Rotate by changing the env var; the secret rides in a
-// URL, so treat it as semi-durable (browser history, access logs).
+// endpoint never confirms whether a guess was close. A valid key additionally
+// unlocks per-fix timestamps (hoverable points) and a daily-mileage summary
+// (includeTimes below) - trusted viewers only; the public/delayed feed stays
+// geometry-only. Rotate by changing the env var; the secret rides in a URL, so
+// treat it as semi-durable (browser history, access logs).
 const isLiveKey = key => {
 	const secret = process.env.GARMIN_LIVE_SECRET
 	if (!secret || !key) return false
@@ -137,6 +138,10 @@ export async function GET(request, { params }) {
 			properties: { year: Number(params.year) },
 			notAfter: delayHours > 0 ? cutoff : null,
 			maxGapKm: MAX_GAP_KM,
+			// LIVE ONLY: emit per-fix timestamps (hoverable points) + a daily-mileage
+			// summary. Gated on the accepted secret so the public/delayed feed stays
+			// geometry-only, and live responses are private/no-store (see json()).
+			includeTimes: live,
 		})
 
 		// Lifetime PCT progress: union the live 2026 track (snapped here) with the

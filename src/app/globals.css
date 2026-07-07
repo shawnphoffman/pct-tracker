@@ -326,6 +326,119 @@ body,
 	transition: width 0.4s ease;
 }
 
+/* Live-only daily-mileage panel (distance walked per Pacific day). Bottom-left,
+   stacked above the LIVE badge. Mirrors the progress panel, left-anchored. */
+.daily-panel {
+	--accent: #4d7c0f; /* darker lime, for text contrast against the 2026 green */
+	position: absolute;
+	bottom: 70px;
+	left: 10px;
+	z-index: 2;
+	width: fit-content;
+	max-width: calc(100vw - 20px);
+	padding: 0 12px;
+	background: rgba(255, 255, 255, 0.95);
+	border-radius: 8px;
+	box-shadow: var(--shadow);
+	font-size: 0.8rem;
+	color: #1a1a1a;
+	pointer-events: auto;
+}
+.daily-head {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+	padding: 10px 0;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	color: inherit;
+	font-size: inherit;
+	text-align: left;
+}
+.daily-icon {
+	flex: 0 0 auto;
+	height: 15px;
+	width: 15px;
+	fill: var(--accent);
+}
+.daily-title {
+	flex: 1 1 auto;
+	font-weight: bold;
+}
+.daily-total {
+	flex: 0 0 auto;
+	font-weight: bold;
+	font-size: 1.15rem;
+	color: var(--accent);
+}
+.daily-body {
+	display: none;
+}
+.daily-panel.open .daily-body {
+	display: block;
+}
+.daily-body-inner {
+	width: 216px;
+	padding-bottom: 10px;
+}
+.daily-sub {
+	color: #555;
+	font-size: 0.72rem;
+}
+.daily-rows {
+	margin-top: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	max-height: 40vh;
+	overflow-y: auto;
+}
+.daily-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.72rem;
+}
+.daily-date {
+	flex: 0 0 68px;
+	color: #333;
+}
+.daily-bar {
+	flex: 1 1 auto;
+	height: 6px;
+	border-radius: 3px;
+	background: rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
+.daily-bar-fill {
+	height: 100%;
+	border-radius: 3px;
+	background: var(--accent);
+	transition: width 0.4s ease;
+}
+.daily-miles {
+	flex: 0 0 auto;
+	min-width: 26px;
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+	font-weight: 600;
+}
+
+/* Live-only fix-point hover popup (Pacific date/time). */
+.fix-popup {
+	font-size: 0.75rem;
+	font-weight: 600;
+	white-space: nowrap;
+	padding: 1px 3px;
+}
+/* Live-only "when" line under the current-position pin popup. */
+.latest-when {
+	font-size: 0.75rem;
+	color: #555;
+}
+
 .madi-icon svg {
 	height: 29px;
 	padding: 5px;
