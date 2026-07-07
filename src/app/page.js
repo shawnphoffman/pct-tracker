@@ -101,13 +101,25 @@ const trackUnknown = {
 	color: '#facc15',
 }
 
-// Incomplete: LOCAL-ONLY debug layer of the PCT sections that don't count toward
-// coverage yet (pending gaps). public/incomplete.geojson is gitignored.
+// Incomplete: the PCT sections that don't count toward coverage yet (pending
+// gaps). Available in dev (isLocal) AND in the secret-keyed live preview, sourced
+// from /api/incomplete (server-generated from committed gaps + public mile spine,
+// gated on dev-or-live-key) rather than the gitignored public/incomplete.geojson.
 const trackIncomplete = {
 	source: 'track-incomplete',
 	line: 'incomplete-line',
-	url: '/incomplete.geojson',
+	url: '/api/incomplete',
 	color: '#000000',
+}
+
+// Mile markers: dots at each PCT mile marker, straight off the mile-marker tileset
+// (shawnhoffman.32639qah) already bundled in the style's `composite` source - no
+// extra data fetch. A dev-and-live-only reference toggle (like Incomplete).
+const mileMarkers = {
+	layer: 'mile-marker-dots',
+	source: 'composite',
+	sourceLayer: 'Full_PCT_Mile_Marker_shapefil-9o39kw',
+	color: '#334155',
 }
 
 // Layers that get a dev-only hover popover showing the route id (for reference
@@ -185,6 +197,8 @@ const Home = () => {
 	const [showMisc, setShowMisc] = useState(true)
 	const [showUnknown, setShowUnknown] = useState(false)
 	const [showIncomplete, setShowIncomplete] = useState(false)
+	// Mile-marker reference dots (dev + live only); no lazy fetch (composite source).
+	const [showMileMarkers, setShowMileMarkers] = useState(false)
 	const [showLightbox, setShowLightbox] = useState(false)
 	const [imageOverride, setImageOverride] = useState(null)
 	const [progress, setProgress] = useState(null)
@@ -246,12 +260,14 @@ const Home = () => {
 		[toggleLayer]
 	)
 
-	// Toggle a lazy static-GeoJSON line, fetching its data the first time it's shown.
+	// Toggle a lazy static-GeoJSON line, fetching its data the first time it's
+	// shown. `urlOverride` lets a caller fetch from a computed URL (e.g. the
+	// incomplete route with the live key appended) instead of track.url.
 	const toggleLazyLine = useCallback(
-		(track, loadedRef, stateCallback) => {
+		(track, loadedRef, stateCallback, urlOverride) => {
 			if (!loadedRef.current) {
 				loadedRef.current = true
-				fetch(track.url)
+				fetch(urlOverride || track.url)
 					.then(r => r.json())
 					.then(geo => map.current?.getSource(track.source)?.setData(geo))
 					.catch(() => {})
@@ -263,7 +279,15 @@ const Home = () => {
 	const toggleTrailCrew = useCallback(() => toggleLazyLine(trackTrailCrew, trailCrewLoaded, setShowTrailCrew), [toggleLazyLine])
 	const toggleMisc = useCallback(() => toggleLazyLine(trackMisc, miscLoaded, setShowMisc), [toggleLazyLine])
 	const toggleUnknown = useCallback(() => toggleLazyLine(trackUnknown, unknownLoaded, setShowUnknown), [toggleLazyLine])
-	const toggleIncomplete = useCallback(() => toggleLazyLine(trackIncomplete, incompleteLoaded, setShowIncomplete), [toggleLazyLine])
+	// Incomplete rides the live key through to /api/incomplete so the deployed
+	// live preview can fetch it (the route is gated on dev-or-valid-key).
+	const incompleteUrl = liveKey ? `${trackIncomplete.url}?live=${encodeURIComponent(liveKey)}` : trackIncomplete.url
+	const toggleIncomplete = useCallback(
+		() => toggleLazyLine(trackIncomplete, incompleteLoaded, setShowIncomplete, incompleteUrl),
+		[toggleLazyLine, incompleteUrl]
+	)
+	// Mile-marker dots come from the always-loaded composite source, so just flip visibility.
+	const toggleMileMarkers = useCallback(() => toggleLayer(mileMarkers.layer, setShowMileMarkers), [toggleLayer])
 
 	const copyValues = useCallback(() => {
 		const values = {
@@ -333,6 +357,9 @@ const Home = () => {
 		const controlIncomplete = new CustomControl({
 			container: document.getElementById('toggle-incomplete'),
 		})
+		const controlMileMarkers = new CustomControl({
+			container: document.getElementById('toggle-milemarkers'),
+		})
 		const controlNewsletter = new CustomControl({
 			container: document.getElementById('toggle-newsletter'),
 		})
@@ -378,9 +405,15 @@ const Home = () => {
 			map.current.addControl(controlPhotos, 'top-left')
 		}
 
+		// Unknown stays strictly dev-only (raw Madison-GPS geometry). Incomplete +
+		// the mile-marker dots are reference layers safe for the secret-keyed live
+		// preview too, so they show in dev OR when a live key is being attempted.
 		if (isLocal) {
 			map.current.addControl(controlUnknown, 'top-left')
+		}
+		if (isLocal || liveKey) {
 			map.current.addControl(controlIncomplete, 'top-left')
+			map.current.addControl(controlMileMarkers, 'top-left')
 		}
 
 		if (isDebug) {
@@ -607,6 +640,49 @@ const Home = () => {
 				fetch(trackMisc.url).then(r => r.json()).then(geo => map.current?.getSource(trackMisc.source)?.setData(geo)).catch(() => {})
 			}
 
+			// Incomplete line + mile-marker dots: reference layers safe for dev AND
+			// the secret-keyed live preview (the Incomplete geometry rides the public
+			// PCT spine, no Madison-GPS PII).
+			if (isLocal || liveKey) {
+				map.current.addSource(trackIncomplete.source, {
+					type: 'geojson',
+					data: { type: 'FeatureCollection', features: [] },
+				})
+				map.current.addLayer(
+					{
+						id: trackIncomplete.line,
+						source: trackIncomplete.source,
+						type: 'line',
+						layout: { 'line-join': 'round', 'line-cap': 'round', visibility: showIncomplete ? 'visible' : 'none' },
+						paint: {
+							'line-color': trackIncomplete.color,
+							'line-width': ['interpolate', ['linear'], ['zoom'], 4, 2, 10, 4.5],
+						},
+					},
+					'newsletter-points'
+				)
+
+				// Mile-marker dots straight off the composite tileset (no data fetch).
+				map.current.addLayer(
+					{
+						id: mileMarkers.layer,
+						source: mileMarkers.source,
+						'source-layer': mileMarkers.sourceLayer,
+						type: 'circle',
+						minzoom: 5,
+						layout: { visibility: showMileMarkers ? 'visible' : 'none' },
+						paint: {
+							'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 1, 10, 2.5],
+							'circle-color': mileMarkers.color,
+							'circle-opacity': 0.85,
+							'circle-stroke-width': ['step', ['zoom'], 0, 8, 0.6],
+							'circle-stroke-color': '#fff',
+						},
+					},
+					'newsletter-points'
+				)
+			}
+
 			// LOCAL-ONLY: the Unknown debug layer + route-id hover popovers.
 			if (isLocal) {
 				map.current.addSource(trackUnknown.source, {
@@ -623,23 +699,6 @@ const Home = () => {
 							'line-color': trackUnknown.color,
 							'line-width': ['interpolate', ['linear'], ['zoom'], 4, 1.5, 10, 3.5],
 							'line-dasharray': [2, 1],
-						},
-					},
-					'newsletter-points'
-				)
-				map.current.addSource(trackIncomplete.source, {
-					type: 'geojson',
-					data: { type: 'FeatureCollection', features: [] },
-				})
-				map.current.addLayer(
-					{
-						id: trackIncomplete.line,
-						source: trackIncomplete.source,
-						type: 'line',
-						layout: { 'line-join': 'round', 'line-cap': 'round', visibility: showIncomplete ? 'visible' : 'none' },
-						paint: {
-							'line-color': trackIncomplete.color,
-							'line-width': ['interpolate', ['linear'], ['zoom'], 4, 2, 10, 4.5],
 						},
 					},
 					'newsletter-points'
@@ -679,6 +738,7 @@ const Home = () => {
 				track2023.line,
 				track2026.line,
 				track2026.fixes, // live-only points sit above the 2026 line (hoverable)
+				mileMarkers.layer, // reference dots on top of the tracks, below newsletters
 			]
 			for (const id of trackStackBottomToTop) {
 				if (map.current.getLayer(id)) map.current.moveLayer(id, 'newsletter-points')
@@ -817,7 +877,7 @@ const Home = () => {
 				})
 			}
 		})
-	}, [isDebug, isLocal, liveKey, showNewslettersLayer, showPhotosLayer, show23, show26, showTrailCrew, showMisc, showUnknown, showIncomplete])
+	}, [isDebug, isLocal, liveKey, showNewslettersLayer, showPhotosLayer, show23, show26, showTrailCrew, showMisc, showUnknown, showIncomplete, showMileMarkers])
 
 	return (
 		<div>
@@ -881,11 +941,20 @@ const Home = () => {
 						</button>
 					</div>
 				)}
-				{isLocal && (
+				{(isLocal || liveKey) && (
 					<div id="toggle-incomplete">
 						<button className={`mapboxgl-ctrl-year year-visible-${showIncomplete} year-incomplete`} onClick={toggleIncomplete}>
 							<EyeToggle visible={showIncomplete} />
 							<>Incomplete</>
+							<ColorCircle />
+						</button>
+					</div>
+				)}
+				{(isLocal || liveKey) && (
+					<div id="toggle-milemarkers">
+						<button className={`mapboxgl-ctrl-year year-visible-${showMileMarkers} year-milemarkers`} onClick={toggleMileMarkers}>
+							<EyeToggle visible={showMileMarkers} />
+							<>Mile Markers</>
 							<ColorCircle />
 						</button>
 					</div>

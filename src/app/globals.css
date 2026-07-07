@@ -96,6 +96,9 @@ body,
 .mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-incomplete svg:last-of-type {
 	fill: #000;
 }
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-year.year-milemarkers svg:last-of-type {
+	fill: #334155;
+}
 .route-id {
 	font-size: 12px;
 	font-weight: 600;
