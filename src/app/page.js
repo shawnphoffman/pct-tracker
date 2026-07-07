@@ -670,6 +670,8 @@ const Home = () => {
 						'source-layer': mileMarkers.sourceLayer,
 						type: 'circle',
 						minzoom: 5,
+						// The tileset has a marker every 0.5 mi; keep only whole miles.
+						filter: ['==', ['%', ['get', 'Mile'], 1], 0],
 						layout: { visibility: showMileMarkers ? 'visible' : 'none' },
 						paint: {
 							'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 1, 10, 2.5],
