@@ -1,7 +1,7 @@
 import { timingSafeEqual } from 'node:crypto'
 
-import { garminKmlToGeoJSON } from '@/lib/garmin'
-import { computePctProgress } from '@/lib/pct-progress'
+import { garminKmlToGeoJSON, parseGarminFixes } from '@/lib/garmin'
+import { computePctProgress, summarizeDailySnappedMiles } from '@/lib/pct-progress'
 import historyCoverage from '@/data/pct-history-coverage.json'
 import exportCoverage from '@/data/pct-export-coverage.json'
 import gapsData from '@/data/pct-gaps.json'
@@ -165,6 +165,27 @@ export async function GET(request, { params }) {
 			})
 		} catch (err) {
 			console.error('PCT progress computation failed', err)
+		}
+
+		// LIVE ONLY: alongside the raw GPS-walked `daily` summary, add a trail
+		// metric (`milesSnapped`) per day by snapping each timed fix to its PCT
+		// milepost. Two views of the same days: GPS = all ground covered (incl.
+		// town), snapped = trail miles made good. Gated on the accepted secret
+		// (same as `daily`); failures must never break the response.
+		if (live && Array.isArray(geojson.daily) && geojson.daily.length) {
+			try {
+				const { fixes } = parseGarminFixes(kml, { notAfter: null })
+				const snapped = await summarizeDailySnappedMiles(fixes, {
+					token: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
+					tileset: MILE_MARKER_TILESET,
+					radius: SNAP_RADIUS_M,
+					bridgeMax: BRIDGE_MAX_MILES,
+				})
+				const byDate = new Map(snapped.map(d => [d.date, d.miles]))
+				geojson.daily = geojson.daily.map(d => ({ ...d, milesSnapped: byDate.get(d.date) ?? 0 }))
+			} catch (err) {
+				console.error('snapped daily mileage failed', err)
+			}
 		}
 
 		// `live: true` tells the map the key was accepted (it renders a badge);

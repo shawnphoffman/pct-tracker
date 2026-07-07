@@ -701,6 +701,8 @@ const Home = () => {
 					setIsLiveFeed(!!geo.live)
 					// daily only rides along on the accepted-secret (live) response.
 					setDaily(geo.daily?.length ? geo.daily : null)
+					// In live mode the daily panel is worth seeing, so default it open.
+					if (geo.live && geo.daily?.length) setDailyOpen(true)
 
 					const latest = geo.features?.find(f => f.properties?.role === 'latest')
 					if (!latest) return
@@ -960,8 +962,13 @@ const Home = () => {
 			{isLiveFeed &&
 				daily?.length > 0 &&
 				(() => {
-					const total = Math.round(daily.reduce((s, d) => s + d.miles, 0) * 10) / 10
-					const max = Math.max(1, ...daily.map(d => d.miles))
+					// Two metrics per day: GPS = raw distance walked (all ground, incl.
+					// town); trail = miles snapped onto the PCT (off-trail reads ~0).
+					const r1 = n => Math.round(n * 10) / 10
+					const hasSnapped = daily.some(d => d.milesSnapped != null)
+					const gpsTotal = r1(daily.reduce((s, d) => s + d.miles, 0))
+					const trailTotal = r1(daily.reduce((s, d) => s + (d.milesSnapped || 0), 0))
+					const max = Math.max(1, ...daily.flatMap(d => [d.miles, d.milesSnapped || 0]))
 					return (
 						<div className={`daily-panel${dailyOpen ? ' open' : ''}`}>
 							<button
@@ -974,21 +981,40 @@ const Home = () => {
 									<path d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192z" />
 								</svg>
 								<span className="daily-title">2026 by day</span>
-								<span className="daily-total">{total} mi</span>
+								<span className="daily-total">
+									{gpsTotal}
+									{hasSnapped && <span className="daily-total-alt"> / {trailTotal}</span>} mi
+								</span>
 							</button>
 							<div className="daily-body">
 								<div className="daily-body-inner">
 									<div className="daily-sub">
-										{daily.length} {daily.length === 1 ? 'day' : 'days'} · {total} mi total
+										{daily.length} {daily.length === 1 ? 'day' : 'days'}
+										{hasSnapped && (
+											<span className="daily-legend">
+												<span className="daily-key gps">GPS walked</span>
+												<span className="daily-key trail">on trail</span>
+											</span>
+										)}
 									</div>
 									<div className="daily-rows">
 										{daily.map(d => (
 											<div className="daily-row" key={d.date}>
 												<span className="daily-date">{fmtDay(d.date)}</span>
-												<div className="daily-bar">
-													<div className="daily-bar-fill" style={{ width: `${(d.miles / max) * 100}%` }} />
+												<div className="daily-bars">
+													<div className="daily-bar">
+														<div className="daily-bar-fill gps" style={{ width: `${(d.miles / max) * 100}%` }} />
+													</div>
+													{hasSnapped && (
+														<div className="daily-bar">
+															<div className="daily-bar-fill trail" style={{ width: `${((d.milesSnapped || 0) / max) * 100}%` }} />
+														</div>
+													)}
 												</div>
-												<span className="daily-miles">{d.miles}</span>
+												<span className="daily-miles">
+													<span className="gps">{d.miles}</span>
+													{hasSnapped && <span className="trail">{d.milesSnapped || 0}</span>}
+												</span>
 											</div>
 										))}
 									</div>

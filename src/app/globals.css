@@ -330,6 +330,7 @@ body,
    stacked above the LIVE badge. Mirrors the progress panel, left-anchored. */
 .daily-panel {
 	--accent: #4d7c0f; /* darker lime, for text contrast against the 2026 green */
+	--accent-trail: #475569; /* slate, for the snapped/on-trail metric */
 	position: absolute;
 	bottom: 70px;
 	left: 10px;
@@ -373,6 +374,9 @@ body,
 	font-size: 1.15rem;
 	color: var(--accent);
 }
+.daily-total-alt {
+	color: var(--accent-trail);
+}
 .daily-body {
 	display: none;
 }
@@ -386,6 +390,33 @@ body,
 .daily-sub {
 	color: #555;
 	font-size: 0.72rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+.daily-legend {
+	display: flex;
+	gap: 8px;
+}
+.daily-key {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	white-space: nowrap;
+}
+.daily-key::before {
+	content: '';
+	width: 8px;
+	height: 8px;
+	border-radius: 2px;
+	background: currentColor;
+}
+.daily-key.gps {
+	color: var(--accent);
+}
+.daily-key.trail {
+	color: var(--accent-trail);
 }
 .daily-rows {
 	margin-top: 8px;
@@ -402,12 +433,18 @@ body,
 	font-size: 0.72rem;
 }
 .daily-date {
-	flex: 0 0 68px;
+	flex: 0 0 58px;
 	color: #333;
 }
-.daily-bar {
+.daily-bars {
 	flex: 1 1 auto;
-	height: 6px;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+}
+.daily-bar {
+	height: 5px;
 	border-radius: 3px;
 	background: rgba(0, 0, 0, 0.1);
 	overflow: hidden;
@@ -418,12 +455,26 @@ body,
 	background: var(--accent);
 	transition: width 0.4s ease;
 }
+.daily-bar-fill.trail {
+	background: var(--accent-trail);
+}
 .daily-miles {
 	flex: 0 0 auto;
-	min-width: 26px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 2px;
+	min-width: 30px;
 	text-align: right;
 	font-variant-numeric: tabular-nums;
 	font-weight: 600;
+	line-height: 1.05;
+}
+.daily-miles .gps {
+	color: var(--accent);
+}
+.daily-miles .trail {
+	color: var(--accent-trail);
 }
 
 /* Live-only fix-point hover popup (Pacific date/time). */

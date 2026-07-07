@@ -51,7 +51,7 @@ const text = v => (v && typeof v === 'object' ? v['#text'] : v)
 
 const R_KM = 6371
 const toRad = d => (d * Math.PI) / 180
-const haversineKm = ([lon1, lat1], [lon2, lat2]) => {
+export const haversineKm = ([lon1, lat1], [lon2, lat2]) => {
 	const dLat = toRad(lat2 - lat1)
 	const dLon = toRad(lon2 - lon1)
 	const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2
@@ -200,7 +200,7 @@ const KM_PER_MILE = 1.609344
 
 // Bucket an epoch (ms) into a YYYY-MM-DD calendar day in `timeZone`. en-CA
 // formats as ISO-ish (2026-07-05), so the strings sort chronologically.
-const dayKey = (epochMs, timeZone) =>
+export const dayKey = (epochMs, timeZone) =>
 	new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(epochMs)
 
 /**

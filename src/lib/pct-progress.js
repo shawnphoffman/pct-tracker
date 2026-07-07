@@ -16,6 +16,8 @@
 // between two consecutive fixes only when they're within bridgeMaxMiles (a
 // walkable gap); a larger gap reads as a shuttle/flip and isn't counted.
 
+import { haversineKm, dayKey } from './garmin'
+
 // PCT region spans (cumulative miles), derived from the mile-marker tileset and
 // split at the half-mile gaps between regions so the lengths total 2662.
 export const PCT_REGIONS = [
@@ -79,6 +81,61 @@ const bridgeIntervals = (miles, bridgeMax) => {
 		if (Math.abs(b - a) <= bridgeMax) intervals.push([Math.min(a, b), Math.max(a, b)])
 	}
 	return mergeIntervals(intervals)
+}
+
+// Decimate timed fixes to ~minSpacingKm apart to bound Tilequery volume while
+// keeping switchback resolution: keep the first timed fix, then any fix at least
+// that far from the last kept. Untimed fixes can't be day-bucketed, so drop them.
+const thinTimed = (fixes, minSpacingKm) => {
+	const out = []
+	for (const f of fixes) {
+		if (!Number.isFinite(f?.time)) continue
+		const prev = out[out.length - 1]
+		if (!prev || haversineKm(prev.coord, f.coord) >= minSpacingKm) out.push(f)
+	}
+	return out
+}
+
+/**
+ * Per-Pacific-day TRAIL miles from timed fixes: snap each fix to its official PCT
+ * milepost, then per day take the covered trail EXTENT - the union of walkable-gap
+ * intervals, the same interval method the lifetime progress uses. Off-trail fixes
+ * have no milepost and a jump wider than bridgeMax reads as a mis-snap/shuttle, so
+ * both drop out - which means a town/off-trail day reads ~0. That's the
+ * trail-progress metric, meant to sit beside the raw GPS-walked summary
+ * (summarizeDailyMiles) for comparison, not to replace it.
+ *
+ * NB: this is coverage, not summed |Δmile|. Summing raw deltas double-counts
+ * snapping noise where the trail switchbacks or runs parallel to itself (a fix
+ * mis-snaps to a nearby-but-mile-distant marker and back), inflating a day
+ * several-fold. Union is immune: oscillation inside the band adds nothing. The
+ * tradeoff is that a genuine on-trail out-and-back counts once, not twice - the
+ * GPS column still reflects the true there-and-back distance.
+ *
+ * Returns [] when there's no token or too few fixes. PRIVACY: reveals WHEN Madison
+ * moved - callers must gate this on the secret-keyed live path only (see
+ * src/app/api/track/[year]/route.js).
+ * @returns {Promise<Array<{ date: string, miles: number }>>} ascending by date
+ */
+export async function summarizeDailySnappedMiles(
+	fixes,
+	{ token, tileset, radius, bridgeMax = 30, timeZone = 'America/Los_Angeles', minSpacingKm = 0.15, seamMiles = 1 } = {}
+) {
+	if (!token || !Array.isArray(fixes)) return []
+	const timed = thinTimed(fixes, minSpacingKm)
+	if (timed.length < 2) return []
+	const miles = await mapPool(timed, 8, f => snapMile(f.coord, { token, tileset, radius }))
+	// Bucket each fix's milepost into its Pacific day, in time order.
+	const byDay = new Map()
+	for (let i = 0; i < timed.length; i++) {
+		if (miles[i] == null) continue
+		const day = dayKey(timed[i].time, timeZone)
+		if (!byDay.has(day)) byDay.set(day, [])
+		byDay.get(day).push(miles[i])
+	}
+	return [...byDay.entries()]
+		.sort(([d1], [d2]) => (d1 < d2 ? -1 : d1 > d2 ? 1 : 0))
+		.map(([date, ms]) => ({ date, miles: round1(totalLength(mergeIntervals(bridgeIntervals(ms, bridgeMax), seamMiles))) }))
 }
 
 const totalLength = intervals => intervals.reduce((sum, [a, b]) => sum + (b - a), 0)
