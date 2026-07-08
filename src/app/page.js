@@ -1148,7 +1148,9 @@ const Home = () => {
 								{progress.regions.map(r => (
 									<div className="progress-region" key={r.name}>
 										<div className="progress-region-top">
-											<span>{r.name}</span>
+											<span>
+												{r.name} <span className="progress-region-miles">{Math.round(r.covered)} / {Math.round(r.length)} mi</span>
+											</span>
 											<span>{r.percent}%</span>
 										</div>
 										<div className="progress-bar">

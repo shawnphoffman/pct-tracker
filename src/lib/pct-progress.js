@@ -21,9 +21,9 @@ import { haversineKm, dayKey } from './garmin'
 // PCT region spans (cumulative miles), derived from the mile-marker tileset and
 // split at the half-mile gaps between regions so the lengths total 2662.
 export const PCT_REGIONS = [
-	{ name: 'Southern California', from: 0, to: 651.75 },
+	{ name: 'SoCal', from: 0, to: 651.75 },
 	{ name: 'Central California', from: 651.75, to: 1157.25 },
-	{ name: 'Northern California', from: 1157.25, to: 1718.75 },
+	{ name: 'NorCal', from: 1157.25, to: 1718.75 },
 	{ name: 'Oregon', from: 1718.75, to: 2148.25 },
 	{ name: 'Washington', from: 2148.25, to: 2662 },
 ]

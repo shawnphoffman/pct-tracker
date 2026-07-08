@@ -315,6 +315,10 @@ body,
 	justify-content: space-between;
 	font-size: 0.72rem;
 }
+.progress-region-miles {
+	color: #888;
+	font-size: 0.66rem;
+}
 .progress-bar {
 	margin-top: 2px;
 	height: 5px;
