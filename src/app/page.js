@@ -1090,8 +1090,8 @@ const Home = () => {
 										{daily.length} {daily.length === 1 ? 'day' : 'days'}
 										{hasSnapped && (
 											<span className="daily-legend">
-												<span className="daily-key gps">GPS walked</span>
-												<span className="daily-key trail">on trail</span>
+												<span className="daily-key gps">GPS Tracks</span>
+												<span className="daily-key trail">On Trail</span>
 											</span>
 										)}
 									</div>
