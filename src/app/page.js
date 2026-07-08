@@ -432,7 +432,9 @@ const Home = () => {
 				if (layer.id.includes('PCT -')) {
 					// 2019 starts hidden; 2023's tileset layer stays hidden for good (we
 					// render 2023 from our own home-safe GeoJSON instead - see track2023).
-					if (!layer.id.includes('2019') && !layer.id.includes('2023')) {
+					if (layer.id.includes('2019')) {
+						map.current.setLayoutProperty(layer.id, 'visibility', 'none')
+					} else if (!layer.id.includes('2023')) {
 						map.current.setLayoutProperty(layer.id, 'visibility', 'visible')
 					}
 					const yearKey = layer.id.slice(-2)
