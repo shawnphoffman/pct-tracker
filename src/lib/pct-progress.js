@@ -16,7 +16,7 @@
 // between two consecutive fixes only when they're within bridgeMaxMiles (a
 // walkable gap); a larger gap reads as a shuttle/flip and isn't counted.
 
-import { haversineKm, dayKey } from './garmin'
+import { haversineKm, dayKey } from './garmin.js'
 
 // PCT region spans (cumulative miles), derived from the mile-marker tileset and
 // split at the half-mile gaps between regions so the lengths total 2662.
@@ -146,6 +146,24 @@ const overlapLen = ([s, e], from, to) => {
 	return b > a ? b - a : 0
 }
 
+const regionOf = mile => (PCT_REGIONS.find(r => mile >= r.from && mile < r.to) || PCT_REGIONS[PCT_REGIONS.length - 1]).name
+
+// Interior holes in the covered set = the not-yet-walked gaps. Derived from
+// whatever `intervals` the caller passes, so unioning the live track in shrinks
+// the gaps at request time - the runtime twin of scripts/build-gaps.mjs, no
+// re-bake needed. Returns interior gaps only (the trailing stretch to the
+// terminus is `remaining`, computed separately by the caller).
+export const deriveGaps = (intervals, { seamMiles = 1 } = {}) => {
+	const merged = mergeIntervals(intervals, seamMiles)
+	const gaps = []
+	for (let i = 1; i < merged.length; i++) {
+		const from = round1(merged[i - 1][1])
+		const to = round1(merged[i][0])
+		if (to > from) gaps.push({ from, to, miles: round1(to - from), region: regionOf((from + to) / 2) })
+	}
+	return gaps
+}
+
 const regionBreakdown = intervals =>
 	PCT_REGIONS.map(r => {
 		const length = r.to - r.from
@@ -192,19 +210,25 @@ export async function computePctProgress(liveCoords, { token, tileset, radius, b
 	}
 	if (liveIntervals.length) byYear['2026'] = round1(totalLength(liveIntervals))
 
-	// Gaps she hitched/jumped only count once manually marked "complete".
+	// Only the "complete" adjudications from the gaps file feed coverage (walked
+	// sections a track can't confirm - off-PCT variants, device-off stretches).
+	// The to-do list is NOT read from the file; it's derived below from the union.
 	const completeIntervals = gaps.filter(g => g.status === 'complete').map(g => [g.from, g.to])
 
 	// Union everything -> deduped lifetime coverage.
 	const all = mergeIntervals([...Object.values(history).flat(), ...liveIntervals, ...completeIntervals], seamMiles)
 	if (!all.length) return null
 
-	// Pending = not-yet-complete gap miles that nothing else covers (the to-do list).
-	const pending = gaps.filter(g => g.status !== 'complete')
-	const pendingMiles = pending.reduce((sum, g) => {
-		const covered = all.reduce((o, iv) => o + overlapLen(iv, g.from, g.to), 0)
-		return sum + Math.max(0, g.to - g.from - covered)
-	}, 0)
+	// To-do list derived live from the union: interior holes are the pending gaps,
+	// the trailing stretch is `remaining` (to the Canadian terminus). Because the
+	// live track is already in `all`, walking a gap shrinks it here with no re-bake.
+	const incompleteGaps = deriveGaps(all, { seamMiles })
+	const coveredFurthest = round1(all[all.length - 1][1])
+	const remaining =
+		coveredFurthest < total
+			? { from: coveredFurthest, to: round1(total), miles: round1(total - coveredFurthest), region: regionOf((coveredFurthest + total) / 2) }
+			: null
+	const pendingMiles = incompleteGaps.reduce((sum, g) => sum + g.miles, 0)
 
 	const coveredMiles = totalLength(all)
 	return {
@@ -215,8 +239,10 @@ export async function computePctProgress(liveCoords, { token, tileset, radius, b
 		furthestMile,
 		byYear,
 		regions: regionBreakdown(all),
+		incompleteGaps,
+		remaining,
 		pendingMiles: round1(pendingMiles),
-		pendingGaps: pending.length,
+		pendingGaps: incompleteGaps.length,
 		bridgeMaxMiles,
 	}
 }

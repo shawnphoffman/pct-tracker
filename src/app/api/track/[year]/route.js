@@ -5,6 +5,7 @@ import { computePctProgress, summarizeDailySnappedMiles } from '@/lib/pct-progre
 import historyCoverage from '@/data/pct-history-coverage.json'
 import exportCoverage from '@/data/pct-export-coverage.json'
 import gapsData from '@/data/pct-gaps.json'
+import spine from '@/data/pct-mile-spine.json'
 
 // Server-side proxy for Madison's Garmin inReach MapShare feed. The MapShare
 // password stays in env and never reaches the browser. The upstream KML is
@@ -73,12 +74,39 @@ const GAPS = gapsData.gaps || []
 
 const empty = { type: 'FeatureCollection', features: [] }
 
+// Draw the live-derived incomplete gaps (from computePctProgress) as LineStrings
+// along the public PCT mile spine (src/data/pct-mile-spine.json - trail geometry,
+// no Madison-GPS PII). Replaces the static /api/incomplete route: the gaps now
+// come from the same live-aware union the progress panel uses, so walking a gap
+// shrinks it with no re-bake. Only emitted on the dev-or-live path (see GET).
+const spineBetween = (a, b) => spine.filter(([, , m]) => a <= m && m <= b).map(([lon, lat]) => [lon, lat])
+const incompleteFeature = (id, from, to, label) => {
+	const coords = spineBetween(from, to)
+	if (coords.length < 2) return null
+	return { type: 'Feature', properties: { role: 'incomplete', id, fromMile: from, toMile: to, label }, geometry: { type: 'LineString', coordinates: coords } }
+}
+const buildIncomplete = progress => {
+	const features = []
+	;(progress?.incompleteGaps || []).forEach((g, i) => {
+		const f = incompleteFeature(`incomplete-${String(i + 1).padStart(2, '0')}`, g.from, g.to, `${g.miles} mi · ${g.region}`)
+		if (f) features.push(f)
+	})
+	const r = progress?.remaining
+	if (r) {
+		const f = incompleteFeature('incomplete-remaining', r.from, r.to, `${r.miles} mi · to Canada`)
+		if (f) features.push(f)
+	}
+	return { type: 'FeatureCollection', features }
+}
+
 // Empty track but still surface lifetime progress from the prior years (this
 // does no network when there's no live track). Used when the feed is
-// unavailable so the progress panel keeps working.
+// unavailable so the progress panel keeps working. Dev also gets the (baked)
+// incomplete layer here since it commonly runs without Garmin creds.
 const emptyWithHistory = async () => {
 	const progress = await computePctProgress([], { total: TOTAL_MILES, history: HISTORY, gaps: GAPS }).catch(() => null)
-	return progress ? { ...empty, progress } : empty
+	if (!progress) return empty
+	return { ...empty, progress, ...(isProd ? {} : { incomplete: buildIncomplete(progress) }) }
 }
 
 const json = (body, { status = 200, note, live = false } = {}) =>
@@ -189,8 +217,15 @@ export async function GET(request, { params }) {
 		}
 
 		// `live: true` tells the map the key was accepted (it renders a badge);
-		// a rejected key just yields the delayed body with no marker.
-		const body = { ...geojson, ...(progress ? { progress } : {}), ...(live ? { live: true } : {}) }
+		// a rejected key just yields the delayed body with no marker. The incomplete
+		// gap geometry rides along on the dev-or-live path only (same posture as the
+		// old /api/incomplete route): the public/delayed feed omits it.
+		const body = {
+			...geojson,
+			...(progress ? { progress } : {}),
+			...(live ? { live: true } : {}),
+			...((live || !isProd) && progress ? { incomplete: buildIncomplete(progress) } : {}),
+		}
 		return json(body, { note: `ok-${geojson.features.length}${progress ? `-p${progress.coveredPercent}` : ''}`, live })
 	} catch (err) {
 		console.error('Garmin feed fetch failed', err)

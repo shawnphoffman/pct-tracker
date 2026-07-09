@@ -101,14 +101,13 @@ const trackUnknown = {
 	color: '#facc15',
 }
 
-// Incomplete: the PCT sections that don't count toward coverage yet (pending
-// gaps). Available in dev (isLocal) AND in the secret-keyed live preview, sourced
-// from /api/incomplete (server-generated from committed gaps + public mile spine,
-// gated on dev-or-live-key) rather than the gitignored public/incomplete.geojson.
+// Incomplete: the PCT sections that don't count toward coverage yet (the to-do
+// gaps). Available in dev (isLocal) AND in the secret-keyed live preview. Geometry
+// is derived live and delivered on the /api/track response (its `incomplete`
+// field), drawn along the public PCT mile spine - no separate fetch.
 const trackIncomplete = {
 	source: 'track-incomplete',
 	line: 'incomplete-line',
-	url: '/api/incomplete',
 	color: '#000000',
 }
 
@@ -181,7 +180,6 @@ const Home = () => {
 	const trailCrewLoaded = useRef(false)
 	const miscLoaded = useRef(false)
 	const unknownLoaded = useRef(false)
-	const incompleteLoaded = useRef(false)
 	const throbTimer = useRef(null)
 	const [showNewslettersDialog, setShowNewslettersDialog] = useState(false)
 	const [showNewslettersLayer, setShowNewslettersLayer] = useState(false)
@@ -279,13 +277,9 @@ const Home = () => {
 	const toggleTrailCrew = useCallback(() => toggleLazyLine(trackTrailCrew, trailCrewLoaded, setShowTrailCrew), [toggleLazyLine])
 	const toggleMisc = useCallback(() => toggleLazyLine(trackMisc, miscLoaded, setShowMisc), [toggleLazyLine])
 	const toggleUnknown = useCallback(() => toggleLazyLine(trackUnknown, unknownLoaded, setShowUnknown), [toggleLazyLine])
-	// Incomplete rides the live key through to /api/incomplete so the deployed
-	// live preview can fetch it (the route is gated on dev-or-valid-key).
-	const incompleteUrl = liveKey ? `${trackIncomplete.url}?live=${encodeURIComponent(liveKey)}` : trackIncomplete.url
-	const toggleIncomplete = useCallback(
-		() => toggleLazyLine(trackIncomplete, incompleteLoaded, setShowIncomplete, incompleteUrl),
-		[toggleLazyLine, incompleteUrl]
-	)
+	// Incomplete geometry is preloaded from the /api/track response (live-derived
+	// from the same union the progress panel uses), so the toggle just flips visibility.
+	const toggleIncomplete = useCallback(() => toggleLayer(trackIncomplete.line, setShowIncomplete), [toggleLayer])
 	// Mile-marker dots come from the always-loaded composite source, so just flip visibility.
 	const toggleMileMarkers = useCallback(() => toggleLayer(mileMarkers.layer, setShowMileMarkers), [toggleLayer])
 
@@ -787,6 +781,9 @@ const Home = () => {
 					if (!map.current) return
 					map.current.getSource(track2026.source)?.setData(geo)
 					setProgress(geo.progress || null)
+					// Incomplete gaps come live-derived on the /api/track response (dev/live
+					// only); preload the layer so its toggle is just visibility.
+					map.current.getSource(trackIncomplete.source)?.setData(geo.incomplete || { type: 'FeatureCollection', features: [] })
 					setIsLiveFeed(!!geo.live)
 					// daily only rides along on the accepted-secret (live) response.
 					setDaily(geo.daily?.length ? geo.daily : null)
