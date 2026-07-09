@@ -15,7 +15,7 @@
 			"from": 181.5,
 			"to": 185.5,
 			"miles": 4,
-			"region": "Southern California",
+			"region": "SoCal",
 			"status": "complete",
 			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
@@ -23,7 +23,7 @@
 			"from": 342,
 			"to": 369,
 			"miles": 27,
-			"region": "Southern California",
+			"region": "SoCal",
 			"status": "unknown",
 			"note": ""
 		},
@@ -31,7 +31,7 @@
 			"from": 375.5,
 			"to": 383,
 			"miles": 7.5,
-			"region": "Southern California",
+			"region": "SoCal",
 			"status": "complete",
 			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
@@ -39,7 +39,7 @@
 			"from": 390.5,
 			"to": 398,
 			"miles": 7.5,
-			"region": "Southern California",
+			"region": "SoCal",
 			"status": "complete",
 			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
@@ -47,7 +47,7 @@
 			"from": 465.5,
 			"to": 478.5,
 			"miles": 13,
-			"region": "Southern California",
+			"region": "SoCal",
 			"status": "unknown",
 			"note": ""
 		},
@@ -55,7 +55,7 @@
 			"from": 485.5,
 			"to": 511,
 			"miles": 25.5,
-			"region": "Southern California",
+			"region": "SoCal",
 			"status": "unknown",
 			"note": ""
 		},
@@ -103,7 +103,7 @@
 			"from": 1197,
 			"to": 1221,
 			"miles": 24,
-			"region": "Northern California",
+			"region": "NorCal",
 			"status": "unknown",
 			"note": ""
 		},
@@ -111,7 +111,7 @@
 			"from": 1224,
 			"to": 1239,
 			"miles": 15,
-			"region": "Northern California",
+			"region": "NorCal",
 			"status": "unknown",
 			"note": ""
 		},
@@ -119,7 +119,7 @@
 			"from": 1244,
 			"to": 1269,
 			"miles": 25,
-			"region": "Northern California",
+			"region": "NorCal",
 			"status": "unknown",
 			"note": ""
 		},
@@ -127,7 +127,7 @@
 			"from": 1492.5,
 			"to": 1496,
 			"miles": 3.5,
-			"region": "Northern California",
+			"region": "NorCal",
 			"status": "complete",
 			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
@@ -135,7 +135,7 @@
 			"from": 1502,
 			"to": 1507,
 			"miles": 5,
-			"region": "Northern California",
+			"region": "NorCal",
 			"status": "complete",
 			"note": "walked variant - a continuous track (walking-pace, no teleport) spans the gap on the actual ground while running off the official PCT line"
 		},
