@@ -53,7 +53,7 @@ const REVALIDATE_SECONDS = numEnv('GARMIN_REVALIDATE_SECONDS', isProd ? 12 * 360
 // PCT progress: snap the track onto this mile-marker tileset via Tilequery.
 const MILE_MARKER_TILESET = process.env.PCT_MILE_MARKER_TILESET || 'shawnhoffman.32639qah'
 const SNAP_RADIUS_M = numEnv('PCT_SNAP_RADIUS_M', 500) // max off-trail distance to count a fix
-const BRIDGE_MAX_MILES = numEnv('PCT_BRIDGE_MAX_MILES', 30) // consecutive fixes farther apart = a jump, not walked
+const BRIDGE_MAX_MILES = numEnv('PCT_BRIDGE_MAX_MILES', 3) // consecutive fixes farther apart = a jump, not walked
 // Consecutive fixes farther apart than this break the drawn line (a hitch/flip,
 // e.g. off-trail at Ebbetts and back on at Carson, isn't a walked straight line).
 const MAX_GAP_KM = numEnv('PCT_MAX_GAP_KM', 5)

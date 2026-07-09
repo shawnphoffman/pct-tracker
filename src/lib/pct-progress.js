@@ -71,6 +71,25 @@ export const mergeIntervals = (intervals, tolerance = 0) => {
 	return merged
 }
 
+// Remove `holes` from sorted, non-overlapping `intervals`, returning the
+// difference (also sorted, non-overlapping). Used to carve the not-yet-complete
+// gaps back out of coverage so nothing can count a hitched section as walked.
+export const subtractIntervals = (intervals, holes) => {
+	let out = intervals
+	for (const [hs, he] of mergeIntervals(holes)) {
+		const next = []
+		for (const [s, e] of out) {
+			if (he <= s || hs >= e) next.push([s, e]) // no overlap: keep as-is
+			else {
+				if (hs > s) next.push([s, hs]) // remainder left of the hole
+				if (he < e) next.push([he, e]) // remainder right of the hole
+			}
+		}
+		out = next
+	}
+	return out
+}
+
 // Ordered snapped miles -> walked intervals, bridging only walkable gaps.
 const bridgeIntervals = (miles, bridgeMax) => {
 	const seq = miles.filter(m => m != null)
@@ -194,13 +213,18 @@ export async function computePctProgress(liveCoords, { token, tileset, radius, b
 
 	// Gaps she hitched/jumped only count once manually marked "complete".
 	const completeIntervals = gaps.filter(g => g.status === 'complete').map(g => [g.from, g.to])
+	const pending = gaps.filter(g => g.status !== 'complete')
 
 	// Union everything -> deduped lifetime coverage.
-	const all = mergeIntervals([...Object.values(history).flat(), ...liveIntervals, ...completeIntervals], seamMiles)
-	if (!all.length) return null
+	const unioned = mergeIntervals([...Object.values(history).flat(), ...liveIntervals, ...completeIntervals], seamMiles)
+	if (!unioned.length) return null
+
+	// Carve the not-yet-complete gaps back OUT: pct-gaps.json is the authoritative
+	// "not walked" record, so a bridged live fix or snapping noise can't count a
+	// hitched section as covered. Keeps the panel consistent with the incomplete layer.
+	const all = subtractIntervals(unioned, pending.map(g => [g.from, g.to]))
 
 	// Pending = not-yet-complete gap miles that nothing else covers (the to-do list).
-	const pending = gaps.filter(g => g.status !== 'complete')
 	const pendingMiles = pending.reduce((sum, g) => {
 		const covered = all.reduce((o, iv) => o + overlapLen(iv, g.from, g.to), 0)
 		return sum + Math.max(0, g.to - g.from - covered)
