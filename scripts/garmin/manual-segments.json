@@ -4,7 +4,7 @@
 		{ "fromMile": 2130.0, "toMile": 2147.0, "note": "Eagle Creek Alternate: left the official PCT ~mile 2130 and descended Eagle Creek Trail #440 (Tunnel Falls) to Cascade Locks / Bridge of the Gods, rejoining at ~mile 2147. Her continuous track runs up to ~3.9 km off the official ridge line, so it does not snap to coverage (0.5 km) - counted complete here. Its actual shape IS drawn: year_track.py keeps it via the Columbia Gorge CORRIDOR_BOXES exception." }
 	],
 	"trailcrew": [
-		{ "fromMile": 1074.0, "toMile": 1081.0, "note": "Carson Pass corridor: from just south of Elephant's Back up through the pass to Meiss Meadow / Upper Truckee River. Trail crew work not captured on the inReach." },
+		{ "fromMile": 1074.0, "toMile": 1081.0, "note": "Ebbetts Pass area (~mile 1074-1081): trail crew work not captured on the inReach. NB: an earlier note labeled this the Carson Pass corridor (Elephant's Back / Meiss Meadow / Upper Truckee), but those are ~mile 1092; this range is Ebbetts, and Carson Pass proper is covered by the 2022/2023 tracks." },
 		{ "fromMile": 1239.0, "toMile": 1244.0, "note": "Castle Rock area (near Sierra City), ~mile 1238-1244. Trail crew work not captured on the inReach." }
 	]
 }
