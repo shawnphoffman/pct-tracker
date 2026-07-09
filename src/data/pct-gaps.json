@@ -77,11 +77,19 @@
 		},
 		{
 			"from": 1034,
-			"to": 1074,
-			"miles": 40,
+			"to": 1049.5,
+			"miles": 15.5,
 			"region": "Central California",
 			"status": "complete",
-			"note": "Sonora Pass NOBO to Ebbetts - walked; fills the Garmin gap between her logged 2026 miles and the Ebbetts approach"
+			"note": "Sonora Pass NOBO to Ebbetts Pass (mile 1049.5) - walked and logged in the live 2026 feed. Baked export-coverage is stale (2026 ends at 1034 as of the Jul 2 export), so mark complete manually; drop this once a fresh export re-bakes 2026 past 1049.5."
+		},
+		{
+			"from": 1049.5,
+			"to": 1074,
+			"miles": 24.5,
+			"region": "Central California",
+			"status": "unknown",
+			"note": "Ebbetts Pass (mile 1049.5) NOBO - NOT yet walked; still to-do"
 		},
 		{
 			"from": 1104.5,
